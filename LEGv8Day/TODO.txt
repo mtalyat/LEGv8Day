@@ -1,0 +1,39 @@
+﻿TODO
+
+Document:
+* InstructionMnemonic
+* InstructionFormat
+* Everything
+
+Instructions:
+* ADDIS
+* ADDS
+* ANDIS
+* ANDS
+* B.cond
+* BL
+* LDXR
+* MOVK
+* MOVZ
+* STXR
+* SUBIS
+* SUBS
+* FADDS
+* FADDD
+* FCMPS
+* FCMPD
+* FDIVS
+* FDIVD
+* FMULS
+* FMULD
+* FSUBS
+* FMULD
+* FSUBD
+* LDURS
+* LDURD
+* SDIV
+* SMULH
+* STURS
+* STURD
+* UDIV
+* UMULH
