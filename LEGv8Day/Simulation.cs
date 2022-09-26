@@ -80,7 +80,7 @@ namespace LEGv8Day
                 r = _registers[i];
 
                 //print binary, hex, and normal number form
-                results.Add($"X{i}:\t[0b{Convert.ToString(r.Long, 2).PadLeft(sizeof(long) * 8, '0')}]\t[0x{Convert.ToString(r.Long, 16).PadLeft(sizeof(long), '0')}]\t[{r.Long}]\t[ {string.Join(' ', r.ToCharArray())} ]");
+                results.Add($"X{i}:\t[0b{Convert.ToString(r.Long, 2).PadLeft(sizeof(long) * 8, '0')}] [0x{Convert.ToString(r.Long, 16).PadLeft(sizeof(long), '0')}] [ {string.Join(' ', r.ToCharArray())} ] [{r.Long}]");
             }
 
             //add memory

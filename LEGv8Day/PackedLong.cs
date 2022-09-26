@@ -210,7 +210,7 @@ namespace LEGv8Day
 
             for (int i = 0; i < bytes.Length; i++)
             {
-                bytes[i] = (byte)GetByte(i);
+                bytes[i] = (byte)GetByte(bytes.Length - 1 - i);
             }
 
             return bytes;

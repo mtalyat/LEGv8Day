@@ -158,8 +158,6 @@ namespace LEGv8Day
 
         private static HashSet<string> _keywords = new HashSet<string>();
 
-        private static Dictionary<string, StyleGroup> _styleGroups = new Dictionary<string, StyleGroup>();
-
         private static string FormatColor(Color color)
         {
             return $"\\red{color.R}\\green{color.G}\\blue{color.B}";
@@ -248,7 +246,7 @@ namespace LEGv8Day
                     }
 
                     //clamp
-                    j = Math.Min(j, text.Length - 1);
+                    j = Math.Min(j, text.Length);
 
                     //get new "word"
                     word = text.Substring(i, j - i);

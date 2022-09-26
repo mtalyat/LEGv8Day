@@ -25,7 +25,7 @@ namespace LEGv8Day
         public override string ToString()
         {
             //print in binary
-            return $"{_instruction.Format}[{Convert.ToString(MachineCode, 2)}]";
+            return $"[{Convert.ToString(MachineCode, 2).PadLeft(sizeof(int) * 8, '0')}]";
         }
     }
 

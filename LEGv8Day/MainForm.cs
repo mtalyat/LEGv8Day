@@ -105,7 +105,7 @@ namespace LEGv8Day
                 switch (ci.Format)
                 {
                     case InstructionFormat.R:
-                        return new RInstruction(ci, ci.OpCodeStart, arg2, arg0, arg1, arg0);
+                        return new RInstruction(ci, ci.OpCodeStart, arg2, arg2, arg1, arg0);
                     case InstructionFormat.I:
                         return new IInstruction(ci, ci.OpCodeStart, arg2, arg1, arg0);
                     case InstructionFormat.D:
