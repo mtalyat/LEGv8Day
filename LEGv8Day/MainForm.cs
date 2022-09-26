@@ -21,11 +21,14 @@ namespace LEGv8Day
 
         private bool _ignoreNextSetText = false;
 
+        private string _title;
+
         private Stack<string> _undos = new Stack<string>();
         private bool canUndo => _undos.Any();
         private Stack<string> _redos = new Stack<string>();
         private bool canRedo => _redos.Any();
         private string _rtf = "";
+        private string _lastSavedText = "";
 
         private RichTextBox _convertingBox;
 
@@ -97,16 +100,16 @@ namespace LEGv8Day
             RtfLEGv8Formatter.SetKeywords(_coreInstructions.Keys.ToArray());
         }
 
-        private Instruction ParseInstruction(Line line, Dictionary<string, int> headers)
+        private Instruction ParseInstruction(Line line, Dictionary<string, int> labels)
         {
-            int[] args = line.Args.Select(a => ParseArgument(a, headers)).ToArray();
+            int[] args = line.Args.Select(a => ParseArgument(a, labels)).ToArray();
 
             int arg0 = args.Length > 0 ? args[0] : 0;
             int arg1 = args.Length > 1 ? args[1] : 0;
             int arg2 = args.Length > 2 ? args[2] : 0;
 
             //find the core instruction
-            if (_coreInstructions.TryGetValue(line.Header, out CoreInstruction? ci))
+            if (_coreInstructions.TryGetValue(line.Label.Replace('.', '_'), out CoreInstruction? ci))
             {
                 switch (ci.Format)
                 {
@@ -210,9 +213,9 @@ namespace LEGv8Day
                 //if no args, must be a header
                 if (line.Args.Length == 0)
                 {
-                    if (line.Header.EndsWith(Constants.HEADER_POSTFIX))
+                    if (line.Label.EndsWith(Constants.HEADER_POSTFIX))
                     {
-                        headers.Add(line.Header.TrimEnd(Constants.HEADER_POSTFIX), instructionLines.Count);
+                        headers.Add(line.Label.TrimEnd(Constants.HEADER_POSTFIX), instructionLines.Count);
                     }
                 }
                 else
@@ -328,6 +331,10 @@ namespace LEGv8Day
 
             //set reference
             _legFile = file;
+
+            //up to date
+            _lastSavedText = file.Text;
+            SetSaveState(true);
         }
 
         private void SaveFile(LegFile file)
@@ -344,6 +351,10 @@ namespace LEGv8Day
             //log last file path
             FileSettings.Default.LastFilePath = file.FileName;
             FileSettings.Default.Save();
+
+            //let the user know
+            _lastSavedText = text;
+            SetSaveState(true);
         }
 
         private void SetFilePath(LegFile file, string path)
@@ -361,7 +372,13 @@ namespace LEGv8Day
 
         private void SetFormTitle(string text)
         {
-            Text = $"{FORM_TEXT} - {text}";
+            _title = $"{FORM_TEXT} - {text}";
+            Text = _title;
+        }
+
+        private void SetSaveState(bool upToDate)
+        {
+            Text = $"{_title}{(upToDate ? "" : "*")}";
         }
 
         private void SetText(string text, bool rtf)
@@ -455,7 +472,11 @@ namespace LEGv8Day
             _undos.Push(_rtf);
 
             //reformat
-            SetText(GetText(true), false);
+            string text = GetText(true);
+
+            SetText(text, false);
+
+            SetSaveState(text == _lastSavedText);
         }
 
         #region Main Menu Strip

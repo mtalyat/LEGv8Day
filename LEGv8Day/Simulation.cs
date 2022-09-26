@@ -49,6 +49,8 @@ namespace LEGv8Day
 
         #endregion
 
+        #region Data
+
         /// <summary>
         /// The registers within this simulation.
         /// </summary>
@@ -68,6 +70,18 @@ namespace LEGv8Day
         /// The current index of the instruction that is being executed.
         /// </summary>
         public int ExecutionIndex { get; set; } = 0;
+
+        private byte Flags;
+
+        public bool NegativeFlag => ((Flags >> 3) & 1) != 0;
+
+        public bool ZeroFlag => ((Flags >> 2) & 1) != 0;
+
+        public bool OverflowFlag => ((Flags >> 1) & 1) != 0;
+
+        public bool CarryFlag => (Flags & 1) != 0;
+
+        #endregion
 
         /// <summary>
         /// Creates a new Simulation that will run using the given instructions.
@@ -318,6 +332,16 @@ namespace LEGv8Day
         public Instruction[] GetInstructions()
         {
             return _instructions;
+        }
+
+        public void SetFlags(long result)
+        {
+            SetFlags(result < 0, result == 0, false, false);
+        }
+
+        public void SetFlags(bool negative, bool zero, bool overflow, bool carry)
+        {
+            Flags = (byte)((negative ? 1 : 0) << 3 | (zero ? 1 : 0) << 2 | (overflow ? 1 : 0) << 1 | (carry ? 1 : 0));
         }
     }
 }

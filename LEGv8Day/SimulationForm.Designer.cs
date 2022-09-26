@@ -33,6 +33,9 @@
             // 
             // SimulationRichTextBox
             // 
+            this.SimulationRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.SimulationRichTextBox.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.SimulationRichTextBox.Location = new System.Drawing.Point(12, 12);
             this.SimulationRichTextBox.Name = "SimulationRichTextBox";

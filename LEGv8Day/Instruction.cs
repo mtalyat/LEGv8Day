@@ -59,16 +59,28 @@ namespace LEGv8Day
 
         public override void Evaluate(Simulation simulation)
         {
-            switch(_instruction.Mnemonic)
+            long value;
+
+            switch (_instruction.Mnemonic)
             {
                 case InstructionMnemonic.ADD:
-                    simulation.SetReg(Rd, simulation.GetReg(Rn) + simulation.GetReg(Rm));
+                    unchecked { simulation.SetReg(Rd, simulation.GetReg(Rn) + simulation.GetReg(Rm)); }
+                    break;
+                case InstructionMnemonic.ADDS:
+                    unchecked { value = simulation.GetReg(Rn) + simulation.GetReg(Rm); }                    
+                    simulation.SetFlags(value);
+                    simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.SUB:
-                    simulation.SetReg(Rd, simulation.GetReg(Rn) - simulation.GetReg(Rm));
+                    unchecked { simulation.SetReg(Rd, simulation.GetReg(Rn) - simulation.GetReg(Rm)); }
+                    break;
+                case InstructionMnemonic.SUBS:
+                    unchecked { value = simulation.GetReg(Rn) - simulation.GetReg(Rm); }
+                    simulation.SetFlags(value);
+                    simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.MUL:
-                    simulation.SetReg(Rd, simulation.GetReg(Rn) * simulation.GetReg(Rm));
+                    unchecked { simulation.SetReg(Rd, simulation.GetReg(Rn) * simulation.GetReg(Rm)); }
                     break;
                 case InstructionMnemonic.UDIV:
                     simulation.SetReg(Rd, simulation.GetReg<ulong>(Rn) / simulation.GetReg<ulong>(Rm));
@@ -78,6 +90,11 @@ namespace LEGv8Day
                     break;
                 case InstructionMnemonic.AND:
                     simulation.SetReg(Rd, simulation.GetReg(Rn) & simulation.GetReg(Rm));
+                    break;
+                case InstructionMnemonic.ANDS:
+                    value = simulation.GetReg(Rn) & simulation.GetReg(Rm);
+                    simulation.SetFlags(value);
+                    simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.EOR:
                     simulation.SetReg(Rd, simulation.GetReg(Rn) ^ simulation.GetReg(Rm));
@@ -119,16 +136,33 @@ namespace LEGv8Day
 
         public override void Evaluate(Simulation simulation)
         {
-            switch(_instruction.Mnemonic)
+            long value;
+
+            switch (_instruction.Mnemonic)
             {
                 case InstructionMnemonic.ADDI:
-                    simulation.SetReg(Rd,  simulation.GetReg(Rn) + AluImmediate);
+                    unchecked { simulation.SetReg(Rd, simulation.GetReg(Rn) + AluImmediate); }
+                    break;
+                case InstructionMnemonic.ADDIS:
+                    unchecked { value = simulation.GetReg(Rn) + AluImmediate; }
+                    simulation.SetFlags(value);
+                    simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.SUBI:
-                    simulation.SetReg(Rd,  simulation.GetReg(Rn) - AluImmediate);
+                    unchecked { simulation.SetReg(Rd, simulation.GetReg(Rn) - AluImmediate); }
+                    break;
+                case InstructionMnemonic.SUBIS:
+                    unchecked { value = simulation.GetReg(Rn) - AluImmediate; }
+                    simulation.SetFlags(value);
+                    simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.ANDI:
                     simulation.SetReg(Rd,  simulation.GetReg(Rn) & AluImmediate);
+                    break;
+                case InstructionMnemonic.ANDIS:
+                    value = simulation.GetReg(Rn) & AluImmediate;
+                    simulation.SetFlags(value);
+                    simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.EORI:
                     simulation.SetReg(Rd,  simulation.GetReg(Rn) ^ AluImmediate);
@@ -238,16 +272,16 @@ namespace LEGv8Day
             {
                 case InstructionMnemonic.CBZ:
                     if(simulation.GetReg(Rt) == 0)
-                    {
                         simulation.ExecutionIndex = CondBrAddress;
-                    }
                     break;
                 case InstructionMnemonic.CBNZ:
                     if(simulation.GetReg(Rt) != 0)
-                    {
                         simulation.ExecutionIndex = CondBrAddress;
-                    }
                     break;
+
+                //case InstructionMnemonic.B_EQ:
+
+                //    break;
 
                 default:
                     throw new NotImplementedException($"The instruction {_instruction.Mnemonic} has not been implemented yet.");

@@ -127,7 +127,7 @@ namespace LEGv8Day
         private static readonly Style REGISTER_STYLE = new Style(2, Modifiers.None);
         private static readonly Style NUMBER_STYLE = new Style(3, Modifiers.None);
         private static readonly Style COMMENT_STYLE = new Style(4, Modifiers.Italic);
-        private static readonly Style HEADER_STYLE = new Style(5, Modifiers.Underline | Modifiers.Bold);
+        private static readonly Style LABEL_STYLE = new Style(5, Modifiers.Underline | Modifiers.Bold);
 
         private static readonly HashSet<char> STICKY_PUNCT_CHARS = new HashSet<char>(new char[]
         {
@@ -229,7 +229,7 @@ namespace LEGv8Day
                 else if (char.IsLetter(c) && d == ':')
                 {
                     //stylize only the text, not the colon
-                    HEADER_STYLE.Stylize(sb, ref currentStyle, word.Substring(0, word.Length - 1));
+                    LABEL_STYLE.Stylize(sb, ref currentStyle, word.Substring(0, word.Length - 1));
                     DEFAULT_STYLE.Stylize(sb, ref currentStyle, ":");
                 }
                 else if (c == '/' && i + 1 < text.Length && text[i + 1] == '/')

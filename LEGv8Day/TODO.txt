@@ -6,17 +6,10 @@ Document:
 * Everything
 
 Instructions:
-* ADDIS
-* ADDS
-* ANDIS
-* ANDS
-* B.cond
 * LDXR
 * MOVK
 * MOVZ
 * STXR
-* SUBIS
-* SUBS
 * FADDS
 * FADDD
 * FCMPS
