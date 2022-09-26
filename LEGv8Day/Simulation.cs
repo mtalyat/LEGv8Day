@@ -16,7 +16,6 @@ namespace LEGv8Day
         public const int ReturnAddressRegister = REGISTER_COUNT - 2;
         public const int ConstantValueZeroRegister = REGISTER_COUNT - 1;
 
-
         private readonly long[] _registers;
         public long[] Registers => _registers;
 

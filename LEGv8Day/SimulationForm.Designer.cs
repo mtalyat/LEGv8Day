@@ -33,6 +33,7 @@
             // 
             // SimulationRichTextBox
             // 
+            this.SimulationRichTextBox.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.SimulationRichTextBox.Location = new System.Drawing.Point(12, 12);
             this.SimulationRichTextBox.Name = "SimulationRichTextBox";
             this.SimulationRichTextBox.ReadOnly = true;

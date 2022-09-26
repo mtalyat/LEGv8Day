@@ -113,7 +113,7 @@
             // MainMenuStrip_Refresh_ToolStripMenuItem
             // 
             this.MainMenuStrip_Refresh_ToolStripMenuItem.Name = "MainMenuStrip_Refresh_ToolStripMenuItem";
-            this.MainMenuStrip_Refresh_ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.MainMenuStrip_Refresh_ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.MainMenuStrip_Refresh_ToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.MainMenuStrip_Refresh_ToolStripMenuItem.Text = "Refresh";
             this.MainMenuStrip_Refresh_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_Refresh_ToolStripMenuItem_Click);
@@ -160,8 +160,8 @@
             // MainMenuStrip_Run_ToolStripMenuItem
             // 
             this.MainMenuStrip_Run_ToolStripMenuItem.Name = "MainMenuStrip_Run_ToolStripMenuItem";
-            this.MainMenuStrip_Run_ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.MainMenuStrip_Run_ToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.MainMenuStrip_Run_ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.MainMenuStrip_Run_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.MainMenuStrip_Run_ToolStripMenuItem.Text = "Run";
             this.MainMenuStrip_Run_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_Run_ToolStripMenuItem_Click);
             // 
