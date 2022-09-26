@@ -7,7 +7,22 @@ AND,AND,R,450
 AND Immediate,ANDI,I,490-491
 AND Immediate & Set flags,ANDIS,I,790-791
 AND & Set flags,ANDS,R,750
-Branch,B,B,0A0-0BF
+Branch unconditionally,B,B,0A0-0BF
+Branch conditionally (equal),B.EQ,2A0
+Branch conditionally (not equal),B.NE,2A1
+Branch conditionally (less than),B.LT,2AB
+Branch conditionally (less than or equal),B.LE,2AD
+Branch conditionally (greater than),B.GT,2AC
+Branch conditionally (greater than or equal),B.GE,2AA
+Branch conditionally (higher),B.HI,2A8
+Branch conditionally (higher or same),B.HS,2A2
+Branch conditionally (lower),B.LO,2A3
+Branch conditionally (lower or same),B.LS,2A9
+Branch conditionally (on minus),B.MI,2A4
+Branch conditionally (on plus),B.PL,2A5
+Branch conditionally (on overflow set),B.VS,2A7
+Branch conditionally (on overflow clear),B.VC,2A8
+
 
 Branch with Link,BL,B,4A0-4BF
 Branch to Register,BR,R,6B0
