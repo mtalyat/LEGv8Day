@@ -27,6 +27,18 @@ namespace LEGv8Day
             //print in binary
             return $"{_instruction.Format}[{Convert.ToString(MachineCode, 2)}]";
         }
+
+        protected static T Reinterpret<T, U>(U u) where T : unmanaged where U : unmanaged
+        {
+            T t;
+
+            unsafe
+            {
+                t = *(T*)&u;
+            }
+
+            return t;
+        }
     }
 
     public class EmptyInstruction : Instruction
@@ -69,6 +81,12 @@ namespace LEGv8Day
                     break;
                 case InstructionMnemonic.MUL:
                     simulation.Registers[Rd] = simulation.Registers[Rn] * simulation.Registers[Rm];
+                    break;
+                case InstructionMnemonic.UDIV:
+                    simulation.Registers[Rd] = Reinterpret<long, ulong>(Reinterpret<ulong, long>(simulation.Registers[Rn]) / Reinterpret<ulong, long>(simulation.Registers[Rm]));
+                    break;
+                case InstructionMnemonic.SDIV:
+                    simulation.Registers[Rd] = simulation.Registers[Rn] / simulation.Registers[Rm];
                     break;
                 case InstructionMnemonic.AND:
                     simulation.Registers[Rd] = simulation.Registers[Rn] & simulation.Registers[Rm];
