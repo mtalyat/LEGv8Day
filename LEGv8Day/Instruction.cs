@@ -27,18 +27,6 @@ namespace LEGv8Day
             //print in binary
             return $"{_instruction.Format}[{Convert.ToString(MachineCode, 2)}]";
         }
-
-        protected static T Reinterpret<T, U>(U u) where T : unmanaged where U : unmanaged
-        {
-            T t;
-
-            unsafe
-            {
-                t = *(T*)&u;
-            }
-
-            return t;
-        }
     }
 
     public class EmptyInstruction : Instruction
@@ -74,37 +62,40 @@ namespace LEGv8Day
             switch(_instruction.Mnemonic)
             {
                 case InstructionMnemonic.ADD:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] + simulation.Registers[Rm];
+                    simulation.SetReg(Rd, simulation.GetReg(Rn) + simulation.GetReg(Rm));
                     break;
                 case InstructionMnemonic.SUB:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] - simulation.Registers[Rm];
+                    simulation.SetReg(Rd, simulation.GetReg(Rn) - simulation.GetReg(Rm));
                     break;
                 case InstructionMnemonic.MUL:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] * simulation.Registers[Rm];
+                    simulation.SetReg(Rd, simulation.GetReg(Rn) * simulation.GetReg(Rm));
                     break;
                 case InstructionMnemonic.UDIV:
-                    simulation.Registers[Rd] = Reinterpret<long, ulong>(Reinterpret<ulong, long>(simulation.Registers[Rn]) / Reinterpret<ulong, long>(simulation.Registers[Rm]));
+                    simulation.SetReg(Rd, simulation.GetReg<ulong>(Rn) / simulation.GetReg<ulong>(Rm));
                     break;
                 case InstructionMnemonic.SDIV:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] / simulation.Registers[Rm];
+                    simulation.SetReg(Rd, simulation.GetReg(Rn) / simulation.GetReg(Rm));
                     break;
                 case InstructionMnemonic.AND:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] & simulation.Registers[Rm];
+                    simulation.SetReg(Rd, simulation.GetReg(Rn) & simulation.GetReg(Rm));
                     break;
                 case InstructionMnemonic.EOR:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] ^ simulation.Registers[Rm];
+                    simulation.SetReg(Rd, simulation.GetReg(Rn) ^ simulation.GetReg(Rm));
                     break;
                 case InstructionMnemonic.ORR:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] | simulation.Registers[Rm];
+                    simulation.SetReg(Rd, simulation.GetReg(Rn) | simulation.GetReg(Rm));
                     break;
                 case InstructionMnemonic.LSL:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] << Shamt;
+                    simulation.SetReg(Rd, simulation.GetReg(Rn) << Shamt);
                     break;
                 case InstructionMnemonic.LSR:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] >> Shamt;
+                    simulation.SetReg(Rd, simulation.GetReg(Rn) >> Shamt);
                     break;
                 case InstructionMnemonic.BR:
-                    simulation.ExecutionIndex = (int)simulation.Registers[Rd];
+                    simulation.ExecutionIndex = (int)simulation.GetReg(Rd);
+                    break;
+                case InstructionMnemonic.FADDS:
+                    simulation.SetReg(Rd, simulation.GetReg<float>(Rn) + simulation.GetReg<float>(Rm));
                     break;
 
                 default:
@@ -131,19 +122,19 @@ namespace LEGv8Day
             switch(_instruction.Mnemonic)
             {
                 case InstructionMnemonic.ADDI:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] + AluImmediate;
+                    simulation.SetReg(Rd,  simulation.GetReg(Rn) + AluImmediate);
                     break;
                 case InstructionMnemonic.SUBI:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] - AluImmediate;
+                    simulation.SetReg(Rd,  simulation.GetReg(Rn) - AluImmediate);
                     break;
                 case InstructionMnemonic.ANDI:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] & AluImmediate;
+                    simulation.SetReg(Rd,  simulation.GetReg(Rn) & AluImmediate);
                     break;
                 case InstructionMnemonic.EORI:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] ^ AluImmediate;
+                    simulation.SetReg(Rd,  simulation.GetReg(Rn) ^ AluImmediate);
                     break;
                 case InstructionMnemonic.ORRI:
-                    simulation.Registers[Rd] = simulation.Registers[Rn] | (long)AluImmediate;
+                    simulation.SetReg(Rd,  simulation.GetReg(Rn) | (long)AluImmediate);
                     break;
 
                 default:
@@ -167,34 +158,34 @@ namespace LEGv8Day
             _data = (opcode << 21) | (dtAddress << 12) | (op << 10) | (rn << 5) | rt;
         }
 
-        public override void Evaluate(Simulation sim)
+        public override void Evaluate(Simulation simulation)
         {
             switch(_instruction.Mnemonic)
             {
                 case InstructionMnemonic.LDUR:
-                    sim.Registers[Rt] = sim.GetMemory((int)sim.Registers[Rn] + DtAddress, sizeof(long));
+                    simulation.SetReg(Rt, simulation.GetMem((int)simulation.GetReg(Rn) + DtAddress, sizeof(long)));
                     break;
                 case InstructionMnemonic.LDURB:
-                    sim.Registers[Rt] = sim.GetMemory((int)sim.Registers[Rn] + DtAddress, sizeof(byte));
+                    simulation.SetReg(Rt, simulation.GetMem((int)simulation.GetReg(Rn) + DtAddress, sizeof(byte)));
                     break;
                 case InstructionMnemonic.LDURH:
-                    sim.Registers[Rt] = sim.GetMemory((int)sim.Registers[Rn] + DtAddress, sizeof(short));
+                    simulation.SetReg(Rt, simulation.GetMem((int)simulation.GetReg(Rn) + DtAddress, sizeof(short)));
                     break;
                 case InstructionMnemonic.LDURSW:
-                    sim.Registers[Rt] = sim.GetMemory((int)sim.Registers[Rn] + DtAddress, sizeof(int));
+                    simulation.SetReg(Rt, simulation.GetMem((int)simulation.GetReg(Rn) + DtAddress, sizeof(int)));
                     break;
 
                 case InstructionMnemonic.STUR:
-                    sim.SetMemory((int)sim.Registers[Rn] + DtAddress, sim.Registers[Rt], sizeof(long));
+                    simulation.SetMem((int)simulation.GetReg(Rn) + DtAddress, simulation.GetReg(Rt), sizeof(long));
                     break;
                 case InstructionMnemonic.STURB:
-                    sim.SetMemory((int)sim.Registers[Rn] + DtAddress, sim.Registers[Rt], sizeof(byte));
+                    simulation.SetMem((int)simulation.GetReg(Rn) + DtAddress, simulation.GetReg(Rt), sizeof(byte));
                     break;
                 case InstructionMnemonic.STURH:
-                    sim.SetMemory((int)sim.Registers[Rn] + DtAddress, sim.Registers[Rt], sizeof(short));
+                    simulation.SetMem((int)simulation.GetReg(Rn) + DtAddress, simulation.GetReg(Rt), sizeof(short));
                     break;
                 case InstructionMnemonic.STURW:
-                    sim.SetMemory((int)sim.Registers[Rn] + DtAddress, sim.Registers[Rt], sizeof(int));
+                    simulation.SetMem((int)simulation.GetReg(Rn) + DtAddress, simulation.GetReg(Rt), sizeof(int));
                     break;
 
                 default:
@@ -220,7 +211,7 @@ namespace LEGv8Day
                     simulation.ExecutionIndex = BrAddress;
                     break;
                 case InstructionMnemonic.BL:
-                    simulation.Registers[Simulation.ReturnAddressRegister] = simulation.ExecutionIndex;
+                    simulation.SetReg(Simulation.RETURN_ADDRESS_REG, simulation.ExecutionIndex);
                     simulation.ExecutionIndex = BrAddress;
                     break;
                 default:
@@ -246,13 +237,13 @@ namespace LEGv8Day
             switch(_instruction.Mnemonic)
             {
                 case InstructionMnemonic.CBZ:
-                    if(simulation.Registers[Rt] == 0)
+                    if(simulation.GetReg(Rt) == 0)
                     {
                         simulation.ExecutionIndex = CondBrAddress;
                     }
                     break;
                 case InstructionMnemonic.CBNZ:
-                    if(simulation.Registers[Rt] != 0)
+                    if(simulation.GetReg(Rt) != 0)
                     {
                         simulation.ExecutionIndex = CondBrAddress;
                     }

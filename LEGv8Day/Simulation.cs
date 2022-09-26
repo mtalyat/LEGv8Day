@@ -11,19 +11,16 @@ namespace LEGv8Day
         public const int REGISTER_COUNT = 32;
         public const int MEMORY_SIZE = 4096;
 
-        public const int StackPointerRegister = REGISTER_COUNT - 4;
-        public const int FramePointerRegister = REGISTER_COUNT - 3;
-        public const int ReturnAddressRegister = REGISTER_COUNT - 2;
-        public const int ConstantValueZeroRegister = REGISTER_COUNT - 1;
+        public const int STACK_POINTER_REG = REGISTER_COUNT - 4;
+        public const int FRAME_POINTER_REG = REGISTER_COUNT - 3;
+        public const int RETURN_ADDRESS_REG = REGISTER_COUNT - 2;
+        public const int ZERO_REG = REGISTER_COUNT - 1;
 
         private readonly long[] _registers;
-        public long[] Registers => _registers;
 
         private readonly byte[] _memory;
-        public byte[] Memory => _memory;
 
         private readonly Instruction[] _instructions;
-        public Instruction[] Instructions => _instructions;
 
         public int ExecutionIndex { get; set; } = 0;
 
@@ -111,7 +108,33 @@ namespace LEGv8Day
             return results.ToArray();
         }
 
-        public void SetMemory(int index, long data, int size)
+        private static U Reinterpret<T, U>(T t) where T : unmanaged where U : unmanaged
+        {
+            U u;
+
+            unsafe
+            {
+                u = *(U*)&t;
+            }
+
+            return u;
+        }
+
+        public long GetReg(int index)
+        {
+            return _registers[index];
+        }
+
+        public T GetReg<T>(int index) where T : unmanaged => Reinterpret<long, T>(GetReg(index));
+
+        public void SetReg(int index, long data)
+        {
+            _registers[index] = data;
+        }
+
+        public void SetReg<T>(int index, T data) where T : unmanaged => SetReg(index, Reinterpret<T, long>(data));
+        
+        public void SetMem(int index, long data, int size)
         {
             PackedLong p = new PackedLong(data);
 
@@ -121,7 +144,9 @@ namespace LEGv8Day
             }
         }
 
-        public long GetMemory(int index, int size)
+        public void SetMem<T>(int index, T data, int size) where T : unmanaged => SetMem(index, Reinterpret<T, long>(data), size);
+
+        public long GetMem(int index, int size)
         {
             PackedLong p = new PackedLong();
 
@@ -131,6 +156,23 @@ namespace LEGv8Day
             }
 
             return p.Long;
+        }
+
+        public T GetMem<T>(int index, int size) where T : unmanaged => Reinterpret<long, T>(GetMem(index, size));
+
+        public long[] GetRegisters()
+        {
+            return _registers;
+        }
+
+        public byte[] GetMemory()
+        {
+            return _memory;
+        }
+
+        public Instruction[] GetInstructions()
+        {
+            return _instructions;
         }
     }
 }
