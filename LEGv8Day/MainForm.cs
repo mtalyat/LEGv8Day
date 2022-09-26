@@ -21,6 +21,12 @@ namespace LEGv8Day
 
         private bool _ignoreNextSetText = false;
 
+        private Stack<string> _undos = new Stack<string>();
+        private bool canUndo => _undos.Any();
+        private Stack<string> _redos = new Stack<string>();
+        private bool canRedo => _redos.Any();
+        private string _rtf = "";
+
         private RichTextBox _convertingBox;
 
         public MainForm()
@@ -243,18 +249,26 @@ namespace LEGv8Day
 
         private void Undo()
         {
-            if (MainRichTextBox.CanUndo)
+            if (canUndo)
             {
-                MainRichTextBox.Undo();
+                //push to redos
+                _redos.Push(GetText(false));
+
+                //pull from undos
+                SetText(_undos.Pop(), true);
             }
         }
 
         private void Redo()
         {
             //go to last redo, store this one on undo
-            if (MainRichTextBox.CanRedo)
+            if (canRedo)
             {
-                MainRichTextBox.Redo();
+                //push to undos
+                _undos.Push(GetText(false));
+
+                //pull from redos
+                SetText(_redos.Pop(), true);
             }
         }
 
@@ -372,6 +386,8 @@ namespace LEGv8Day
                 MainRichTextBox.Rtf = text;
                 _ignoreNextSetText = false;
 
+                _rtf = text;
+
                 //set selected back to where we were
                 MainRichTextBox.SelectionStart = MainRichTextBox.Text.Length - 1 - index;
                 MainRichTextBox.SelectionLength = 0;
@@ -384,15 +400,15 @@ namespace LEGv8Day
             }
         }
 
-        private string GetText(bool rtf)
+        private string GetText(bool plainText)
         {
-            if(rtf)
+            if(plainText)
             {
                 _convertingBox.Rtf = MainRichTextBox.Rtf.Replace(@"\line", @"\par");
                 return _convertingBox.Text;
             } else
             {
-                return MainRichTextBox.Text;
+                return MainRichTextBox.Rtf;
             }
         }
 
@@ -435,7 +451,10 @@ namespace LEGv8Day
                 return;
             }
 
-            //when the text is changed, reformat
+            //log last text stored
+            _undos.Push(_rtf);
+
+            //reformat
             SetText(GetText(true), false);
         }
 
