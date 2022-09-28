@@ -33,6 +33,8 @@ namespace LEGv8Day
         {
             _simulation.Run();
 
+            ExecutionTime_Label.Text = $"Execution Time: {_simulation.ExecutionTime}ms";
+
             SimulationRichTextBox.Lines = _simulation.Dump();
         }
 

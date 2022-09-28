@@ -21,7 +21,7 @@ namespace LEGv8Day
 
         private bool _ignoreNextSetText = false;
 
-        private string _title;
+        private string _title = "";
 
         private Stack<string> _undos = new Stack<string>();
         private bool canUndo => _undos.Any();

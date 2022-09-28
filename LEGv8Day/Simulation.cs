@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -83,6 +84,8 @@ namespace LEGv8Day
 
         #endregion
 
+        public float ExecutionTime { get; private set; } = 0.0f;
+
         /// <summary>
         /// Creates a new Simulation that will run using the given instructions.
         /// </summary>
@@ -106,6 +109,9 @@ namespace LEGv8Day
 
             Instruction currentInstruction;
 
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
             while (ExecutionIndex < _instructions.Length)
             {
                 currentInstruction = _instructions[ExecutionIndex];
@@ -114,6 +120,9 @@ namespace LEGv8Day
 
                 currentInstruction.Evaluate(this);
             }
+
+            watch.Stop();
+            ExecutionTime = watch.ElapsedMilliseconds;
         }
 
         /// <summary>
@@ -153,7 +162,7 @@ namespace LEGv8Day
                 r = _registers[i];
 
                 //print binary, hex, and normal number form
-                results.Add($"X{i}:\t[0b{Convert.ToString(r.Long, 2).PadLeft(sizeof(long) * 8, '0')}] [0x{Convert.ToString(r.Long, 16).PadLeft(sizeof(long), '0')}] [ {string.Join(' ', r.ToCharArray())} ] [{r.Long}]");
+                results.Add($"X{i}:\t[0b{Convert.ToString(r.Long, 2).PadLeft(sizeof(long) * 8, '0')}] [0x{Convert.ToString(r.Long, 16).PadLeft(sizeof(long) * 2, '0')}] [ {string.Join(' ', r.ToCharArray())} ] [{r.Long}/{Reinterpret<long, float>(r.Long)}/{Reinterpret<long, double>(r.Long)}]");
             }
 
             //add memory
