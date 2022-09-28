@@ -54,7 +54,12 @@ namespace LEGv8Day
 
         public RInstruction(CoreInstruction instruction, int opcode, int rm, int shamt, int rn, int rd) : base(instruction)
         {
-            _data = (opcode << 21) | (rm << 16) | (shamt << 10) | (rn << 5) | rd;
+            _data = 0;
+            _data.SetRange(21, 31, opcode);
+            _data.SetRange(16, 20, rm);
+            _data.SetRange(10, 15, shamt);
+            _data.SetRange(5, 9, rn);
+            _data.SetRange(0, 4, rd);
         }
 
         public override void Evaluate(Simulation simulation)
@@ -131,7 +136,11 @@ namespace LEGv8Day
 
         public IInstruction(CoreInstruction instruction, int opcode, int aluImmediate, int rn, int rd) : base(instruction)
         {
-            _data = (opcode << 22) | (aluImmediate << 10) | (rn << 5) | rd;
+            _data = 0;
+            _data.SetRange(22, 31, opcode);
+            _data.SetRange(10, 21, aluImmediate);
+            _data.SetRange(5, 9, rn);
+            _data.SetRange(0, 4, rd);
         }
 
         public override void Evaluate(Simulation simulation)
@@ -198,7 +207,12 @@ namespace LEGv8Day
 
         public DInstruction(CoreInstruction instruction, int opcode, int dtAddress, int op, int rn, int rt) : base(instruction)
         {
-            _data = (opcode << 21) | (dtAddress << 12) | (op << 10) | (rn << 5) | rt;
+            _data = 0;
+            _data.SetRange(21, 31, opcode);
+            _data.SetRange(12, 20, dtAddress);
+            _data.SetRange(10, 11, op);
+            _data.SetRange(5, 9, rn);
+            _data.SetRange(0, 4, rt);
         }
 
         public override void Evaluate(Simulation simulation)
@@ -243,7 +257,9 @@ namespace LEGv8Day
 
         public BInstruction(CoreInstruction instruction, int opcode, int brAddress) : base(instruction)
         {
-            _data = (opcode << 26) | brAddress;
+            _data = 0;
+            _data.SetRange(26, 31, opcode);
+            _data.SetRange(0, 25, brAddress);
         }
 
         public override void Evaluate(Simulation simulation)
@@ -272,7 +288,10 @@ namespace LEGv8Day
 
         public CBInstruction(CoreInstruction instruction, int opcode, int condBrAddress, int rt) : base(instruction)
         {
-            _data = (opcode << 24) | (condBrAddress << 5) | rt;
+            _data = 0;
+            _data.SetRange(24, 31, opcode);
+            _data.SetRange(5, 23, condBrAddress);
+            _data.SetRange(0, 4, rt);
         }
 
         public override void Evaluate(Simulation simulation)
@@ -331,7 +350,10 @@ namespace LEGv8Day
 
         public IMInstruction(CoreInstruction instruction, int opcode, int movImmediate, int rd) : base(instruction)
         {
-            _data = (opcode << 21) | (movImmediate << 5) | rd;
+            _data = 0;
+            _data.SetRange(21, 31, opcode);
+            _data.SetRange(5, 20, movImmediate);
+            _data.SetRange(0, 4, rd);
         }
 
         public override void Evaluate(Simulation simulation)
