@@ -27,6 +27,28 @@ namespace LEGv8Day
             //print in binary
             return $"[{Convert.ToString(MachineCode, 2).PadLeft(sizeof(int) * 8, '0')}]";
         }
+
+        /// <summary>
+        /// Extends the most signigicant bit in the given value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        protected static int ExtendMSB(int value, int sizeInBits)
+        {
+            unsafe
+            {
+                //get the bit
+                bool bit = (value >> (sizeInBits - 1)) != 0;
+
+                //set to all remaining bits
+                PackedInt packed = new PackedInt(value);
+                packed.Set(sizeInBits, bit ? ~0 : 0, sizeof(int) - sizeInBits);
+                //MessageBox.Show($"Setting at {sizeInBits}, value: {Convert.ToString(bit ? ~0 : 0, 2)}, length: {sizeof(long) - sizeInBits} to existing value {value}");
+
+                return packed;
+            }
+        }
     }
 
     public class EmptyInstruction : Instruction
@@ -128,7 +150,7 @@ namespace LEGv8Day
 
     public class IInstruction : Instruction
     {
-        private int AluImmediate => _data.GetRange(10, 21);
+        private int AluImmediate => ExtendMSB(_data.GetRange(10, 21), 11);
 
         private int Rn => _data.GetRange(5, 9);
 

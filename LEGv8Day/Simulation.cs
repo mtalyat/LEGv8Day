@@ -195,6 +195,7 @@ namespace LEGv8Day
 
             unsafe
             {
+                //turn into a pointer, cast to a new pointer of type U
                 u = *(U*)&t;
             }
 
@@ -227,7 +228,7 @@ namespace LEGv8Day
         public void SetReg(int index, long value)
         {
             //only set if not the zero register
-            if(index == ZERO_REG)
+            if (index == ZERO_REG)
             {
                 return;
             }
@@ -330,7 +331,7 @@ namespace LEGv8Day
         {
             return _memory;
         }
-        
+
         /// <summary>
         /// Gets all instructions.
         /// </summary>
@@ -348,6 +349,8 @@ namespace LEGv8Day
         public void SetFlags(bool negative, bool zero, bool overflow, bool carry)
         {
             Flags = (byte)((negative ? 1 : 0) << 3 | (zero ? 1 : 0) << 2 | (overflow ? 1 : 0) << 1 | (carry ? 1 : 0));
+
+            //MessageBox.Show($"Flags: [{Convert.ToString(Flags, 2).PadLeft(4, '0')}]");
         }
     }
 }

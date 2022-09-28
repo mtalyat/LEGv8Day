@@ -110,11 +110,11 @@ namespace LEGv8Day
             int[] args = line.Args.Select(a => ParseArgument(a, labels)).ToArray();
 
             int arg0 = args.Length > 0 ? args[0] : 0;
-            int arg1 = args.Length > 1 ? args[1] : 0;
-            int arg2 = args.Length > 2 ? args[2] : 0;
+            int arg1 = args.Length > 1 ? args[1] : arg0;
+            int arg2 = args.Length > 2 ? args[2] : (args.Length > 1 ? arg1 : arg0);
 
             //find the core instruction
-            if (_coreInstructions.TryGetValue(line.Label.Replace('.', '_'), out CoreInstruction? ci))
+            if (_coreInstructions.TryGetValue(line.Label, out CoreInstruction? ci))
             {
                 switch (ci.Format)
                 {
