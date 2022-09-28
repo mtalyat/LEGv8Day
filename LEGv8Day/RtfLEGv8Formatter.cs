@@ -131,7 +131,7 @@ namespace LEGv8Day
 
         private static readonly HashSet<char> STICKY_PUNCT_CHARS = new HashSet<char>(new char[]
         {
-            '_', ':', '#', '/'
+            '_', ':', '#', '/', '.'
         });
 
         #endregion
@@ -222,7 +222,7 @@ namespace LEGv8Day
                 d = word[word.Length - 1];
 
                 //check word
-                if (c == '#' && char.IsNumber(d))
+                if ((c == '#' || char.IsNumber(c)) && char.IsNumber(d))
                 {
                     NUMBER_STYLE.Stylize(sb, ref currentStyle, word);
                 }

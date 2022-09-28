@@ -43,6 +43,11 @@ namespace LEGv8Day
 
         #region Instructions
 
+        private InstructionMnemonic ParseMnemonic(string m)
+        {
+            return Enum.Parse<InstructionMnemonic>(m.Replace('.', '_'));
+        }
+
         private void LoadCoreInstructions()
         {
             _coreInstructions.Clear();
@@ -78,13 +83,13 @@ namespace LEGv8Day
                 {
                     ops = args[3].Split('-');
 
-                    c = new CoreInstruction(args[0], Enum.Parse<InstructionMnemonic>(mnemonic), Enum.Parse<InstructionFormat>(args[2]), int.Parse(ops[0], System.Globalization.NumberStyles.HexNumber), int.Parse(ops.Length == 1 ? ops[0] : ops[1], System.Globalization.NumberStyles.HexNumber));
+                    c = new CoreInstruction(args[0], ParseMnemonic(mnemonic), Enum.Parse<InstructionFormat>(args[2]), int.Parse(ops[0], System.Globalization.NumberStyles.HexNumber), int.Parse(ops.Length == 1 ? ops[0] : ops[1], System.Globalization.NumberStyles.HexNumber));
                 }
                 else if (args.Length == 5)//name, mnemonic, format, opcode, shamt
                 {
                     ops = args[3].Split('-');
 
-                    c = new CoreInstruction(args[0], Enum.Parse<InstructionMnemonic>(mnemonic), Enum.Parse<InstructionFormat>(args[2]), int.Parse(ops[0], System.Globalization.NumberStyles.HexNumber), int.Parse(ops.Length == 1 ? ops[0] : ops[1], System.Globalization.NumberStyles.HexNumber), int.Parse(args[4], System.Globalization.NumberStyles.HexNumber));
+                    c = new CoreInstruction(args[0], ParseMnemonic(mnemonic), Enum.Parse<InstructionFormat>(args[2]), int.Parse(ops[0], System.Globalization.NumberStyles.HexNumber), int.Parse(ops.Length == 1 ? ops[0] : ops[1], System.Globalization.NumberStyles.HexNumber), int.Parse(args[4], System.Globalization.NumberStyles.HexNumber));
                 }
                 else
                 {
