@@ -350,9 +350,13 @@ namespace LEGv8Day
             return _instructions;
         }
 
-        public void SetFlags(long result)
+        public void SetFlags(long value, long left, long right)
         {
-            SetFlags(result < 0, result == 0, false, false);
+            SetFlags(
+                        value < 0,
+                        value == 0,
+                        (left > 0 && right > 0 && value < 0) || (left < 0 && right < 0 && value > 0),
+                        (left > 0 && right > 0 && value < left && value < right) || (left < 0 && right < 0 && value > left && value > right));
         }
 
         public void SetFlags(bool negative, bool zero, bool overflow, bool carry)

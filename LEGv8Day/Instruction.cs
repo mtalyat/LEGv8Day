@@ -25,7 +25,7 @@ namespace LEGv8Day
         public override string ToString()
         {
             //print in binary
-            return $"[{Convert.ToString(MachineCode, 2).PadLeft(sizeof(int) * 8, '0')}]";
+            return Convert.ToString(MachineCode, 2).PadLeft(sizeof(int) * 8, '0');
         }
 
         /// <summary>
@@ -86,54 +86,56 @@ namespace LEGv8Day
 
         public override void Evaluate(Simulation simulation)
         {
+            long left = simulation.GetReg(Rn);
+            long right = simulation.GetReg(Rm);
             long value;
 
             switch (_instruction.Mnemonic)
             {
                 case InstructionMnemonic.ADD:
-                    unchecked { simulation.SetReg(Rd, simulation.GetReg(Rn) + simulation.GetReg(Rm)); }
+                    unchecked { simulation.SetReg(Rd, left + right); }
                     break;
                 case InstructionMnemonic.ADDS:
-                    unchecked { value = simulation.GetReg(Rn) + simulation.GetReg(Rm); }
-                    simulation.SetFlags(value);
+                    unchecked { value = left + right; }
+                    simulation.SetFlags(value, left, right);
                     simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.SUB:
-                    unchecked { simulation.SetReg(Rd, simulation.GetReg(Rn) - simulation.GetReg(Rm)); }
+                    unchecked { simulation.SetReg(Rd, left - right); }
                     break;
                 case InstructionMnemonic.SUBS:
-                    unchecked { value = simulation.GetReg(Rn) - simulation.GetReg(Rm); }
-                    simulation.SetFlags(value);
+                    unchecked { value = left - right; }
+                    simulation.SetFlags(value, left, right);
                     simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.MUL:
-                    unchecked { simulation.SetReg(Rd, simulation.GetReg(Rn) * simulation.GetReg(Rm)); }
+                    unchecked { simulation.SetReg(Rd, left * right); }
                     break;
                 case InstructionMnemonic.UDIV:
                     simulation.SetRegR(Rd, simulation.GetRegR<ulong>(Rn) / simulation.GetRegR<ulong>(Rm));
                     break;
                 case InstructionMnemonic.SDIV:
-                    simulation.SetReg(Rd, simulation.GetReg(Rn) / simulation.GetReg(Rm));
+                    simulation.SetReg(Rd, left / right);
                     break;
                 case InstructionMnemonic.AND:
-                    simulation.SetReg(Rd, simulation.GetReg(Rn) & simulation.GetReg(Rm));
+                    simulation.SetReg(Rd, left & right);
                     break;
                 case InstructionMnemonic.ANDS:
-                    value = simulation.GetReg(Rn) & simulation.GetReg(Rm);
-                    simulation.SetFlags(value);
+                    value = left & right;
+                    simulation.SetFlags(value, left, right);
                     simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.EOR:
-                    simulation.SetReg(Rd, simulation.GetReg(Rn) ^ simulation.GetReg(Rm));
+                    simulation.SetReg(Rd, left ^ right);
                     break;
                 case InstructionMnemonic.ORR:
-                    simulation.SetReg(Rd, simulation.GetReg(Rn) | simulation.GetReg(Rm));
+                    simulation.SetReg(Rd, left | right);
                     break;
                 case InstructionMnemonic.LSL:
-                    simulation.SetReg(Rd, simulation.GetReg(Rn) << Shamt);
+                    simulation.SetReg(Rd, left << Shamt);
                     break;
                 case InstructionMnemonic.LSR:
-                    simulation.SetReg(Rd, simulation.GetReg(Rn) >> Shamt);
+                    simulation.SetReg(Rd, left >> Shamt);
                     break;
                 case InstructionMnemonic.BR:
                     simulation.ExecutionIndex = (int)simulation.GetReg(Rd);
@@ -167,48 +169,41 @@ namespace LEGv8Day
 
         public override void Evaluate(Simulation simulation)
         {
-            long left;
-            long right;
+            long left = simulation.GetReg(Rn);
+            long right = AluImmediate;
             long value;
 
             switch (_instruction.Mnemonic)
             {
                 case InstructionMnemonic.ADDI:
-                    unchecked { simulation.SetReg(Rd, simulation.GetReg(Rn) + AluImmediate); }
+                    unchecked { simulation.SetReg(Rd, left + right); }
                     break;
                 case InstructionMnemonic.ADDIS:
-                    left = simulation.GetReg(Rn);
-                    right = AluImmediate;
                     unchecked { value = left + right; }
-                    simulation.SetFlags(
-                        value < 0,
-                        value == 0,
-                        (left > 0 && right > 0 && value < 0) || (left < 0 && right < 0 && value > 0),
-                        false
-                        );
+                    simulation.SetFlags(value, left, right);
                     simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.SUBI:
-                    unchecked { simulation.SetReg(Rd, simulation.GetReg(Rn) - AluImmediate); }
+                    unchecked { simulation.SetReg(Rd, left - right); }
                     break;
                 case InstructionMnemonic.SUBIS:
-                    unchecked { value = simulation.GetReg(Rn) - AluImmediate; }
-                    simulation.SetFlags(value);
+                    unchecked { value = left - right; }
+                    simulation.SetFlags(value, left, right);
                     simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.ANDI:
-                    simulation.SetReg(Rd, simulation.GetReg(Rn) & AluImmediate);
+                    simulation.SetReg(Rd, left & right);
                     break;
                 case InstructionMnemonic.ANDIS:
-                    value = simulation.GetReg(Rn) & AluImmediate;
-                    simulation.SetFlags(value);
+                    value = left & right;
+                    simulation.SetFlags(value, left, right);
                     simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.EORI:
-                    simulation.SetReg(Rd, simulation.GetReg(Rn) ^ AluImmediate);
+                    simulation.SetReg(Rd, left ^ right);
                     break;
                 case InstructionMnemonic.ORRI:
-                    simulation.SetReg(Rd, simulation.GetReg(Rn) | (long)AluImmediate);
+                    simulation.SetReg(Rd, left | right);
                     break;
 
                 default:
