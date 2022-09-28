@@ -123,8 +123,8 @@ namespace LEGv8Day
                         return new BInstruction(ci, ci.OpCodeStart, arg0);
                     case InstructionFormat.CB:
                         return new CBInstruction(ci, ci.OpCodeStart, arg1, arg0);
-                        //case InstructionFormat.IM:
-                        //return new IMInstruction(ci, ci.OpCodeStart, )
+                    case InstructionFormat.IM:
+                        return new IMInstruction(ci, ci.OpCodeStart, arg1, arg0);
                 }
             }
 

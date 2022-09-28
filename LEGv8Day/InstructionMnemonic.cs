@@ -8,6 +8,9 @@ namespace LEGv8Day
 {
     public enum InstructionMnemonic : int
     {
+        /// <summary>
+        /// Does nothing. Not a real instruction, used for internal simulation error handling.
+        /// </summary>
         Empty,
         ADD,
         ADDI,

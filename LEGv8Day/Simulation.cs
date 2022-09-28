@@ -217,7 +217,7 @@ namespace LEGv8Day
         /// <typeparam name="T"></typeparam>
         /// <param name="index"></param>
         /// <returns></returns>
-        public T GetReg<T>(int index) where T : unmanaged => Reinterpret<long, T>(GetReg(index));
+        public T GetRegR<T>(int index) where T : unmanaged => Reinterpret<long, T>(GetReg(index));
 
         /// <summary>
         /// Sets the value for the register with the given index to the given value.
@@ -226,6 +226,12 @@ namespace LEGv8Day
         /// <param name="value"></param>
         public void SetReg(int index, long value)
         {
+            //only set if not the zero register
+            if(index == ZERO_REG)
+            {
+                return;
+            }
+
             _registers[index] = value;
         }
 
@@ -235,7 +241,7 @@ namespace LEGv8Day
         /// <typeparam name="T"></typeparam>
         /// <param name="index"></param>
         /// <param name="value"></param>
-        public void SetReg<T>(int index, T value) where T : unmanaged => SetReg(index, Reinterpret<T, long>(value));
+        public void SetRegR<T>(int index, T value) where T : unmanaged => SetReg(index, Reinterpret<T, long>(value));
 
         /// <summary>
         /// Sets the memory at the given index to the given value.
@@ -259,7 +265,7 @@ namespace LEGv8Day
         /// <typeparam name="T"></typeparam>
         /// <param name="index"></param>
         /// <param name="value"></param>
-        public void SetMem<T>(int index, T value) where T : unmanaged
+        public void SetMemR<T>(int index, T value) where T : unmanaged
         {
             int size;
 
@@ -295,7 +301,7 @@ namespace LEGv8Day
         /// <typeparam name="T"></typeparam>
         /// <param name="index"></param>
         /// <returns></returns>
-        public T GetMem<T>(int index) where T : unmanaged
+        public T GetMemR<T>(int index) where T : unmanaged
         {
             int size;
 
