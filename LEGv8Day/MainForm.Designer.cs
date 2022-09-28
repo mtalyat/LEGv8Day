@@ -41,6 +41,8 @@
             this.MainMenuStrip_Undo_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip_Redo_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainMenuStrip_Theme_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip_Run_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainRichTextBox = new System.Windows.Forms.RichTextBox();
@@ -52,6 +54,7 @@
             this.MainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
+            this.viewToolStripMenuItem,
             this.runToolStripMenuItem});
             this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MainMenuStrip.Name = "MainMenuStrip";
@@ -149,6 +152,21 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
             // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MainMenuStrip_Theme_ToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // MainMenuStrip_Theme_ToolStripMenuItem
+            // 
+            this.MainMenuStrip_Theme_ToolStripMenuItem.Name = "MainMenuStrip_Theme_ToolStripMenuItem";
+            this.MainMenuStrip_Theme_ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.MainMenuStrip_Theme_ToolStripMenuItem.Text = "Theme";
+            this.MainMenuStrip_Theme_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_Theme_ToolStripMenuItem_Click);
+            // 
             // runToolStripMenuItem
             // 
             this.runToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -161,7 +179,7 @@
             // 
             this.MainMenuStrip_Run_ToolStripMenuItem.Name = "MainMenuStrip_Run_ToolStripMenuItem";
             this.MainMenuStrip_Run_ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.MainMenuStrip_Run_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.MainMenuStrip_Run_ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.MainMenuStrip_Run_ToolStripMenuItem.Text = "Run";
             this.MainMenuStrip_Run_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_Run_ToolStripMenuItem_Click);
             // 
@@ -184,11 +202,13 @@
             this.ClientSize = new System.Drawing.Size(1068, 558);
             this.Controls.Add(this.MainRichTextBox);
             this.Controls.Add(this.MainMenuStrip);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Legv8 Day";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.MainMenuStrip.ResumeLayout(false);
             this.MainMenuStrip.PerformLayout();
@@ -214,5 +234,7 @@
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem MainMenuStrip_Refresh_ToolStripMenuItem;
+        private ToolStripMenuItem viewToolStripMenuItem;
+        private ToolStripMenuItem MainMenuStrip_Theme_ToolStripMenuItem;
     }
 }

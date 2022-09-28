@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Update="FormSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FormSettings.settings</DependentUpon>
+    </Compile>
     <Compile Update="ProgramData.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -34,9 +39,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="FileSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>FileSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="FormSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>FormSettings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 

@@ -146,14 +146,16 @@ namespace LEGv8Day
 }
          */
 
+        private static Theme _theme = Theme.Default;
+
         private readonly static Color[] _colors = new Color[]
         {
-            Color.FromArgb(0, 0, 0),//default black
-            Color.FromArgb(10, 50, 210),//keyword blue
-            Color.FromArgb(205, 50, 22),//register red
-            Color.FromArgb(194, 185, 56),//number yellow
-            Color.FromArgb(100, 185, 70),//comment green
-            Color.FromArgb(192, 73, 222),//header purple
+            _theme.TextColor,
+            _theme.KeywordColor,
+            _theme.RegisterColor,
+            _theme.NumberColor,
+            _theme.CommentColor,
+            _theme.LabelColor
         };
 
         private static HashSet<string> _keywords = new HashSet<string>();
@@ -166,6 +168,16 @@ namespace LEGv8Day
         public static void SetKeywords(string[] words)
         {
             _keywords = new HashSet<string>(words.Select(w => w.ToUpper()));
+        }
+
+        public static void SetTheme(Theme theme)
+        {
+            _colors[0] = theme.TextColor;
+            _colors[1] = theme.KeywordColor;
+            _colors[2] = theme.RegisterColor;
+            _colors[3] = theme.NumberColor;
+            _colors[4] = theme.CommentColor;
+            _colors[5] = theme.LabelColor;
         }
 
         public static string FormatString(string text)

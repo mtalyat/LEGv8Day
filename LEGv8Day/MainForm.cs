@@ -10,6 +10,10 @@ namespace LEGv8Day
         /// </summary>
         private const string FORM_TEXT = "LEGv8 Day";
 
+        private const string FORM_DATA_PATH = "FormData.txt";
+
+        private const string THEMES_PATH = "Themes.txt";
+
         /// <summary>
         /// The filter that is used when saving and opening files.
         /// </summary>
@@ -18,6 +22,8 @@ namespace LEGv8Day
         private Dictionary<string, CoreInstruction> _coreInstructions = new Dictionary<string, CoreInstruction>();
 
         private LegFile _legFile;
+
+        private List<Theme> _themes;
 
         private bool _ignoreNextSetText = false;
 
@@ -36,9 +42,16 @@ namespace LEGv8Day
         {
             InitializeComponent();
 
+            _themes = Data.Load<List<Theme>>(THEMES_PATH) ?? new List<Theme>(new Theme[1] { Theme.Default });
+            //always ensure the 1st is the actual default, not modified outside of this environment
+            _themes[0] = Theme.Default;
+            FormSettings.Default.ActiveThemeIndex = Math.Min(FormSettings.Default.ActiveThemeIndex, _themes.Count - 1);
+
             _convertingBox = new RichTextBox();
 
             _legFile = new LegFile();
+
+            RefreshForm();
         }
 
         #region Instructions
@@ -246,7 +259,7 @@ namespace LEGv8Day
             //get all instructions
             Instruction[] instructions = GetInstructions(GetText(true).Split('\n'));
 
-            SimulationForm form = new SimulationForm(new Simulation(instructions), _legFile.Name);
+            SimulationForm form = new SimulationForm(this, new Simulation(instructions), _legFile.Name);
 
             form.Show();
         }
@@ -284,6 +297,17 @@ namespace LEGv8Day
 
         #region Loading and Saving
 
+        private void SetFilePath(LegFile file, string path)
+        {
+            //set the path on the file
+            file.FileName = path;
+
+            //set the title
+            SetFormTitle(file.Name);
+        }
+
+        #region Load
+
         private bool LoadDialog(out string path)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -304,6 +328,26 @@ namespace LEGv8Day
                 return false;
             }
         }
+
+        private void LoadFile(LegFile file)
+        {
+            //set title
+            SetFormTitle(file.Name);
+
+            //set text
+            SetText(file.Text, false);
+
+            //set reference
+            _legFile = file;
+
+            //up to date
+            _lastSavedText = file.Text;
+            SetSaveState(true);
+        }
+
+        #endregion
+
+        #region Save
 
         private bool SaveDialog(out string path)
         {
@@ -326,22 +370,6 @@ namespace LEGv8Day
             }
         }
 
-        private void LoadFile(LegFile file)
-        {
-            //set title
-            SetFormTitle(file.Name);
-
-            //set text
-            SetText(file.Text, false);
-
-            //set reference
-            _legFile = file;
-
-            //up to date
-            _lastSavedText = file.Text;
-            SetSaveState(true);
-        }
-
         private void SaveFile(LegFile file)
         {
             //get text
@@ -362,14 +390,7 @@ namespace LEGv8Day
             SetSaveState(true);
         }
 
-        private void SetFilePath(LegFile file, string path)
-        {
-            //set the path on the file
-            file.FileName = path;
-
-            //set the title
-            SetFormTitle(file.Name);
-        }
+        #endregion
 
         #endregion
 
@@ -434,6 +455,38 @@ namespace LEGv8Day
             }
         }
 
+        private void RefreshText()
+        {
+            SetText(GetText(true), false);
+        }
+
+        public Theme GetActiveTheme()
+        {
+            return FormSettings.Default.ActiveThemeIndex < _themes.Count ? _themes[FormSettings.Default.ActiveThemeIndex] : Theme.Default;
+        }
+
+        public void RefreshForm()
+        {
+            //refresh theme
+            Theme active = GetActiveTheme();
+
+            RtfLEGv8Formatter.SetTheme(active);
+
+            RefreshText();
+
+            BackColor = active.PrimaryColor;
+
+            MainRichTextBox.BackColor = active.SecondaryColor;
+        }
+
+        private void SaveAllData()
+        {
+            FormSettings.Default.Save();
+            FileSettings.Default.Save();
+
+            Data.Save(THEMES_PATH, _themes);
+        }
+
         #endregion
 
         #region Form Events
@@ -461,6 +514,11 @@ namespace LEGv8Day
                 //load last user data file path
                 LoadFile(new LegFile(lastFilePath));
             }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveAllData();
         }
 
         #endregion
@@ -544,6 +602,17 @@ namespace LEGv8Day
         private void MainMenuStrip_Redo_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Redo();
+        }
+
+        #endregion
+
+        #region View
+
+        private void MainMenuStrip_Theme_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ThemeForm form = new ThemeForm(_themes, this);
+
+            form.Show();
         }
 
         #endregion

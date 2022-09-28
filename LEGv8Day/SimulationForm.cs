@@ -14,15 +14,27 @@ namespace LEGv8Day
     {
         private const string FORM_TEXT = "LEGv8 Day Simulation";
 
+        private readonly MainForm _mainForm;
+
         private readonly Simulation _simulation;
 
-        public SimulationForm(Simulation simulation, string name)
+        public SimulationForm(MainForm mainForm, Simulation simulation, string name)
         {
+            _mainForm = mainForm;
+
             _simulation = simulation;
 
             InitializeComponent();
 
             Text = $"{FORM_TEXT} - {name}";
+
+            //set theme
+            Theme theme = _mainForm.GetActiveTheme();
+
+            BackColor = theme.PrimaryColor;
+            ForeColor = theme.PrimaryColor.GetTextColor();
+            SimulationRichTextBox.BackColor = theme.SecondaryColor;
+            SimulationRichTextBox.ForeColor = theme.SecondaryColor.GetTextColor();
         }
 
         #region Form Events
