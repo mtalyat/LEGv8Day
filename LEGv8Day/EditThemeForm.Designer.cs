@@ -232,6 +232,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Edit Theme - Name";
+            this.TopMost = true;
             this.Theme_TabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
