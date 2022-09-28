@@ -10,8 +10,9 @@ namespace LEGv8Day
         /// </summary>
         private const string FORM_TEXT = "LEGv8 Day";
 
-        private const string FORM_DATA_PATH = "FormData.txt";
-
+        /// <summary>
+        /// The constant name of the file for themes.
+        /// </summary>
         private const string THEMES_PATH = "Themes.txt";
 
         /// <summary>
