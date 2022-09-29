@@ -84,7 +84,13 @@ namespace LEGv8Day
 
         #endregion
 
-        public float ExecutionTime { get; private set; } = 0.0f;
+        private Stopwatch _watch = new Stopwatch();
+
+        public bool IsRunning { get; private set; } = false;
+
+        public bool IsCompleted { get; private set; } = false;
+
+        public float ExecutionTime => _watch.ElapsedMilliseconds;
 
         /// <summary>
         /// Creates a new Simulation that will run using the given instructions.
@@ -109,8 +115,9 @@ namespace LEGv8Day
 
             Instruction currentInstruction;
 
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
+            _watch.Start();
+
+            IsRunning = true;
 
             while (ExecutionIndex < _instructions.Length)
             {
@@ -121,8 +128,56 @@ namespace LEGv8Day
                 currentInstruction.Evaluate(this);
             }
 
-            watch.Stop();
-            ExecutionTime = watch.ElapsedMilliseconds;
+            IsRunning = false;
+
+            _watch.Stop();
+        }
+
+        public void Start()
+        {
+            if(!IsRunning)
+            {
+                Reset();
+
+                IsRunning = true;
+
+                ExecutionIndex = 0;
+
+                _watch.Restart();
+            }
+        }
+
+        public void Step()
+        {
+            if(IsRunning)
+            {
+                if (ExecutionIndex < _instructions.Length)
+                {
+                    //perform step
+
+                    Instruction currentInstruction = _instructions[ExecutionIndex];
+
+                    ExecutionIndex++;
+
+                    currentInstruction.Evaluate(this);
+                }
+                else
+                {
+                    //done here
+                    IsCompleted = true;
+                    Stop();
+                }
+            }
+        }
+
+        public void Stop()
+        {
+            if(IsRunning)
+            {
+                IsRunning = false;
+
+                _watch.Stop();
+            }
         }
 
         /// <summary>
@@ -141,6 +196,9 @@ namespace LEGv8Day
             {
                 _memory[i] = 0;
             }
+
+            //no longer completed
+            IsCompleted = false;
         }
 
         /// <summary>

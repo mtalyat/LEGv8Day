@@ -260,7 +260,8 @@ namespace LEGv8Day
             //get all instructions
             Instruction[] instructions = GetInstructions(GetText(true).Split('\n'));
 
-            SimulationForm form = new SimulationForm(this, new Simulation(instructions), _legFile.Name);
+            //SimulationForm form = new SimulationForm(this, new Simulation(instructions), _legFile.Name);
+            RunForm form = new RunForm(this, new Simulation(instructions), _legFile.Name);
 
             form.Show();
         }
@@ -410,13 +411,6 @@ namespace LEGv8Day
 
         private void SetText(string text, bool rtf)
         {
-            //only set if there is something to set
-            if (string.IsNullOrEmpty(text))
-            {
-                return;
-            }
-
-
             //set text
             if (rtf)
             {
@@ -433,7 +427,7 @@ namespace LEGv8Day
                 _rtf = text;
 
                 //set selected back to where we were
-                MainRichTextBox.SelectionStart = MainRichTextBox.Text.Length - 1 - index;
+                MainRichTextBox.SelectionStart = Math.Max(MainRichTextBox.Text.Length - 1 - index, 0);
                 MainRichTextBox.SelectionLength = 0;
             }
             else
