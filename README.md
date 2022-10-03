@@ -34,8 +34,8 @@ The following are the instructions for this simulator. They will indicate their 
 | YES | AND Immediate | ANDI | I | Bitwise AND using a register and an immediate value. | `ANDI X0, X1, 5 // stores result of X1 AND 5 in X0` |
 | YES | AND Immedaite and Set flags | ANDIS | I | Bitwise AND using a register and an immediate value, and sets flags. | `ANDIS X0, X1, 5 // stores result of X1 AND 5 in X0, sets flags` |
 | YES | Branch unconditionally | B | B | Starts executing instructions at the given label. | `B loop // branches to label "loop:"` |
-| YES | Branch conditionally (EQual) | B.EQ | CB | Branches to the given label, if the zero flag is enabled. | `B.EQ loop // branches to label "loop:" if last flags call had equal values"` |
-| YES | Branch conditionally (Not Equal) | B.NE | CB | Branches to the given label, if the zero flag is not enabled. | `B.NE loop // branches to the label "loop:" if the last flags call had not equal vlaues"` |
+| YES | Branch conditionally (EQual) | B.EQ | CB | Branches to the given label, if the zero flag is enabled. | `B.EQ loop // branches to label "loop:" if last flags call had equal values` |
+| YES | Branch conditionally (Not Equal) | B.NE | CB | Branches to the given label, if the zero flag is not enabled. | `B.NE loop // branches to the label "loop:" if the last flags call had not equal vlaues` |
 | YES | Branch conditionally (Less Than) | B.LT | CB | ... | ... |
 | YES | Branch conditionally (Less than or Equal) | B.LE | CB | ... | ... |
 | YES | Branch conditionally (Greater Than) | B.GT | CB | ... | ... |
