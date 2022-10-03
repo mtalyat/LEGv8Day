@@ -9,6 +9,8 @@ This is a LEGv8 Simulator for Windows. The program is able to input a text file 
 
 This simulator also has support for using alternative names for registers. For example, register 31 (`X31`) can be written as `XZR` or `X31`. Numbers can be written as `23` or `#23`. Negative numbers are supported. The simulation will begin executing instructions at the first line of the program that contains an instruction.
 
+*Note: This program does not yet handle incorrect syntax or other similar issues. The program may crash if the syntax for the open file is incorrect.*
+
 ## Motivation
 
 This was created to be able to create an run LEGv8 Assembly code. The main factors behind motivation was to learn how LEGv8/Assembly communications with the hardware better, and to create a program so that I did not have to use Linux. This simulator is written on and for Windows.
@@ -93,6 +95,8 @@ The editor has the ability to undo and redo.
 The editor has the ability to change the colors of the theme. The default theme cannot be edited or deleted. New themes can use any color for the background or code editor colors.
 
 ### Run
+
+The editor will allow the user to run the currently open file. Once the program is complete, the registers and memory will be dumped and displayed to the screen. If the program takes a significant amount of time to complete, the user will be given the option to cancel the process.
 
 References
 ======
