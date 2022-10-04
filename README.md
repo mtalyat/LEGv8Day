@@ -1,5 +1,12 @@
 README WIP. The following information may be incomplete.
 
+Table of Contents
+======
+1. [General Information](#general-information)
+2. [Features](#features)
+3. [Examples](#examples)
+4. [References](#references)
+
 General Information
 ======
 
@@ -46,8 +53,8 @@ The following are the instructions for this simulator. They will indicate their 
 | YES | Branch conditionally (Lower or Same) | B.LS | CB | ... | ... |
 | YES | Branch conditionally (on MInus) | B.MI | CB | ... | ... |
 | YES | Branch conditionally (on PLus) | B.PL | CB | ... | ... |
-| YES | Branch conditionally (on oVerflow Set) | B.VS | CB | ... | ... |
-| YES | Branch conditionally (on oVerflow Clear) | B.VC | CB | ... | ... |
+| NO  | Branch conditionally (on oVerflow Set) | B.VS | CB | ... | ... |
+| NO  | Branch conditionally (on oVerflow Clear) | B.VC | CB | ... | ... |
 | YES | Branch with Link | BL | B | Branches to the given label, and sets the return register (`LR`/`X30`) to the current execution index. | `BL loop // branches to label "loop:", saves execution index for return later` |
 | YES | Branch to Register | BR | R | Branches to the execution index given within the register. | `BR X30 // branches to the execution index stored in X30 (could be any register)` |
 | YES | Compare and Branch if Not Zero | CBNZ | CB | Branches to the given label, if the given register is not zero. | `CBNZ X0, loop // branches to label "loop:" if the given register is not zero` |
@@ -55,9 +62,9 @@ The following are the instructions for this simulator. They will indicate their 
 | YES | Exclusive OR | EOR | R | Exclusive OR using two registers. | `EOR X0, X1, X2 // stores result of X1 XOR X2 in X0` |
 | YES | Exclusive OR Immediate | EORI | I | Exclusive OR using a register and an immediate value. | `EOR X0, X1, 5 // stores the result of X1 XOR 5 in X0` |
 | YES | LoaD Register Unscaled offset | LDUR | D | Retrieves data from memory and stores it in a register. | `LDUR X0, [X1, 0] // stores the memory at pointer location X1 + offset (0) in register X0` |
-| NO  | LoaD Byte Unscaled offset | LDURB | D | ... | ... | 
-| NO  | LoaD Half Unscaled offset | LDURH | D | ... | ... | 
-| NO  | LoaD Signed Word Unscaled offset | LDURSW | D | ... | ... |
+| YES | LoaD Byte Unscaled offset | LDURB | D | ... | ... | 
+| YES | LoaD Half Unscaled offset | LDURH | D | ... | ... | 
+| YES | LoaD Signed Word Unscaled offset | LDURSW | D | ... | ... |
 | YES | Logical Shift Left | LSL | R | Shifts the register to the left (<<) using the immediate value. | `LSL X0, X1, 5 // shifts the register X1 5 times to the left, stores result in X0` |
 | YES | Logical Shift Right | LSR | R | Shifts the register to the right (>>) using the immediate value. | `LSR X0, X1, 5 // shifts the register X1 5 times to the right, stores result in X0` |
 | YES | MOVe wide with Keep | MOVK | IM | Stores the immediate value in the register, but does not change the other bits in the register. | `MOVK X0, 5 // sets register to 5, but does not change existing bits` |
@@ -65,9 +72,9 @@ The following are the instructions for this simulator. They will indicate their 
 | YES | Inclusive OR | ORR | R | Bitwise OR using two registers. | `ORR X0, X1, X2 // stores result of X1 OR X2 in X0` |
 | YES | Inclusive OR Immediate | ORRI | I | Bitwise OR using a register and an immediate value. | `ORRI X0, X1, 5 // stores result of X1 OR 5 in X0` |
 | YES | STore Register Unscaled offset | STUR | D | Sets data in memory to the register value. | `STUR X0, [X1, 0] // stores the value in register X0 to memory at location X1 + offset (0)` |
-| NO  | STore Byte Unscaled offset | STURB | D | ... | ... |
-| NO  | STore Half Unscaled offset | STURH | D | ... | ... |
-| NO  | STore Signed Word Unscaled offset | STURSW | D | ... | ... |
+| YES | STore Byte Unscaled offset | STURB | D | ... | ... |
+| YES | STore Half Unscaled offset | STURH | D | ... | ... |
+| YES | STore Signed Word Unscaled offset | STURSW | D | ... | ... |
 | YES | SUBtract | SUB | R | Subtracts one register from another. | `SUB X0, X1, X2 // subtracts X2 from X1, stores result in X0` |
 | YES | SUBtract and Set flags | SUBS | R | Subtracts one register from another, and sets flags. | `SUB X0, X1, X2 // subtracts X2 from X1, stores result in X0, sets flags` |
 | YES | SUBtract Immediate | SUBI | I | Subtracts an immediate value from a register. | `SUBI X0, X1, 5 // subtracts 5 from X1, stores result in X0` |
@@ -97,6 +104,11 @@ The editor has the ability to change the colors of the theme. The default theme 
 ### Run
 
 The editor will allow the user to run the currently open file. Once the program is complete, the registers and memory will be dumped and displayed to the screen. If the program takes a significant amount of time to complete, the user will be given the option to cancel the process.
+
+Examples
+======
+
+Examples to come soon.
 
 References
 ======
