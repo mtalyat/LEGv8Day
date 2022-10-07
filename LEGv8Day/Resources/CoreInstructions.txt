@@ -65,11 +65,11 @@ LoaD Address,LDA,R,0
 MOVe,MOV,R,0
 
 
-CLeaR,CLR,D,0
-Dump,D,D,0
-Dump All Memory,DAM,D,0
-Dump All Registers,DAR,D,0
-Dump Register,DR,D,0
+CLeaR,CLR,R,0
+Dump,D,R,0
+Dump All Memory,DAM,R,0
+Dump All Registers,DAR,R,0
+Dump Register,DR,R,0
 Dump Memory,DM,D,0
 Dump Memory in Range,DMR,D,0
-Dump Memory in Range Immediate,DMRI,D,0
+Dump Memory in Range Immediate,DMRI,I,0
