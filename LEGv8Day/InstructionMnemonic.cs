@@ -92,11 +92,11 @@ namespace LEGv8Day
         //      DEBUG INSTRUCTIONS
         CLR,
         DUMP,
-        DAM,
-        DAR,
-        DR,
-        DM,
-        DMR,
-        DMRI,
+        DUMPAM,
+        DUMPAR,
+        DUMPR,
+        DUMPM,
+        DUMPMR,
+        DUMPMRI,
     }
 }

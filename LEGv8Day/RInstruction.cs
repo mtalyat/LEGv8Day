@@ -95,13 +95,13 @@
                 case InstructionMnemonic.DUMP:
                     simulation.Dump();
                     break;
-                case InstructionMnemonic.DAM:
+                case InstructionMnemonic.DUMPAM:
                     simulation.DumpAllMemory();
                     break;
-                case InstructionMnemonic.DAR:
+                case InstructionMnemonic.DUMPAR:
                     simulation.DumpAllRegisters();
                     break;
-                case InstructionMnemonic.DR:
+                case InstructionMnemonic.DUMPR:
                     simulation.DumpRegister(Rd);
                     break;
 

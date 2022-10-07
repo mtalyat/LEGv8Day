@@ -54,10 +54,10 @@
                     simulation.SetReg(Rt, simulation.GetReg(Rn) + DtAddress);
                     break;
 
-                case InstructionMnemonic.DM:
+                case InstructionMnemonic.DUMPM:
                     simulation.DumpMemory(simulation.GetReg(Rt));
                     break;
-                case InstructionMnemonic.DMR:
+                case InstructionMnemonic.DUMPMR:
                     long address = simulation.GetReg(Rt);
                     simulation.DumpMemoryRange(address, address + DtAddress);
                     break;
