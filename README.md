@@ -106,14 +106,14 @@ These are instructions that are specific to this emulator. Their sole purpose is
 
 | Implemented? | Name                           | Mnemonic | Definition                                       | Example                                                                                                    |
 | ------------ | ------------------------------ | -------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| NO           | CLeaR                          | CLR      | Clears all registers and memory in the emulator. | `CLR // reset all registers and memory to 0`                                                               |
-| NO           | Dump                           | DUMP     | Displays all registers and memory in the output. | `D // show all register values and memory at this point in time`                                           |
-| NO           | Dump All Memory                | DUMPAM   | Displays all memory in the output.               | `DAM // show all memory at this point in time`                                                             |
-| NO           | Dump All Registers             | DUMPAR   | Displays all registers in the output.            | `DAR // show all register values at this point in time`                                                    |
-| NO           | Dump Register                  | DUMPR    | Displays a given register in the output.         | `DR X0 // shows the value of X0 at this point in time`                                                     |
-| NO           | Dump Memory                    | DUMPM    | Displays a given byte in memory in the output.   | `DM X0 // shows the value of the data in the memory at pointer X0 at this point in time`                   |
-| NO           | Dump Memory in Range           | DUMPMR   | Displays a range of memory in the output.        | `DMR X0, X1 // shows the values of the data in the memory from pointer X0 to X1 at this point in time`     |
-| NO           | Dump Memory in Range Immediate | DUMPMRI  | Displays a range of memory in the output.        | `DMRI X0, 5 // shows the values of the data in the memory from pointer X0 to X0 + 5 at this point in time` |
+| YES          | CLeaR                          | CLR      | Clears all registers and memory in the emulator. | `CLR // reset all registers and memory to 0`                                                               |
+| YES          | Dump                           | DUMP     | Displays all registers and memory in the output. | `D // show all register values and memory at this point in time`                                           |
+| YES          | Dump All Memory                | DUMPAM   | Displays all memory in the output.               | `DAM // show all memory at this point in time`                                                             |
+| YES          | Dump All Registers             | DUMPAR   | Displays all registers in the output.            | `DAR // show all register values at this point in time`                                                    |
+| YES          | Dump Register                  | DUMPR    | Displays a given register in the output.         | `DR X0 // shows the value of X0 at this point in time`                                                     |
+| YES          | Dump Memory                    | DUMPM    | Displays a given byte in memory in the output.   | `DM X0 // shows the value of the data in the memory at pointer X0 at this point in time`                   |
+| YES          | Dump Memory in Range           | DUMPMR   | Displays a range of memory in the output.        | `DMR X0, X1 // shows the values of the data in the memory from pointer X0 to X1 at this point in time`     |
+| YES          | Dump Memory in Range Immediate | DUMPMRI  | Displays a range of memory in the output.        | `DMRI X0, 5 // shows the values of the data in the memory from pointer X0 to X0 + 5 at this point in time` |
 
 Editor
 ------
