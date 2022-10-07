@@ -10,7 +10,7 @@ namespace LEGv8Day
     {
         public string Label { get; private set; }
 
-        public string[] Args { get; private set; }
+        public string RawArgs { get; private set; }
 
         public Line(string line)
         {
@@ -20,30 +20,40 @@ namespace LEGv8Day
             {
                 //if no space index, then there are no arguments
                 Label = line;
-                Args = Array.Empty<string>();
+                RawArgs = string.Empty;
             } else
             {
                 //space index, so get the header, the rest are args
                 Label = line.Substring(0, spaceIndex);
-                Args = line.Substring(spaceIndex + 1, line.Length - 1 - spaceIndex).Split(Constants.ARG_SEPARATOR).Select(a => a.Replace("[", "").Replace("]", "").Trim()).Where(s => !string.IsNullOrEmpty(s)).ToArray();
+                RawArgs = line.Substring(spaceIndex + 1, line.Length - 1 - spaceIndex);
             }
         }
 
-        public Line(string label, params string[] args)
+        public Line(string label, string args)
         {
             Label = label;
-            Args = args.Select(a => a.Trim()).ToArray();
+            RawArgs = args;
+        }
+
+        public string[] GetArgs()
+        {
+            return RawArgs
+                .Split(Constants.ARG_SEPARATOR)
+                .Select(a => a.Replace("[", "")
+                .Replace("]", "").Trim())
+                .Where(s => !string.IsNullOrEmpty(s))
+                .ToArray();
         }
 
         public bool IsInstruction()
         {
             //this line is an instruction if it has arguments, or if it is a mnemonic
-            return Args.Length > 0 || Enum.TryParse<InstructionMnemonic>(Label, out _);
+            return RawArgs.Length > 0 || Enum.TryParse<InstructionMnemonic>(Label, out _);
         }
 
         public override string ToString()
         {
-            return $"{Label} {string.Join(Constants.ARG_SEPARATOR, Args)}";
+            return $"{Label} {string.Join(Constants.ARG_SEPARATOR, RawArgs)}";
         }
     }
 }

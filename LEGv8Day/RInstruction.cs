@@ -88,19 +88,6 @@
                     simulation.SetReg(Rd, left);
                     break;
 
-                case InstructionMnemonic.CLR:
-                    simulation.Clear();
-                    break;
-
-                case InstructionMnemonic.DUMP:
-                    simulation.Dump();
-                    break;
-                case InstructionMnemonic.DUMPAM:
-                    simulation.DumpAllMemory();
-                    break;
-                case InstructionMnemonic.DUMPAR:
-                    simulation.DumpAllRegisters();
-                    break;
                 case InstructionMnemonic.DUMPR:
                     simulation.DumpRegister(Rd);
                     break;

@@ -98,5 +98,6 @@ namespace LEGv8Day
         DUMPM,
         DUMPMR,
         DUMPMRI,
+        LOG,
     }
 }

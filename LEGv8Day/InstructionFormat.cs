@@ -58,5 +58,10 @@ namespace LEGv8Day
         /// Rd              [4-0]
         /// </summary>
         IM,
+
+        /// <summary>
+        /// DEBUG
+        /// </summary>
+        Z
     }
 }

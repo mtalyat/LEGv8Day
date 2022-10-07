@@ -205,7 +205,7 @@ namespace LEGv8Day
 
         #endregion
 
-        #region Dumping
+        #region Debugging
 
         public void Clear()
         {
@@ -292,6 +292,11 @@ namespace LEGv8Day
             {
                 DumpMemory(addressStart + i);
             }
+        }
+
+        public void Log(string str)
+        {
+            _output.Add(str);
         }
 
         #endregion

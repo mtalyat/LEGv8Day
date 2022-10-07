@@ -121,7 +121,7 @@ namespace LEGv8Day
 
         private Instruction ParseInstruction(Line line, Dictionary<string, int> labels)
         {
-            int[] args = line.Args.Select(a => ParseArgument(a, labels)).ToArray();
+            int[] args = line.GetArgs().Select(a => ParseArgument(a, labels)).ToArray();
 
             int arg0 = args.Length > 0 ? args[0] : 0;
             int arg1 = args.Length > 1 ? args[1] : arg0;
@@ -144,6 +144,8 @@ namespace LEGv8Day
                         return new CBInstruction(ci, ci.OpCodeStart, arg1, arg0);
                     case InstructionFormat.IM:
                         return new IMInstruction(ci, ci.OpCodeStart, arg1, arg0);
+                    case InstructionFormat.Z:
+                        return new ZInstruction(ci, line.RawArgs);
                 }
             }
 
@@ -192,7 +194,8 @@ namespace LEGv8Day
                         return value;
                     }
 
-                    throw new Exception($"Does not recognize \"{arg}\".");
+                    //unrecognized argument
+                    return 0;
             }
         }
 
