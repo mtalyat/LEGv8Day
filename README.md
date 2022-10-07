@@ -30,6 +30,10 @@ Instructions
 
 The following are the instructions for this simulator. They will indicate their status of implementation below. For further explaination, check out the cheat sheet in the references below.
 
+### Core Instructions
+
+These are instructions that are part of the LEGv8 assembly code.
+
 | Implemented? | Name | Mnemonic | Format | Definition | Example |
 | --- | ---- | -------- | - | ---------- | ------- |
 | YES | ADD | ADD | R | Adds two registers together. | `ADD X0, X1, X2 // adds X1 and X2, stores result in X0` |
@@ -85,6 +89,13 @@ The following are the instructions for this simulator. They will indicate their 
 | YES | Unsigned DIVide | UDIV | R | Divides two unsigned registers together. | `UDIV X0, X1, X2 // divides X2 into X1, stores result in X0` |
 | NO  | Unsigned MULtiply High | UMULH | R | ... | ... |
 
+### Psuedoinstructions
+
+These are instructions that are psuedo, and stand for another code. They can be written in the program and still function as they should. Normally, they would be swapped out with their equivalents.
+
+| Implemented? | Name | Mnemonic | Operation | Definition | Example |
+| --- | ---- | -------- | - | ---------- | ------- |
+| NO  | CoMPare | CMP | `SUBS XZR, m, n` where `m` and `n` are registers | Compares the two given registers by setting the flags. | CMP X0, X1 |
 
 Editor
 ------
