@@ -1,5 +1,3 @@
-README WIP. The following information may be incomplete.
-
 Table of Contents
 ======
 1. [General Information](#general-information)
