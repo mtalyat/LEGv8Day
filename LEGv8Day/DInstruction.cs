@@ -20,46 +20,46 @@
             _data.SetRange(0, 4, rt);
         }
 
-        public override void Evaluate(Emulation simulation)
+        public override void Evaluate(Emulation e)
         {
             switch (_instruction.Mnemonic)
             {
                 case InstructionMnemonic.LDUR:
-                    simulation.SetReg(Rt, simulation.GetMem((int)simulation.GetReg(Rn) + DtAddress, sizeof(long)));
+                    e.SetReg(Rt, e.GetMem((int)e.GetReg(Rn) + DtAddress, sizeof(long)));
                     break;
                 case InstructionMnemonic.LDURB:
-                    simulation.SetReg(Rt, simulation.GetMem((int)simulation.GetReg(Rn) + DtAddress, sizeof(byte)));
+                    e.SetReg(Rt, e.GetMem((int)e.GetReg(Rn) + DtAddress, sizeof(byte)));
                     break;
                 case InstructionMnemonic.LDURH:
-                    simulation.SetReg(Rt, simulation.GetMem((int)simulation.GetReg(Rn) + DtAddress, sizeof(short)));
+                    e.SetReg(Rt, e.GetMem((int)e.GetReg(Rn) + DtAddress, sizeof(short)));
                     break;
                 case InstructionMnemonic.LDURSW:
-                    simulation.SetReg(Rt, simulation.GetMem((int)simulation.GetReg(Rn) + DtAddress, sizeof(int)));
+                    e.SetReg(Rt, e.GetMem((int)e.GetReg(Rn) + DtAddress, sizeof(int)));
                     break;
 
                 case InstructionMnemonic.STUR:
-                    simulation.SetMem((int)simulation.GetReg(Rn) + DtAddress, simulation.GetReg(Rt), sizeof(long));
+                    e.SetMem((int)e.GetReg(Rn) + DtAddress, e.GetReg(Rt), sizeof(long));
                     break;
                 case InstructionMnemonic.STURB:
-                    simulation.SetMem((int)simulation.GetReg(Rn) + DtAddress, simulation.GetReg(Rt), sizeof(byte));
+                    e.SetMem((int)e.GetReg(Rn) + DtAddress, e.GetReg(Rt), sizeof(byte));
                     break;
                 case InstructionMnemonic.STURH:
-                    simulation.SetMem((int)simulation.GetReg(Rn) + DtAddress, simulation.GetReg(Rt), sizeof(short));
+                    e.SetMem((int)e.GetReg(Rn) + DtAddress, e.GetReg(Rt), sizeof(short));
                     break;
                 case InstructionMnemonic.STURW:
-                    simulation.SetMem((int)simulation.GetReg(Rn) + DtAddress, simulation.GetReg(Rt), sizeof(int));
+                    e.SetMem((int)e.GetReg(Rn) + DtAddress, e.GetReg(Rt), sizeof(int));
                     break;
 
                 case InstructionMnemonic.LDA:
-                    simulation.SetReg(Rt, simulation.GetReg(Rn) + DtAddress);
+                    e.SetReg(Rt, e.GetReg(Rn) + DtAddress);
                     break;
 
                 case InstructionMnemonic.DUMPM:
-                    simulation.DumpMemory(simulation.GetReg(Rt));
+                    e.DumpMemory(e.GetReg(Rt));
                     break;
                 case InstructionMnemonic.DUMPMR:
-                    long address = simulation.GetReg(Rt);
-                    simulation.DumpMemoryRange(address, address + DtAddress);
+                    long address = e.GetReg(Rt);
+                    e.DumpMemoryRange(address, address + DtAddress);
                     break;
 
                 default:

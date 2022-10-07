@@ -17,9 +17,9 @@
             _data.SetRange(0, 4, rd);
         }
 
-        public override void Evaluate(Emulation simulation)
+        public override void Evaluate(Emulation e)
         {
-            long left = simulation.GetReg(Rn);
+            long left = e.GetReg(Rn);
             long right = AluImmediate;
             long value;
 
@@ -27,40 +27,40 @@
             {
                 case InstructionMnemonic.ADDI:
                     unchecked { value = left + right; }
-                    simulation.SetReg(Rd, value);
+                    e.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.ADDIS:
                     unchecked { value = left + right; }
-                    simulation.SetFlags(value, left, right);
-                    simulation.SetReg(Rd, value);
+                    e.SetFlags(value, left, right);
+                    e.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.SUBI:
                     unchecked { value = left - right; }
-                    simulation.SetReg(Rd, value);
+                    e.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.SUBIS:
                     unchecked { value = left - right; }
-                    simulation.SetFlags(value, left, right);
-                    simulation.SetReg(Rd, value);
+                    e.SetFlags(value, left, right);
+                    e.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.ANDI:
-                    simulation.SetReg(Rd, left & right);
+                    e.SetReg(Rd, left & right);
                     break;
                 case InstructionMnemonic.ANDIS:
                     value = left & right;
-                    simulation.SetFlags(value, left, right);
-                    simulation.SetReg(Rd, value);
+                    e.SetFlags(value, left, right);
+                    e.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.EORI:
-                    simulation.SetReg(Rd, left ^ right);
+                    e.SetReg(Rd, left ^ right);
                     break;
                 case InstructionMnemonic.ORRI:
-                    simulation.SetReg(Rd, left | right);
+                    e.SetReg(Rd, left | right);
                     break;
 
                 case InstructionMnemonic.CMPI:
                     unchecked { value = left - right; }
-                    simulation.SetFlags(value, left, right);
+                    e.SetFlags(value, left, right);
                     break;
 
                 default:

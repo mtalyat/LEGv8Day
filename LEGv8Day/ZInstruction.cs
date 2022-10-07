@@ -16,26 +16,26 @@ namespace LEGv8Day
             _contents = contents;
         }
 
-        public override void Evaluate(Emulation simulation)
+        public override void Evaluate(Emulation e)
         {
             switch (_instruction.Mnemonic)
             {
                 case InstructionMnemonic.CLR:
-                    simulation.Clear();
+                    e.Clear();
                     break;
 
                 case InstructionMnemonic.DUMP:
-                    simulation.Dump();
+                    e.Dump();
                     break;
                 case InstructionMnemonic.DUMPAM:
-                    simulation.DumpAllMemory();
+                    e.DumpAllMemory();
                     break;
                 case InstructionMnemonic.DUMPAR:
-                    simulation.DumpAllRegisters();
+                    e.DumpAllRegisters();
                     break;
 
                 case InstructionMnemonic.LOG:
-                    simulation.Log(_contents);
+                    e.Log(_contents);
                     break;
             }
         }

@@ -20,76 +20,76 @@
             _data.SetRange(0, 4, rd);
         }
 
-        public override void Evaluate(Emulation simulation)
+        public override void Evaluate(Emulation e)
         {
-            long left = simulation.GetReg(Rn);
-            long right = simulation.GetReg(Rm);
+            long left = e.GetReg(Rn);
+            long right = e.GetReg(Rm);
             long value;
 
             switch (_instruction.Mnemonic)
             {
                 case InstructionMnemonic.ADD:
-                    unchecked { simulation.SetReg(Rd, left + right); }
+                    unchecked { e.SetReg(Rd, left + right); }
                     break;
                 case InstructionMnemonic.ADDS:
                     unchecked { value = left + right; }
-                    simulation.SetFlags(value, left, right);
-                    simulation.SetReg(Rd, value);
+                    e.SetFlags(value, left, right);
+                    e.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.SUB:
-                    unchecked { simulation.SetReg(Rd, left - right); }
+                    unchecked { e.SetReg(Rd, left - right); }
                     break;
                 case InstructionMnemonic.SUBS:
                     unchecked { value = left - right; }
-                    simulation.SetFlags(value, left, right);
-                    simulation.SetReg(Rd, value);
+                    e.SetFlags(value, left, right);
+                    e.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.MUL:
-                    unchecked { simulation.SetReg(Rd, left * right); }
+                    unchecked { e.SetReg(Rd, left * right); }
                     break;
                 case InstructionMnemonic.UDIV:
-                    simulation.SetRegR(Rd, simulation.GetRegR<ulong>(Rn) / simulation.GetRegR<ulong>(Rm));
+                    e.SetRegR(Rd, e.GetRegR<ulong>(Rn) / e.GetRegR<ulong>(Rm));
                     break;
                 case InstructionMnemonic.SDIV:
-                    simulation.SetReg(Rd, left / right);
+                    e.SetReg(Rd, left / right);
                     break;
                 case InstructionMnemonic.AND:
-                    simulation.SetReg(Rd, left & right);
+                    e.SetReg(Rd, left & right);
                     break;
                 case InstructionMnemonic.ANDS:
                     value = left & right;
-                    simulation.SetFlags(value, left, right);
-                    simulation.SetReg(Rd, value);
+                    e.SetFlags(value, left, right);
+                    e.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.EOR:
-                    simulation.SetReg(Rd, left ^ right);
+                    e.SetReg(Rd, left ^ right);
                     break;
                 case InstructionMnemonic.ORR:
-                    simulation.SetReg(Rd, left | right);
+                    e.SetReg(Rd, left | right);
                     break;
                 case InstructionMnemonic.LSL:
-                    simulation.SetReg(Rd, left << Shamt);
+                    e.SetReg(Rd, left << Shamt);
                     break;
                 case InstructionMnemonic.LSR:
-                    simulation.SetReg(Rd, left >> Shamt);
+                    e.SetReg(Rd, left >> Shamt);
                     break;
                 case InstructionMnemonic.BR:
-                    simulation.ExecutionIndex = (int)simulation.GetReg(Rd);
+                    e.ExecutionIndex = (int)e.GetReg(Rd);
                     break;
                 case InstructionMnemonic.FADDS:
-                    simulation.SetRegR(Rd, simulation.GetRegR<float>(Rn) + simulation.GetRegR<float>(Rm));
+                    e.SetRegR(Rd, e.GetRegR<float>(Rn) + e.GetRegR<float>(Rm));
                     break;
 
                 case InstructionMnemonic.CMP:
                     unchecked { value = left + right; }
-                    simulation.SetFlags(value, left, right);
+                    e.SetFlags(value, left, right);
                     break;
                 case InstructionMnemonic.MOV:
-                    simulation.SetReg(Rd, left);
+                    e.SetReg(Rd, left);
                     break;
 
                 case InstructionMnemonic.DUMPR:
-                    simulation.DumpRegister(Rd);
+                    e.DumpRegister(Rd);
                     break;
 
                 default:

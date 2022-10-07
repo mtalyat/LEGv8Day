@@ -11,16 +11,16 @@
             _data.SetRange(0, 25, brAddress);
         }
 
-        public override void Evaluate(Emulation simulation)
+        public override void Evaluate(Emulation e)
         {
             switch (_instruction.Mnemonic)
             {
                 case InstructionMnemonic.B:
-                    simulation.ExecutionIndex = BrAddress;
+                    e.ExecutionIndex = BrAddress;
                     break;
                 case InstructionMnemonic.BL:
-                    simulation.SetReg(Emulation.RETURN_ADDRESS_REG, simulation.ExecutionIndex);
-                    simulation.ExecutionIndex = BrAddress;
+                    e.SetReg(Emulation.RETURN_ADDRESS_REG, e.ExecutionIndex);
+                    e.ExecutionIndex = BrAddress;
                     break;
                 default:
                     throw new NotImplementedException($"The instruction {_instruction.Mnemonic} has not been implemented yet.");

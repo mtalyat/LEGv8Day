@@ -14,16 +14,16 @@
             _data.SetRange(0, 4, rd);
         }
 
-        public override void Evaluate(Emulation simulation)
+        public override void Evaluate(Emulation e)
         {
             switch (_instruction.Mnemonic)
             {
                 case InstructionMnemonic.MOVK:
-                    long r = simulation.GetReg(Rd);
-                    simulation.SetReg(Rd, (r & ((long)~0 << 16)) | (long)MovImmediate);
+                    long r = e.GetReg(Rd);
+                    e.SetReg(Rd, (r & ((long)~0 << 16)) | (long)MovImmediate);
                     break;
                 case InstructionMnemonic.MOVZ:
-                    simulation.SetReg(Rd, MovImmediate);
+                    e.SetReg(Rd, MovImmediate);
                     break;
                 default:
                     throw new NotImplementedException($"The instruction {_instruction.Mnemonic} has not been implemented yet.");

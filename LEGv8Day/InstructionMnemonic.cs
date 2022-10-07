@@ -11,7 +11,7 @@ namespace LEGv8Day
         //      CORE INSTRUCTIONS
 
         /// <summary>
-        /// Does nothing. Not a real instruction, used for internal simulation error handling.
+        /// Does nothing. Not a real instruction, used for internal emulation error handling.
         /// </summary>
         Empty,
         ADD,
