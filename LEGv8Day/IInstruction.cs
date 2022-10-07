@@ -26,7 +26,8 @@
             switch (_instruction.Mnemonic)
             {
                 case InstructionMnemonic.ADDI:
-                    unchecked { simulation.SetReg(Rd, left + right); }
+                    unchecked { value = left + right; }
+                    simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.ADDIS:
                     unchecked { value = left + right; }
@@ -34,7 +35,8 @@
                     simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.SUBI:
-                    unchecked { simulation.SetReg(Rd, left - right); }
+                    unchecked { value = left - right; }
+                    simulation.SetReg(Rd, value);
                     break;
                 case InstructionMnemonic.SUBIS:
                     unchecked { value = left - right; }
@@ -54,6 +56,11 @@
                     break;
                 case InstructionMnemonic.ORRI:
                     simulation.SetReg(Rd, left | right);
+                    break;
+
+                case InstructionMnemonic.CMPI:
+                    unchecked { value = left - right; }
+                    simulation.SetFlags(value, left, right);
                     break;
 
                 default:

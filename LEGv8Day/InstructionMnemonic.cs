@@ -8,6 +8,8 @@ namespace LEGv8Day
 {
     public enum InstructionMnemonic : int
     {
+        //      CORE INSTRUCTIONS
+
         /// <summary>
         /// Does nothing. Not a real instruction, used for internal simulation error handling.
         /// </summary>
@@ -80,5 +82,21 @@ namespace LEGv8Day
         STURD,
         UDIV,
         UMULH,
+
+        //      PSEUDO INSTRUCTIONS
+        CMP,
+        CMPI,
+        LDA,
+        MOV,
+
+        //      DEBUG INSTRUCTIONS
+        CLR,
+        D,
+        DAM,
+        DAR,
+        DR,
+        DM,
+        DMR,
+        DMRI,
     }
 }

@@ -61,7 +61,7 @@ Unsigned MULtiply High,UMULH,R,4DE
 
 CoMPare,CMP,R,0
 CoMPare Immediate,CMPI,I,0
-LoaD Address,LDA,R,0
+LoaD Address,LDA,D,0
 MOVe,MOV,R,0
 
 

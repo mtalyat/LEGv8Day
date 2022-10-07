@@ -80,6 +80,14 @@
                     simulation.SetRegR(Rd, simulation.GetRegR<float>(Rn) + simulation.GetRegR<float>(Rm));
                     break;
 
+                case InstructionMnemonic.CMP:
+                    unchecked { value = left + right; }
+                    simulation.SetFlags(value, left, right);
+                    break;
+                case InstructionMnemonic.MOV:
+                    simulation.SetReg(Rd, left);
+                    break;
+
                 default:
                     throw new NotImplementedException($"The instruction {_instruction.Mnemonic} has not been implemented yet.");
             }

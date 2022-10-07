@@ -103,6 +103,8 @@ namespace LEGv8Day
             _instructions = instructions;
         }
 
+        #region Running
+
         /// <summary>
         /// Runs the simulation.
         /// </summary>
@@ -185,6 +187,19 @@ namespace LEGv8Day
         /// </summary>
         public void Reset()
         {
+            //ckear data
+            Clear();
+
+            //no longer completed
+            IsCompleted = false;
+        }
+
+        #endregion
+
+        #region Dumping
+
+        public void Clear()
+        {
             //clear registers
             for (int i = 0; i < REGISTER_COUNT; i++)
             {
@@ -196,9 +211,6 @@ namespace LEGv8Day
             {
                 _memory[i] = 0;
             }
-
-            //no longer completed
-            IsCompleted = false;
         }
 
         /// <summary>
@@ -220,7 +232,7 @@ namespace LEGv8Day
                 r = _registers[i];
 
                 //print binary, hex, and normal number form
-                results.Add($"X{i}:\t[0b{Convert.ToString(r.Long, 2).PadLeft(sizeof(long) * 8, '0')}] [0x{Convert.ToString(r.Long, 16).PadLeft(sizeof(long) * 2, '0')}] [ {string.Join(' ', r.ToCharArray())} ] [{r.Long}/{Reinterpret<long, float>(r.Long)}/{Reinterpret<long, double>(r.Long)}]");
+                results.Add(DumpRegister(i));
             }
 
             //add memory
@@ -239,14 +251,44 @@ namespace LEGv8Day
 
             results.Add(sb.ToString());
 
-            //add instructions
-
-            results.Add("Instructions:");
-
-            results.AddRange(_instructions.Select(i => i.ToString()));
-
             return results.ToArray();
         }
+
+        public string DumpRegister(int index)
+        {
+            PackedLong reg = _registers[index];
+
+            return $"X{index}:\t[0b{Convert.ToString(reg.Long, 2).PadLeft(sizeof(long) * 8, '0')}] [0x{Convert.ToString(reg.Long, 16).PadLeft(sizeof(long) * 2, '0')}] [ {string.Join(' ', reg.ToCharArray())} ] [{reg.Long}/{Reinterpret<long, float>(reg.Long)}/{Reinterpret<long, double>(reg.Long)}]";
+        }
+
+        public string DumpMemory(int index)
+        {
+            byte mem = _memory[index];
+
+            return $"M{index}:\t[0b{Convert.ToString(mem, 2).PadLeft(sizeof(byte) * 8, '0')}] [0x{Convert.ToString(mem, 16).PadLeft(sizeof(byte) * 2, '0')}] [ {(char)mem} ] [{mem}]";
+        }
+
+        public string[] DumpMemoryRange(int start, int stop)
+        {
+            //check for invalid arguments
+            if(stop < start)
+            {
+                return Array.Empty<string>();
+            }
+
+            string[] output = new string[stop - start];
+
+            for (int i = 0; i <= stop; i++)
+            {
+                output[i] = DumpMemory(start + i);
+            }
+
+            return output;
+        }
+
+        #endregion
+
+        #region Getting and Setting
 
         /// <summary>
         /// Reinterprets the given T t as a U.
@@ -268,6 +310,8 @@ namespace LEGv8Day
 
             return u;
         }
+
+        #region Registers
 
         /// <summary>
         /// Gets the value from the register with the given index.
@@ -310,6 +354,19 @@ namespace LEGv8Day
         /// <param name="index"></param>
         /// <param name="value"></param>
         public void SetRegR<T>(int index, T value) where T : unmanaged => SetReg(index, Reinterpret<T, long>(value));
+
+        /// <summary>
+        /// Gets all register values.
+        /// </summary>
+        /// <returns></returns>
+        public long[] GetRegisters()
+        {
+            return _registers;
+        }
+
+        #endregion
+
+        #region Memory
 
         /// <summary>
         /// Sets the memory at the given index to the given value.
@@ -382,15 +439,6 @@ namespace LEGv8Day
         }
 
         /// <summary>
-        /// Gets all register values.
-        /// </summary>
-        /// <returns></returns>
-        public long[] GetRegisters()
-        {
-            return _registers;
-        }
-
-        /// <summary>
         /// Gets all memory values.
         /// </summary>
         /// <returns></returns>
@@ -398,6 +446,8 @@ namespace LEGv8Day
         {
             return _memory;
         }
+
+        #endregion
 
         /// <summary>
         /// Gets all instructions.
@@ -407,6 +457,8 @@ namespace LEGv8Day
         {
             return _instructions;
         }
+
+        #region Flags
 
         public void SetFlags(long value, long left, long right)
         {
@@ -423,5 +475,9 @@ namespace LEGv8Day
 
             //MessageBox.Show($"Flags: [{Convert.ToString(Flags, 2).PadLeft(4, '0')}]");
         }
+
+        #endregion
+
+        #endregion
     }
 }

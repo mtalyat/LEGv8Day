@@ -50,6 +50,10 @@
                     simulation.SetMem((int)simulation.GetReg(Rn) + DtAddress, simulation.GetReg(Rt), sizeof(int));
                     break;
 
+                case InstructionMnemonic.LDA:
+                    simulation.SetReg(Rt, simulation.GetReg(Rn) + DtAddress);
+                    break;
+
                 default:
                     throw new NotImplementedException($"The instruction {_instruction.Mnemonic} has not been implemented yet.");
             }
