@@ -28,11 +28,11 @@ Features
 Instructions
 ------
 
-The following are the instructions for this emulator. They will indicate their status of implementation below. For further explaination, check out the cheat sheet in the [references](#references) below.
+The following are the instructions for this emulator. They will indicate their status of implementation below. For further explaination, check out the cheat sheet in the [references](#references) below. Any instructions not listed below may not be added in the future. However, instructions that are listed below will be added at some point.
 
 ### Core Instructions
 
-These are instructions that are part of the LEGv8 assembly code.
+These are instructions that are part of the LEGv8 assembly code. This does not include all LEGv8 instructions. For a list of all instructions, check out the cheat sheet in [references](#references).
 
 | Implemented? | Name | Mnemonic | Format | Definition | Example |
 | --- | ---- | -------- | - | ---------- | ------- |
