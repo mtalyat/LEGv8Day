@@ -12,15 +12,15 @@ General Information
 
 ## About
 
-This is a LEGv8 Simulator for Windows. The program is able to input a text file or a LEGv8 Assembly file, parse and run the file, in addition to providing an editor for the files. The editor uses a Rich Text Format to nicely display the file data for the user. All labels, instruction mnemonics, numbers, comments and registers will have a color assigned to them. The colors can be edited as well using a theme (check out the Features > Editor > View section below). 
+This is a LEGv8 assembly emulator for Windows. The program is able to input a text file or a LEGv8 Assembly file, parse and run the file, in addition to providing an editor for the files. The editor uses a Rich Text Format to nicely display the file data for the user. All labels, instruction mnemonics, numbers, comments and registers will have a color assigned to them. The colors can be edited as well using a theme (check out the Features > Editor > View section below). 
 
-This simulator also has support for using alternative names for registers. For example, register 31 (`X31`) can be written as `XZR` or `X31`. Numbers can be written as `23` or `#23`. Negative numbers are supported. The simulation will begin executing instructions at the first line of the program that contains an instruction.
+This emulator also has support for using alternative names for registers. For example, register 31 (`X31`) can be written as `XZR` or `X31`. Numbers can be written as `23` or `#23`. Negative numbers are supported. The emulation will begin executing instructions at the first line of the program that contains an instruction.
 
 *Note: This program does not yet handle incorrect syntax or other similar issues. The program may crash if the syntax for the open file is incorrect.*
 
 ## Motivation
 
-This was created to be able to create an run LEGv8 Assembly code. The main factors behind motivation was to learn how LEGv8/Assembly communications with the hardware better, and to create a program so that I did not have to use Linux. This simulator is written on and for Windows.
+This was created to be able to create an run LEGv8 Assembly code. The main factors behind motivation was to learn how LEGv8/Assembly communications with the hardware better, and to create a program so that I did not have to use Linux. This emulator is written on and for Windows.
 
 Features
 ======
@@ -28,7 +28,7 @@ Features
 Instructions
 ------
 
-The following are the instructions for this simulator. They will indicate their status of implementation below. For further explaination, check out the cheat sheet in the references below.
+The following are the instructions for this emulator. They will indicate their status of implementation below. For further explaination, check out the cheat sheet in the [references](#references) below.
 
 ### Core Instructions
 
@@ -89,13 +89,31 @@ These are instructions that are part of the LEGv8 assembly code.
 | YES | Unsigned DIVide | UDIV | R | Divides two unsigned registers together. | `UDIV X0, X1, X2 // divides X2 into X1, stores result in X0` |
 | NO  | Unsigned MULtiply High | UMULH | R | ... | ... |
 
-### Psuedoinstructions
+### Pseudoinstructions
 
-These are instructions that are psuedo, and stand for another code. They can be written in the program and still function as they should. Normally, they would be swapped out with their equivalents.
+These are instructions that are short for another instruction. They can be written in the program and still function as they should. When being assembled, they would be swapped out with their equivalents.
 
-| Implemented? | Name | Mnemonic | Operation | Definition | Example |
+| Implemented? | Name | Mnemonic | Equivalent | Definition | Example |
 | --- | ---- | -------- | - | ---------- | ------- |
-| NO  | CoMPare | CMP | `SUBS XZR, m, n` where `m` and `n` are registers | Compares the two given registers by setting the flags. | CMP X0, X1 |
+| NO  | CoMPare | CMP | `SUBS XZR, m, n` where `m` and `n` are registers | Compares the two given registers by setting the flags. | `CMP X0, X1 // compares X0 and X1` |
+| NO  | CoMPare Immediate | CMPI | `SUBIS XZR, m, n` where `m` is a register, and `n` is an immediate value | Compares the given register and the given value by setting the flags. | `CMPI X0, 5 //compares X0 and 5` |
+| NO  | LoaD Address | LDA | ... | Loads the return address. | `LDA X0, loop // loads the address of the label "loop" into register X0` |
+| NO  | MOVe | MOV | `ORR m, XZR, n` where `m` and `n` are registers | Moves a register value to another register. | `MOV X0, X1 // sets X0 to X1` |
+
+### Debug
+
+These are instructions that are specific to this emulator. Their sole purpose is to aid in the debugging process.
+
+| Implemented? | Name | Mnemonic | Definition | Example |
+| --- | ---- | -------- | ---------- | ------- |
+| NO  | CLeaR | CLR | Clears all registers and memory in the emulator. | `CLR // reset all registers and memory to 0` |
+| NO  | Dump | D | Displays all registers and memory in the output. | `D // show all register values and memory at this point in time` |
+| NO  | Dump All Memory | DAM | Displays all memory in the output. | `DAM // show all memory at this point in time` |
+| NO  | Dump All Registers | DAR | Displays all registers in the output. | `DAR // show all register values at this point in time` |
+| NO  | Dump Register | DR | Displays a given register in the output. | `DR X0 // shows the value of X0 at this point in time` |
+| NO  | Dump Memory | DM | Displays a given byte in memory in the output. | `DM X0 // shows the value of the data in the memory at pointer X0 at this point in time` |
+| NO  | Dump Memory in Range | DMR | Displays a range of memory in the output. | `DMR X0, X1 // shows the values of the data in the memory from pointer X0 to X1 at this point in time` |
+| NO  | Dump Memory in Range Immediate | DMRI | Displays a range of memory in the output. | `DMRI X0, 5 // shows the values of the data in the memory from pointer X0 to X0 + 5 at this point in time` |
 
 Editor
 ------
