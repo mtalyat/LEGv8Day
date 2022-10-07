@@ -477,21 +477,7 @@ namespace LEGv8Day
             MainRichTextBox.BackColor = active.SecondaryColor;
         }
 
-        private void SaveAllData()
-        {
-            FormSettings.Default.Save();
-            FileSettings.Default.Save();
-
-            Data.Save(THEMES_PATH, _themes);
-        }
-
-        #endregion
-
-        #region Form Events
-
-        #region Form
-
-        private void MainForm_Load(object sender, EventArgs e)
+        private void LoadAllData()
         {
             //load program data
             LoadCoreInstructions();
@@ -512,6 +498,28 @@ namespace LEGv8Day
                 //load last user data file path
                 LoadFile(new LegFile(lastFilePath));
             }
+
+            //auto dump
+            MainMenuStrip_AutoDump_ToolStripMenuItem.Checked = FormSettings.Default.AutoDump;
+        }
+
+        private void SaveAllData()
+        {
+            FormSettings.Default.Save();
+            FileSettings.Default.Save();
+
+            Data.Save(THEMES_PATH, _themes);
+        }
+
+        #endregion
+
+        #region Form Events
+
+        #region Form
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            LoadAllData();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -627,5 +635,10 @@ namespace LEGv8Day
         #endregion
 
         #endregion
+
+        private void MainMenuStrip_AutoDump_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormSettings.Default.AutoDump = MainMenuStrip_AutoDump_ToolStripMenuItem.Checked;
+        }
     }
 }

@@ -45,6 +45,8 @@
             this.MainMenuStrip_Theme_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip_Run_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainRichTextBox = new System.Windows.Forms.RichTextBox();
             this.MainMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -170,7 +172,9 @@
             // runToolStripMenuItem
             // 
             this.runToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MainMenuStrip_Run_ToolStripMenuItem});
+            this.MainMenuStrip_Run_ToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem});
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
             this.runToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.runToolStripMenuItem.Text = "Run";
@@ -179,9 +183,23 @@
             // 
             this.MainMenuStrip_Run_ToolStripMenuItem.Name = "MainMenuStrip_Run_ToolStripMenuItem";
             this.MainMenuStrip_Run_ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.MainMenuStrip_Run_ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.MainMenuStrip_Run_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.MainMenuStrip_Run_ToolStripMenuItem.Text = "Run";
             this.MainMenuStrip_Run_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_Run_ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            // 
+            // MainMenuStrip_AutoDump_ToolStripMenuItem
+            // 
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.CheckOnClick = true;
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Name = "MainMenuStrip_AutoDump_ToolStripMenuItem";
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Text = "Auto Dump";
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.ToolTipText = "Should the emulation DUMP at the end of the program?";
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_AutoDump_ToolStripMenuItem_Click);
             // 
             // MainRichTextBox
             // 
@@ -236,5 +254,7 @@
         private ToolStripMenuItem MainMenuStrip_Refresh_ToolStripMenuItem;
         private ToolStripMenuItem viewToolStripMenuItem;
         private ToolStripMenuItem MainMenuStrip_Theme_ToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripMenuItem MainMenuStrip_AutoDump_ToolStripMenuItem;
     }
 }

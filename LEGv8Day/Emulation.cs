@@ -248,10 +248,13 @@ namespace LEGv8Day
         {
             StringBuilder sb = new StringBuilder();
 
+            byte b;
+
             for (int i = 0; i < MEMORY_SIZE; i++)
             {
+                b = _memory[i];
                 //size is 3, as 255 is the max for a byte, and is 3 chars long
-                sb.Append(_memory[i].ToString().PadLeft(3));
+                sb.Append(b > 0 ? b.ToString().PadLeft(3, '.'): "...");
 
                 sb.Append(' ');
             }

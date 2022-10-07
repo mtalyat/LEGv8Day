@@ -34,5 +34,17 @@ namespace LEGv8Day {
                 this["ActiveThemeIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoDump {
+            get {
+                return ((bool)(this["AutoDump"]));
+            }
+            set {
+                this["AutoDump"] = value;
+            }
+        }
     }
 }

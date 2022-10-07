@@ -43,8 +43,17 @@ namespace LEGv8Day
 
         private void SimulationForm_Load(object sender, EventArgs e)
         {
+            //set label to name
             ExecutionTime_Label.Text = $"Execution Time: {_emulation.ExecutionTime}ms";
 
+            //check for auto dump
+            if(FormSettings.Default.AutoDump)
+            {
+                _emulation.Log("Auto Dump:");
+                _emulation.Dump();
+            }
+
+            //show output
             SimulationRichTextBox.Lines = _emulation.GetOutput();
         }
 
