@@ -79,7 +79,19 @@ namespace LEGv8Day
 
         private async void RunForm_Shown(object sender, EventArgs e)
         {
-            Simulation simulation = await RunSimulation(_simulation);
+            Simulation simulation;
+
+            try
+            {
+                simulation = await RunSimulation(_simulation);
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error running the emulation.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+                return;
+            }
+
+            
 
             //simulation completed
             if (simulation.IsCompleted)
