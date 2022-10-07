@@ -114,7 +114,7 @@ These are instructions that are specific to this emulator. Their sole purpose is
 | YES          | Dump Memory                    | DUMPM    | Displays a given byte in memory in the output.   | `DM X0 // shows the value of the data in the memory at pointer X0 at this point in time`                   |
 | YES          | Dump Memory in Range           | DUMPMR   | Displays a range of memory in the output.        | `DMR X0, X1 // shows the values of the data in the memory from pointer X0 to X1 at this point in time`     |
 | YES          | Dump Memory in Range Immediate | DUMPMRI  | Displays a range of memory in the output.        | `DMRI X0, 5 // shows the values of the data in the memory from pointer X0 to X0 + 5 at this point in time` |
-| YES          | Debug LOG                      | LOG      | Prints a string to the output.                   | `LOG This is a log // prints "This is a log" to the output"`                                               |
+| YES          | Debug LOG                      | LOG      | Prints a string to the output.                   | `LOG This is a log // prints "This is a log" to the output`                                                |
 
 Editor
 ------
