@@ -66,10 +66,10 @@ MOVe,MOV,R,0
 
 
 CLeaR,CLR,R,0
-Dump,D,R,0
-Dump All Memory,DAM,R,0
-Dump All Registers,DAR,R,0
-Dump Register,DR,R,0
-Dump Memory,DM,D,0
-Dump Memory in Range,DMR,D,0
-Dump Memory in Range Immediate,DMRI,I,0
+Dump,DUMP,R,0
+Dump All Memory,DUMPAM,R,0
+Dump All Registers,DUMPAR,R,0
+Dump Register,DUMPR,R,0
+Dump Memory,DUMPM,D,0
+Dump Memory in Range,DUMPMR,D,0
+Dump Memory in Range Immediate,DUMPMRI,I,0

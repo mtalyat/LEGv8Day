@@ -91,7 +91,7 @@ namespace LEGv8Day
 
         //      DEBUG INSTRUCTIONS
         CLR,
-        D,
+        DUMP,
         DAM,
         DAR,
         DR,

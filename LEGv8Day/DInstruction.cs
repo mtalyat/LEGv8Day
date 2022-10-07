@@ -54,6 +54,14 @@
                     simulation.SetReg(Rt, simulation.GetReg(Rn) + DtAddress);
                     break;
 
+                case InstructionMnemonic.DM:
+                    simulation.DumpMemory(simulation.GetReg(Rt));
+                    break;
+                case InstructionMnemonic.DMR:
+                    long address = simulation.GetReg(Rt);
+                    simulation.DumpMemoryRange(address, address + DtAddress);
+                    break;
+
                 default:
                     throw new NotImplementedException($"The instruction {_instruction.Mnemonic} has not been implemented yet.");
             }

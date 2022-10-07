@@ -229,18 +229,18 @@ namespace LEGv8Day
                 //turn into a line
                 line = new Line(strLine);
 
-                //if no args, must be a header
-                if (line.Args.Length == 0)
+                //if no args and not a mnemonic, must be a header
+                if (line.IsInstruction())
+                {
+                    //add to list of lines
+                    instructionLines.Add(line);
+                }
+                else
                 {
                     if (line.Label.EndsWith(Constants.HEADER_POSTFIX))
                     {
                         headers.Add(line.Label.TrimEnd(Constants.HEADER_POSTFIX), instructionLines.Count);
                     }
-                }
-                else
-                {
-                    //add to list of lines
-                    instructionLines.Add(line);
                 }
             }
 

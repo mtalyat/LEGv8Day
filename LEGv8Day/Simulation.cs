@@ -92,6 +92,8 @@ namespace LEGv8Day
 
         public float ExecutionTime => _watch.ElapsedMilliseconds;
 
+        private List<string> _output = new List<string>();
+
         /// <summary>
         /// Creates a new Simulation that will run using the given instructions.
         /// </summary>
@@ -190,8 +192,15 @@ namespace LEGv8Day
             //ckear data
             Clear();
 
+            _output.Clear();
+
             //no longer completed
             IsCompleted = false;
+        }
+
+        public string[] GetOutput()
+        {
+            return _output.ToArray();
         }
 
         #endregion
@@ -217,28 +226,26 @@ namespace LEGv8Day
         /// Provides a string array including all data from registers, memory, and instructions.
         /// </summary>
         /// <returns></returns>
-        public string[] Dump()
+        public void Dump()
         {
-            List<string> results = new List<string>();
-
-            results.Add("Registers:");
-
             //add registers
-
-            PackedLong r;
-
-            for (int i = 0; i < REGISTER_COUNT; i++)
-            {
-                r = _registers[i];
-
-                //print binary, hex, and normal number form
-                results.Add(DumpRegister(i));
-            }
+            DumpAllRegisters();
 
             //add memory
+            DumpAllMemory();
+        }
 
-            results.Add("Memory:");
+        public void DumpAllRegisters()
+        {
+            for (int i = 0; i < REGISTER_COUNT; i++)
+            {
+                //print binary, hex, and normal number form
+                DumpRegister(i);
+            }
+        }
 
+        public void DumpAllMemory()
+        {
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < MEMORY_SIZE; i++)
@@ -249,41 +256,42 @@ namespace LEGv8Day
                 sb.Append(' ');
             }
 
-            results.Add(sb.ToString());
-
-            return results.ToArray();
+            _output.Add(sb.ToString());
         }
 
-        public string DumpRegister(int index)
+        public void DumpRegister(int index)
         {
             PackedLong reg = _registers[index];
 
-            return $"X{index}:\t[0b{Convert.ToString(reg.Long, 2).PadLeft(sizeof(long) * 8, '0')}] [0x{Convert.ToString(reg.Long, 16).PadLeft(sizeof(long) * 2, '0')}] [ {string.Join(' ', reg.ToCharArray())} ] [{reg.Long}/{Reinterpret<long, float>(reg.Long)}/{Reinterpret<long, double>(reg.Long)}]";
+            _output.Add($"X{index}:\t[0b{Convert.ToString(reg.Long, 2).PadLeft(sizeof(long) * 8, '0')}] " +
+                $"[0x{Convert.ToString(reg.Long, 16).PadLeft(sizeof(long) * 2, '0')}] [ {string.Join(' ', reg.ToCharArray())} ] " +
+                $"[{reg.Long}/{Reinterpret<long, float>(reg.Long)}/{Reinterpret<long, double>(reg.Long)}]");
         }
 
-        public string DumpMemory(int index)
+        public void DumpMemory(long address)
         {
-            byte mem = _memory[index];
+            byte mem = _memory[address];
 
-            return $"M{index}:\t[0b{Convert.ToString(mem, 2).PadLeft(sizeof(byte) * 8, '0')}] [0x{Convert.ToString(mem, 16).PadLeft(sizeof(byte) * 2, '0')}] [ {(char)mem} ] [{mem}]";
+            _output.Add($"M{address}:\t[0b{Convert.ToString(mem, 2).PadLeft(sizeof(byte) * 8, '0')}] [ {(char)mem} ] [{mem}]");
         }
 
-        public string[] DumpMemoryRange(int start, int stop)
+        public void DumpMemoryRange(long addressStart, long addressStop)
         {
             //check for invalid arguments
-            if(stop < start)
+            if(addressStop < addressStart)
             {
-                return Array.Empty<string>();
+                return;
             }
 
-            string[] output = new string[stop - start];
+            //adjust start and stop to not go out of range of memory
+            addressStart = Math.Clamp(addressStart, 0, MEMORY_SIZE - 1);
+            addressStop = Math.Clamp(addressStop, 0, MEMORY_SIZE - 1);
 
-            for (int i = 0; i <= stop; i++)
+            //dump all memory
+            for (int i = 0; i <= addressStop; i++)
             {
-                output[i] = DumpMemory(start + i);
+                DumpMemory(addressStart + i);
             }
-
-            return output;
         }
 
         #endregion

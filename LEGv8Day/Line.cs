@@ -35,6 +35,12 @@ namespace LEGv8Day
             Args = args.Select(a => a.Trim()).ToArray();
         }
 
+        public bool IsInstruction()
+        {
+            //this line is an instruction if it has arguments, or if it is a mnemonic
+            return Args.Length > 0 || Enum.TryParse<InstructionMnemonic>(Label, out _);
+        }
+
         public override string ToString()
         {
             return $"{Label} {string.Join(Constants.ARG_SEPARATOR, Args)}";

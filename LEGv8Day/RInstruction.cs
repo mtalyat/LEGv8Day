@@ -88,6 +88,23 @@
                     simulation.SetReg(Rd, left);
                     break;
 
+                case InstructionMnemonic.CLR:
+                    simulation.Clear();
+                    break;
+
+                case InstructionMnemonic.DUMP:
+                    simulation.Dump();
+                    break;
+                case InstructionMnemonic.DAM:
+                    simulation.DumpAllMemory();
+                    break;
+                case InstructionMnemonic.DAR:
+                    simulation.DumpAllRegisters();
+                    break;
+                case InstructionMnemonic.DR:
+                    simulation.DumpRegister(Rd);
+                    break;
+
                 default:
                     throw new NotImplementedException($"The instruction {_instruction.Mnemonic} has not been implemented yet.");
             }

@@ -43,11 +43,9 @@ namespace LEGv8Day
 
         private void SimulationForm_Load(object sender, EventArgs e)
         {
-            _simulation.Run();
-
             ExecutionTime_Label.Text = $"Execution Time: {_simulation.ExecutionTime}ms";
 
-            SimulationRichTextBox.Lines = _simulation.Dump();
+            SimulationRichTextBox.Lines = _simulation.GetOutput();
         }
 
         #endregion
