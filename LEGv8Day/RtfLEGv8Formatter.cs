@@ -136,16 +136,6 @@ namespace LEGv8Day
 
         #endregion
 
-        /*
-         * 
-{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033\deflangfe1033{\fonttbl{\f0\fnil\fcharset0 Consolas;}}
-{\colortbl ;\red255\green0\blue0;\red0\green0\blue0;\red255\green255\blue0;}
-{\*\generator Riched20 10.0.22621}{\*\mmathPr\mdispDef1\mwrapIndent1440 }\viewkind4\uc1 
-\pard\nowidctlpar\sa200\sl240\slmult1\f0\fs22\lang9 Normal text\line\b Bolded text\line\b0\i Italicized text\line\ul\i0 Underlined text\line\ulnone\strike Strikethrough text\line\ul\b\i\strike0 Bold, italicized and underlined text\ulnone\b0\i0\line\cf1 Red text\line\cf2\highlight3 Highlighted text\par
-\highlight0 Paragraph\par
-}
-         */
-
         private static Theme _theme = Theme.Default;
 
         private readonly static Color[] _colors = new Color[]
@@ -208,6 +198,12 @@ namespace LEGv8Day
                     if (c == '\n')
                     {
                         DEFAULT_STYLE.Stylize(sb, ref currentStyle, $"{NEW_LINE} ");
+
+                        //if at the end, add another one for some reason
+                        if(i == text.Length - 1)
+                        {
+                            sb.Append($"{NEW_LINE} ");
+                        }
                     } else
                     {
                         DEFAULT_STYLE.Stylize(sb, ref currentStyle, c.ToString());
