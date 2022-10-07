@@ -95,10 +95,10 @@ These are instructions that are short for another instruction. They can be writt
 
 | Implemented? | Name | Mnemonic | Equivalent | Definition | Example |
 | --- | ---- | -------- | - | ---------- | ------- |
-| NO  | CoMPare | CMP | `SUBS XZR, m, n` where `m` and `n` are registers | Compares the two given registers by setting the flags. | `CMP X0, X1 // compares X0 and X1` |
-| NO  | CoMPare Immediate | CMPI | `SUBIS XZR, m, n` where `m` is a register, and `n` is an immediate value | Compares the given register and the given value by setting the flags. | `CMPI X0, 5 //compares X0 and 5` |
-| NO  | LoaD Address | LDA | ... | Loads the return address. | `LDA X0, loop // loads the address of the label "loop" into register X0` |
-| NO  | MOVe | MOV | `ORR m, XZR, n` where `m` and `n` are registers | Moves a register value to another register. | `MOV X0, X1 // sets X0 to X1` |
+| YES | CoMPare | CMP | `SUBS XZR, m, n` where `m` and `n` are registers | Compares the two given registers by setting the flags. | `CMP X0, X1 // compares X0 and X1` |
+| YES | CoMPare Immediate | CMPI | `SUBIS XZR, m, n` where `m` is a register, and `n` is an immediate value | Compares the given register and the given value by setting the flags. | `CMPI X0, 5 //compares X0 and 5` |
+| YES | LoaD Address | LDA | ... | Loads the return address. | `LDA X0, loop // loads the address of the label "loop" into register X0` |
+| YES | MOVe | MOV | `ORR m, XZR, n` where `m` and `n` are registers | Moves a register value to another register. | `MOV X0, X1 // sets X0 to X1` |
 
 ### Debug
 
