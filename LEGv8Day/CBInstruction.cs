@@ -55,6 +55,14 @@
                     if (simulation.ZeroFlag || !simulation.NegativeFlag)
                         simulation.ExecutionIndex = CondBrAddress;
                     break;
+                case InstructionMnemonic.B_MI:
+                    if (simulation.NegativeFlag)
+                        simulation.ExecutionIndex = CondBrAddress;
+                    break;
+                case InstructionMnemonic.B_PL:
+                    if(!simulation.NegativeFlag)
+                        simulation.ExecutionIndex = CondBrAddress;
+                    break;
 
                 default:
                     throw new NotImplementedException($"The instruction {_instruction.Mnemonic} has not been implemented yet.");

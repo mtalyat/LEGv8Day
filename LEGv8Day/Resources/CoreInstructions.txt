@@ -38,7 +38,7 @@ LoaD eXclusive Register,LDXR,D,642
 Logical Shift Left,LSL,R,69B
 Logical Shift Right,LSR,R,69A
 MOVe wide with Keep,MOVK,IM,794-797
-MOVe width with Zero,MOVZ,IM,694-697
+MOVe wide with Zero,MOVZ,IM,694-697
 Inclusive OR,ORR,R,550
 Inclusive OR Immediate,ORRI,I,590-591
 STore Register Unscaled offset,STUR,D,7C0
@@ -57,3 +57,19 @@ Signed MULtiply High,SMULH,R,4DA
 
 Unsigned DIVide,UDIV,R,4D6,03
 Unsigned MULtiply High,UMULH,R,4DE
+
+
+CoMPare,CMP,R,0
+CoMPare Immediate,CMPI,I,0
+LoaD Address,LDA,R,0
+MOVe,MOV,R,0
+
+
+CLeaR,CLR,D,0
+Dump,D,D,0
+Dump All Memory,DAM,D,0
+Dump All Registers,DAR,D,0
+Dump Register,DR,D,0
+Dump Memory,DM,D,0
+Dump Memory in Range,DMR,D,0
+Dump Memory in Range Immediate,DMRI,D,0
