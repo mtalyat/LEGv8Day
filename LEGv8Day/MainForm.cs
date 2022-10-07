@@ -489,9 +489,6 @@ namespace LEGv8Day
             {
                 //load user data
                 LoadFile(new LegFile());
-
-                //test
-                MainRichTextBox.Lines = _coreInstructions.Values.Select(c => c.ToString()).ToArray();
             }
             else
             {

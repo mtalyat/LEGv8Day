@@ -7,6 +7,14 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Authors>Mitchell Talyat</Authors>
+    <Description>A LEGv8 assembly emulator.</Description>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mtalyat/LEGv8Day</RepositoryUrl>
+    <PackageIcon>Legv8Day.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <FileVersion>1.0.0.0</FileVersion>
+    <PackageTags>LEGv8</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +33,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>FileSettings.settings</DependentUpon>
     </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -32,10 +45,25 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ProgramData.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\OneDrive\Pictures\Art\Pixel Art\Legv8Day.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
