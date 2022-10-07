@@ -10,7 +10,7 @@ namespace LEGv8Day
     /// <summary>
     /// Responsibly for running the simulation of the LEGV8 code.
     /// </summary>
-    public class Simulation
+    public class Emulation
     {
         #region Configuration
 
@@ -98,7 +98,7 @@ namespace LEGv8Day
         /// Creates a new Simulation that will run using the given instructions.
         /// </summary>
         /// <param name="instructions"></param>
-        public Simulation(Instruction[] instructions)
+        public Emulation(Instruction[] instructions)
         {
             _registers = new long[REGISTER_COUNT];
             _memory = new byte[MEMORY_SIZE];

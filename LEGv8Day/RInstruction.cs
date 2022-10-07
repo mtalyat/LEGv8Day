@@ -20,7 +20,7 @@
             _data.SetRange(0, 4, rd);
         }
 
-        public override void Evaluate(Simulation simulation)
+        public override void Evaluate(Emulation simulation)
         {
             long left = simulation.GetReg(Rn);
             long right = simulation.GetReg(Rm);

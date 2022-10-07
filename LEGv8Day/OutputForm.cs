@@ -10,19 +10,19 @@ using System.Windows.Forms;
 
 namespace LEGv8Day
 {
-    public partial class SimulationForm : Form
+    public partial class OutputForm : Form
     {
-        private const string FORM_TEXT = "LEGv8 Day Simulation";
+        private const string FORM_TEXT = "LEGv8 Day Emulation";
 
         private readonly MainForm _mainForm;
 
-        private readonly Simulation _simulation;
+        private readonly Emulation _emulation;
 
-        public SimulationForm(MainForm mainForm, Simulation simulation, string name)
+        public OutputForm(MainForm mainForm, Emulation emulation, string name)
         {
             _mainForm = mainForm;
 
-            _simulation = simulation;
+            _emulation = emulation;
 
             InitializeComponent();
 
@@ -43,9 +43,9 @@ namespace LEGv8Day
 
         private void SimulationForm_Load(object sender, EventArgs e)
         {
-            ExecutionTime_Label.Text = $"Execution Time: {_simulation.ExecutionTime}ms";
+            ExecutionTime_Label.Text = $"Execution Time: {_emulation.ExecutionTime}ms";
 
-            SimulationRichTextBox.Lines = _simulation.GetOutput();
+            SimulationRichTextBox.Lines = _emulation.GetOutput();
         }
 
         #endregion

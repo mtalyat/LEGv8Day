@@ -7,7 +7,7 @@
 
         }
 
-        public override void Evaluate(Simulation simulation)
+        public override void Evaluate(Emulation simulation)
         {
 
         }

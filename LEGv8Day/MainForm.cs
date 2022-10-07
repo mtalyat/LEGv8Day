@@ -264,7 +264,7 @@ namespace LEGv8Day
             Instruction[] instructions = GetInstructions(GetText(true).Split('\n'));
 
             //SimulationForm form = new SimulationForm(this, new Simulation(instructions), _legFile.Name);
-            RunForm form = new RunForm(this, new Simulation(instructions), _legFile.Name);
+            RunForm form = new RunForm(this, new Emulation(instructions), _legFile.Name);
 
             form.Show();
         }

@@ -40,7 +40,7 @@ namespace LEGv8Day
         /// Evaluates this Instruction, using the given Simulation.
         /// </summary>
         /// <param name="simulation"></param>
-        public abstract void Evaluate(Simulation simulation);
+        public abstract void Evaluate(Emulation simulation);
 
         public override string ToString()
         {

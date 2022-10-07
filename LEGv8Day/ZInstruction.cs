@@ -16,7 +16,7 @@ namespace LEGv8Day
             _contents = contents;
         }
 
-        public override void Evaluate(Simulation simulation)
+        public override void Evaluate(Emulation simulation)
         {
             switch (_instruction.Mnemonic)
             {

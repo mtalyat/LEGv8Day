@@ -1,6 +1,6 @@
 ﻿namespace LEGv8Day
 {
-    partial class SimulationForm
+    partial class OutputForm
     {
         /// <summary>
         /// Required designer variable.
@@ -54,17 +54,17 @@
             this.ExecutionTime_Label.TabIndex = 1;
             this.ExecutionTime_Label.Text = "Execution Time: 0.0ms";
             // 
-            // SimulationForm
+            // OutputForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1071, 564);
             this.Controls.Add(this.ExecutionTime_Label);
             this.Controls.Add(this.SimulationRichTextBox);
-            this.Name = "SimulationForm";
+            this.Name = "OutputForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Simulation";
+            this.Text = "Emulation";
             this.Load += new System.EventHandler(this.SimulationForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

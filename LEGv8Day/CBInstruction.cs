@@ -14,7 +14,7 @@
             _data.SetRange(0, 4, rt);
         }
 
-        public override void Evaluate(Simulation simulation)
+        public override void Evaluate(Emulation simulation)
         {
             switch (_instruction.Mnemonic)
             {

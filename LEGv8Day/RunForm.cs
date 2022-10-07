@@ -14,16 +14,16 @@ namespace LEGv8Day
     {
         private readonly MainForm _mainForm;
 
-        private readonly Simulation _simulation;
+        private readonly Emulation _emulation;
 
         private readonly string _simulationName;
 
         private object _lock = new object();
 
-        public RunForm(MainForm mainForm, Simulation simulation, string name)
+        public RunForm(MainForm mainForm, Emulation emulation, string name)
         {
             _mainForm = mainForm;
-            _simulation = simulation;
+            _emulation = emulation;
             _simulationName = name;
 
             InitializeComponent();
@@ -35,11 +35,11 @@ namespace LEGv8Day
         {
             lock(_lock)
             {
-                _simulation.Stop();
+                _emulation.Stop();
             }
         }
 
-        private async Task<Simulation> RunSimulation(Simulation simulation)
+        private async Task<Emulation> RunSimulation(Emulation simulation)
         {
             await Task.Run(() =>
             {
@@ -79,11 +79,11 @@ namespace LEGv8Day
 
         private async void RunForm_Shown(object sender, EventArgs e)
         {
-            Simulation simulation;
+            Emulation simulation;
 
             try
             {
-                simulation = await RunSimulation(_simulation);
+                simulation = await RunSimulation(_emulation);
             } catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error running the emulation.", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -97,7 +97,7 @@ namespace LEGv8Day
             if (simulation.IsCompleted)
             {
                 //finished
-                SimulationForm form = new SimulationForm(_mainForm, simulation, _simulationName);
+                OutputForm form = new OutputForm(_mainForm, simulation, _simulationName);
                 form.Show();
             }
 

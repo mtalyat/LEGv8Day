@@ -11,7 +11,7 @@
             _data.SetRange(0, 25, brAddress);
         }
 
-        public override void Evaluate(Simulation simulation)
+        public override void Evaluate(Emulation simulation)
         {
             switch (_instruction.Mnemonic)
             {
@@ -19,7 +19,7 @@
                     simulation.ExecutionIndex = BrAddress;
                     break;
                 case InstructionMnemonic.BL:
-                    simulation.SetReg(Simulation.RETURN_ADDRESS_REG, simulation.ExecutionIndex);
+                    simulation.SetReg(Emulation.RETURN_ADDRESS_REG, simulation.ExecutionIndex);
                     simulation.ExecutionIndex = BrAddress;
                     break;
                 default:

@@ -304,7 +304,7 @@ namespace LEGv8Day
             }
 
             //not a shortcut, must be a number
-            return word[0] == 'X' && int.TryParse(word.Substring(1), out int x) && x < Simulation.REGISTER_COUNT;
+            return word[0] == 'X' && int.TryParse(word.Substring(1), out int x) && x < Emulation.REGISTER_COUNT;
         }
 
         private static bool IsIrrelevantPunctuation(char c)
