@@ -49,7 +49,6 @@ namespace LEGv8Day
             //check for auto dump
             if(FormSettings.Default.AutoDump)
             {
-                _emulation.Print("Auto Dump:");
                 _emulation.Dump();
             }
 
