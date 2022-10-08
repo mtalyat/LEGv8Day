@@ -54,14 +54,6 @@
                     e.SetReg(Rt, e.GetReg(Rn) + DtAddress);
                     break;
 
-                case InstructionMnemonic.DUMPM:
-                    e.DumpMemory(e.GetReg(Rt));
-                    break;
-                case InstructionMnemonic.DUMPMR:
-                    long address = e.GetReg(Rt);
-                    e.DumpMemoryRange(address, address + DtAddress);
-                    break;
-
                 default:
                     throw new NotImplementedException($"The instruction {_instruction.Mnemonic} has not been implemented yet.");
             }

@@ -90,14 +90,8 @@ namespace LEGv8Day
         MOV,
 
         //      DEBUG INSTRUCTIONS
-        CLR,
         DUMP,
-        DUMPAM,
-        DUMPAR,
-        DUMPR,
-        DUMPM,
-        DUMPMR,
-        DUMPMRI,
-        LOG,
+        PRNT,
+        PRNL,
     }
 }

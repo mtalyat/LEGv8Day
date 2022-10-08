@@ -88,10 +88,6 @@
                     e.SetReg(Rd, left);
                     break;
 
-                case InstructionMnemonic.DUMPR:
-                    e.DumpRegister(Rd);
-                    break;
-
                 default:
                     throw new NotImplementedException($"The instruction {_instruction.Mnemonic} has not been implemented yet.");
             }

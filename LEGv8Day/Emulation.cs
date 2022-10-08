@@ -252,12 +252,12 @@ namespace LEGv8Day
             //print dump
             if(_executionInstruction != null)
             {
-                Log("DUMP on:");
-                Log($"  Line ({ExecutionLine})");
-                Log($"  Instruction [{_executionInstruction}]");
+                Print("DUMP on:");
+                Print($"  Line ({ExecutionLine})");
+                Print($"  Instruction [{_executionInstruction}]");
             } else
             {
-                Log("DUMP:");
+                Print("DUMP:");
             }
 
             //add registers
@@ -267,16 +267,16 @@ namespace LEGv8Day
             DumpAllMemory();
         }
 
-        public void DumpAllRegisters()
+        private void DumpAllRegisters()
         {
             for (int i = 0; i < REGISTER_COUNT; i++)
             {
                 //print binary, hex, and normal number form
-                DumpRegister(i);
+                PrintRegister(i);
             }
         }
 
-        public void DumpAllMemory()
+        private void DumpAllMemory()
         {
             StringBuilder sb = new StringBuilder();
 
@@ -294,7 +294,7 @@ namespace LEGv8Day
             _output.Add(sb.ToString());
         }
 
-        public void DumpRegister(int index)
+        public void PrintRegister(int index)
         {
             PackedLong reg = _registers[index];
 
@@ -303,35 +303,34 @@ namespace LEGv8Day
                 $"[{reg.Long}/{Reinterpret<long, float>(reg.Long)}/{Reinterpret<long, double>(reg.Long)}]");
         }
 
-        public void DumpMemory(long address)
+        public void PrintMemory(long address)
         {
             byte mem = _memory[address];
 
             _output.Add($"M{address}:\t[0b{Convert.ToString(mem, 2).PadLeft(sizeof(byte) * 8, '0')}] [ {(char)mem} ] [{mem}]");
         }
 
-        public void DumpMemoryRange(long addressStart, long addressStop)
+        public void Print(string str)
         {
-            //check for invalid arguments
-            if(addressStop < addressStart)
+            //check for empty
+            if(string.IsNullOrWhiteSpace(str))
             {
-                return;
+                _output.Add(string.Empty);
             }
 
-            //adjust start and stop to not go out of range of memory
-            addressStart = Math.Clamp(addressStart, 0, MEMORY_SIZE - 1);
-            addressStop = Math.Clamp(addressStop, 0, MEMORY_SIZE - 1);
-
-            //dump all memory
-            for (int i = 0; i <= addressStop; i++)
-            {
-                DumpMemory(addressStart + i);
-            }
+            //format string
+            _output.Add(str);
         }
 
-        public void Log(string str)
+        private string FormatString(string str)
         {
-            _output.Add(str);
+            //split into words
+            string[] words = str.Split(' ');
+
+            //check words
+
+
+            throw new NotImplementedException();
         }
 
         #endregion

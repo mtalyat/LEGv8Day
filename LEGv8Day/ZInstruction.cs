@@ -20,22 +20,14 @@ namespace LEGv8Day
         {
             switch (_instruction.Mnemonic)
             {
-                case InstructionMnemonic.CLR:
-                    e.Clear();
-                    break;
-
                 case InstructionMnemonic.DUMP:
                     e.Dump();
                     break;
-                case InstructionMnemonic.DUMPAM:
-                    e.DumpAllMemory();
+                case InstructionMnemonic.PRNT:
+                    e.Print(_contents);
                     break;
-                case InstructionMnemonic.DUMPAR:
-                    e.DumpAllRegisters();
-                    break;
-
-                case InstructionMnemonic.LOG:
-                    e.Log(_contents);
+                case InstructionMnemonic.PRNL:
+                    e.Print("");
                     break;
             }
         }
