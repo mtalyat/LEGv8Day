@@ -18,7 +18,7 @@ This emulator also has support for using alternative names for registers. For ex
 
 ## Motivation
 
-This was created to be able to create an run LEGv8 Assembly code. The main factors behind motivation was to learn how LEGv8/Assembly communications with the hardware better, and to create a program so that I did not have to use Linux. This emulator is written on and for Windows.
+This was created to be able to create an run LEGv8 Assembly code. The main factors behind motivation was to learn how LEGv8/Assembly communications with the hardware better. This emulator is written on and for Windows.
 
 Features
 ======
