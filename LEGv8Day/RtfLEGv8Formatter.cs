@@ -191,6 +191,14 @@ namespace LEGv8Day
             {
                 c = text[i];
 
+                //check for escape conditions
+                if (c == '{' || c == '}')
+                {
+                    DEFAULT_STYLE.Stylize(sb, ref currentStyle, $"\\{c}");
+
+                    continue;
+                }
+
                 //check for a char that will let us "skip"
                 if (char.IsWhiteSpace(c) || IsIrrelevantPunctuation(c))
                 {

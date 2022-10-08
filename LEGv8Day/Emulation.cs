@@ -300,7 +300,7 @@ namespace LEGv8Day
 
             _output.Add($"X{index}:\t[0b{Convert.ToString(reg.Long, 2).PadLeft(sizeof(long) * 8, '0')}] " +
                 $"[0x{Convert.ToString(reg.Long, 16).PadLeft(sizeof(long) * 2, '0')}] [ {string.Join(' ', reg.ToCharArray())} ] " +
-                $"[{reg.Long}/{Reinterpret<long, float>(reg.Long)}/{Reinterpret<long, double>(reg.Long)}]");
+                $"[{reg.Long}]");
         }
 
         public void PrintMemory(long address)
@@ -319,7 +319,7 @@ namespace LEGv8Day
             }
 
             //format string
-            _output.Add(str);
+            _output.Add(FormatString(str));
         }
 
         private string FormatString(string str)
@@ -327,10 +327,64 @@ namespace LEGv8Day
             //split into words
             string[] words = str.Split(' ');
 
+            //string builder to go back
+            StringBuilder sb = new StringBuilder();
+
             //check words
+            foreach(string w in words)
+            {
+                //if starts with { and ends with }...
+                if(w.StartsWith(Parse.FORMAT_REG_OPEN) && w.EndsWith(Parse.FORMAT_REG_CLOSE))
+                {
+                    //format
+                    string inside = w.Substring(1, w.Length - 2);
 
+                    //get register index
+                    int index = Parse.ParseRegister(inside);
 
-            throw new NotImplementedException();
+                    //get value
+                    if(index >= 0)
+                    {
+                        sb.Append(GetReg(index));
+                        sb.Append(' ');
+
+                        continue;
+                    }
+                } else if (w.StartsWith(Parse.FORMAT_MEM_OPEN) && w.EndsWith(Parse.FORMAT_MEM_CLOSE))
+                {
+                    //format
+                    string inside = w.Substring(1, w.Length - 2);
+
+                    //get register index
+                    int value = Parse.ParseRegister(inside);
+
+                    if(value < 0)
+                    {
+                        //not a register, get a number
+                        value = Parse.ParseNumber(inside);
+                    } else
+                    {
+                        //register, get value from register
+                        value = (int)GetReg(value);
+                    }
+
+                    //put value from memory
+                    if(value >= 0)
+                    {
+                        sb.Append(GetMem(value));
+                        sb.Append(' ');
+
+                        continue;
+                    }
+                }
+
+                //ignore otherwise
+                sb.Append(w);
+                sb.Append(' ');
+            }
+
+            //remove string at end
+            return sb.ToString().TrimEnd();
         }
 
         #endregion
@@ -448,6 +502,8 @@ namespace LEGv8Day
 
             SetMem(index, Reinterpret<T, long>(value), size);
         }
+
+        public long GetMem(int index) => GetMem(index, 1);
 
         /// <summary>
         /// Gets the memory from the given position and given size as a long.

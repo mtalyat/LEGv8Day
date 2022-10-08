@@ -8,6 +8,19 @@ namespace LEGv8Day
 {
     internal static class Parse
     {
+        #region Consts
+
+        public const char FORMAT_REG_OPEN = '{';
+        public const char FORMAT_REG_CLOSE = '}';
+
+        public const char FORMAT_MEM_OPEN = '[';
+        public const char FORMAT_MEM_CLOSE = ']';
+
+        public const char NUMBER_PREFIX = '#';
+        public const char REGISTER_PREFIX = 'X';
+
+        #endregion
+
         public static Dictionary<string, CoreInstruction> CoreInstructions { get; private set; } = new Dictionary<string, CoreInstruction>();
 
         private static InstructionMnemonic ParseMnemonic(string m)
@@ -105,12 +118,52 @@ namespace LEGv8Day
             return new EmptyInstruction(line.LineNumber);
         }
 
-        public static int ParseArgument(string arg, Dictionary<string, int>? headers)
+        public static int ParseRegister(string arg)
+        {
+            if (arg.StartsWith(REGISTER_PREFIX))
+            {
+                if (arg == "XZR")
+                {
+                    return 31;//zero register
+                }
+                else
+                {
+                    //another register, parse the number next to the X
+                    return int.TryParse(arg.AsSpan(1), out int i) ? i : -1;
+                }
+            } else
+            {
+                //check special cases for registers
+                switch (arg)
+                {
+                    case "IP0": return 16;
+                    case "IP1": return 17;
+                    case "SP": return 28;//stack pointer
+                    case "FP": return 29;//frame pointer
+                    case "LR": return 30;//return address
+                }
+            }
+
+            //not a register
+            return -1;
+        }
+
+        public static int ParseNumber(string arg)
+        {
+            if(arg.StartsWith(NUMBER_PREFIX))
+            {
+                arg = arg.Substring(1);
+            }
+
+            return int.TryParse(arg, out int i) ? i : -1;
+        }
+
+        public static int ParseArgument(string arg, Dictionary<string, int>? headers = null)
         {
             //determine what to do based on the starting char
             switch (arg[0])
             {
-                case 'X'://register
+                case REGISTER_PREFIX://register
                     {
                         if (arg == "XZR")
                         {
@@ -122,7 +175,7 @@ namespace LEGv8Day
                             return int.Parse(arg.Substring(1));
                         }
                     }
-                case '#'://number
+                case NUMBER_PREFIX://number
                     return int.Parse(arg.Substring(1));
                 default:
                     //check special cases for registers
