@@ -10,7 +10,7 @@
 
         private int Rt => _data.GetRange(0, 4);
 
-        public DInstruction(CoreInstruction instruction, int opcode, int dtAddress, int op, int rn, int rt) : base(instruction)
+        public DInstruction(CoreInstruction instruction, int lineNumber, int opcode, int dtAddress, int op, int rn, int rt) : base(instruction, lineNumber)
         {
             _data = 0;
             _data.SetRange(21, 31, opcode);

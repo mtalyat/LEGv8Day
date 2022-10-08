@@ -6,7 +6,7 @@
 
         private int Rd => _data.GetRange(0, 4);
 
-        public IMInstruction(CoreInstruction instruction, int opcode, int movImmediate, int rd) : base(instruction)
+        public IMInstruction(CoreInstruction instruction, int lineNumber, int opcode, int movImmediate, int rd) : base(instruction, lineNumber)
         {
             _data = 0;
             _data.SetRange(21, 31, opcode);

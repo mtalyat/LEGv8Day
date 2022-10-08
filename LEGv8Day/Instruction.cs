@@ -27,10 +27,15 @@ namespace LEGv8Day
         public int MachineCode => _data.Int;
 
         /// <summary>
+        /// The line number this instruction is on in the file.
+        /// </summary>
+        public int LineNumber { get; private set; }
+
+        /// <summary>
         /// Creates a new Instruction using the given Core Instruction.
         /// </summary>
         /// <param name="instruction"></param>
-        public Instruction(CoreInstruction instruction)
+        public Instruction(CoreInstruction instruction, int lineNumber)
         {
             _data = new PackedInt();
             _instruction = instruction;

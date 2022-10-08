@@ -2,7 +2,7 @@
 {
     public class EmptyInstruction : Instruction
     {
-        public EmptyInstruction() : base(new CoreInstruction())
+        public EmptyInstruction(int lineNumber) : base(new CoreInstruction(), lineNumber)
         {
 
         }

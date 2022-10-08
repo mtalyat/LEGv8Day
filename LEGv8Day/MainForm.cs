@@ -138,23 +138,23 @@ namespace LEGv8Day
                 switch (ci.Format)
                 {
                     case InstructionFormat.R:
-                        return new RInstruction(ci, ci.OpCodeStart, arg2, arg2, arg1, arg0);
+                        return new RInstruction(ci, line.LineNumber, ci.OpCodeStart, arg2, arg2, arg1, arg0);
                     case InstructionFormat.I:
-                        return new IInstruction(ci, ci.OpCodeStart, arg2, arg1, arg0);
+                        return new IInstruction(ci, line.LineNumber, ci.OpCodeStart, arg2, arg1, arg0);
                     case InstructionFormat.D:
-                        return new DInstruction(ci, ci.OpCodeStart, arg2, 0, arg1, arg0);
+                        return new DInstruction(ci, line.LineNumber, ci.OpCodeStart, arg2, 0, arg1, arg0);
                     case InstructionFormat.B:
-                        return new BInstruction(ci, ci.OpCodeStart, arg0);
+                        return new BInstruction(ci, line.LineNumber, ci.OpCodeStart, arg0);
                     case InstructionFormat.CB:
-                        return new CBInstruction(ci, ci.OpCodeStart, arg1, arg0);
+                        return new CBInstruction(ci, line.LineNumber, ci.OpCodeStart, arg1, arg0);
                     case InstructionFormat.IM:
-                        return new IMInstruction(ci, ci.OpCodeStart, arg1, arg0);
+                        return new IMInstruction(ci, line.LineNumber, ci.OpCodeStart, arg1, arg0);
                     case InstructionFormat.Z:
-                        return new ZInstruction(ci, line.RawArgs);
+                        return new ZInstruction(ci, line.LineNumber, line.RawArgs);
                 }
             }
 
-            return new EmptyInstruction();
+            return new EmptyInstruction(line.LineNumber);
         }
 
         private int ParseArgument(string arg, Dictionary<string, int> headers)
@@ -235,7 +235,7 @@ namespace LEGv8Day
                 }
 
                 //turn into a line
-                line = new Line(strLine);
+                line = new Line(strLine, i);
 
                 //if no args and not a mnemonic, must be a header
                 if (line.IsInstruction())

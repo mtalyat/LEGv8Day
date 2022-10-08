@@ -228,6 +228,12 @@ namespace LEGv8Day
         /// <returns></returns>
         public void Dump()
         {
+            //stop program
+            Stop();
+
+            //print dump
+            Log($"DUMP on line {ExecutionIndex}:");
+
             //add registers
             DumpAllRegisters();
 

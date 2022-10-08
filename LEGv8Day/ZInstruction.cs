@@ -10,7 +10,7 @@ namespace LEGv8Day
     {
         private string _contents;
 
-        public ZInstruction(CoreInstruction instruction, string contents) : base(instruction)
+        public ZInstruction(CoreInstruction instruction, int lineNumber, string contents) : base(instruction, lineNumber)
         {
             _data = 0;
             _contents = contents;

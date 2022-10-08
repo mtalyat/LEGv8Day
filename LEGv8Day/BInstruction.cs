@@ -4,7 +4,7 @@
     {
         private int BrAddress => _data.GetRange(0, 25);
 
-        public BInstruction(CoreInstruction instruction, int opcode, int brAddress) : base(instruction)
+        public BInstruction(CoreInstruction instruction, int lineNumber, int opcode, int brAddress) : base(instruction, lineNumber)
         {
             _data = 0;
             _data.SetRange(26, 31, opcode);

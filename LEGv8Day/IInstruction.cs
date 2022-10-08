@@ -8,7 +8,7 @@
 
         private int Rd => _data.GetRange(0, 4);
 
-        public IInstruction(CoreInstruction instruction, int opcode, int aluImmediate, int rn, int rd) : base(instruction)
+        public IInstruction(CoreInstruction instruction, int lineNumber, int opcode, int aluImmediate, int rn, int rd) : base(instruction, lineNumber)
         {
             _data = 0;
             _data.SetRange(22, 31, opcode);

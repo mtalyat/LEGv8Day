@@ -6,7 +6,7 @@
 
         private int Rt => _data.GetRange(0, 4);
 
-        public CBInstruction(CoreInstruction instruction, int opcode, int condBrAddress, int rt) : base(instruction)
+        public CBInstruction(CoreInstruction instruction, int lineNumber, int opcode, int condBrAddress, int rt) : base(instruction, lineNumber)
         {
             _data = 0;
             _data.SetRange(24, 31, opcode);

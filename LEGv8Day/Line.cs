@@ -12,7 +12,9 @@ namespace LEGv8Day
 
         public string RawArgs { get; private set; }
 
-        public Line(string line)
+        public int LineNumber { get; private set; }
+
+        public Line(string line, int lineNumber)
         {
             int spaceIndex = line.IndexOf(' ');
 
@@ -27,6 +29,8 @@ namespace LEGv8Day
                 Label = line.Substring(0, spaceIndex);
                 RawArgs = line.Substring(spaceIndex + 1, line.Length - 1 - spaceIndex);
             }
+
+            LineNumber = lineNumber;
         }
 
         public Line(string label, string args)
