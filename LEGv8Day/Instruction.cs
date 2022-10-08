@@ -74,7 +74,6 @@ namespace LEGv8Day
                 //set to all remaining bits
                 PackedInt packed = new PackedInt(value);
                 packed.Set(sizeInBits, bit ? ~0 : 0, sizeof(int) - sizeInBits);
-                //MessageBox.Show($"Setting at {sizeInBits}, value: {Convert.ToString(bit ? ~0 : 0, 2)}, length: {sizeof(long) - sizeInBits} to existing value {value}");
 
                 return packed;
             }

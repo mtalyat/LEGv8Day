@@ -118,6 +118,7 @@ namespace LEGv8Day
         #region Constants
 
         private static readonly Tag NEW_LINE = new Tag(@"\line");
+        public static string NewLine => NEW_LINE.Text;
         private static readonly Tag BOLD = new Tag(@"\b", @"\b0");
         private static readonly Tag ITALICIZE = new Tag(@"\i", @"\i0");
         private static readonly Tag UNDERLINE = new Tag(@"\ul", @"\ulnone");
@@ -132,6 +133,11 @@ namespace LEGv8Day
         private static readonly HashSet<char> STICKY_PUNCT_CHARS = new HashSet<char>(new char[]
         {
             '_', ':', '#', '/', '.', '-'
+        });
+
+        private static readonly HashSet<char> ESCAPE_CHARS = new HashSet<char>(new char[]
+        {
+            '\\', '{', '}'
         });
 
         #endregion
@@ -192,7 +198,7 @@ namespace LEGv8Day
                 c = text[i];
 
                 //check for escape conditions
-                if (c == '{' || c == '}')
+                if (ESCAPE_CHARS.Contains(c))
                 {
                     DEFAULT_STYLE.Stylize(sb, ref currentStyle, $"\\{c}");
 
