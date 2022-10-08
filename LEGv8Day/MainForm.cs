@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -19,6 +20,10 @@ namespace LEGv8Day
         /// The filter that is used when saving and opening files.
         /// </summary>
         private const string FILE_DIALOG_FILTER = $"LEGv8 Assembly Files (*{LegFile.EXTENSION})|*{LegFile.EXTENSION}|Text file (*.txt)|*.txt";
+
+        private const string URL_DOCUMENTATION = @"https://github.com/mtalyat/LEGv8Day/wiki";
+
+        private const string URL_REPOSITORY = @"https://github.com/mtalyat/LEGv8Day";
 
         private Dictionary<string, CoreInstruction> _coreInstructions = new Dictionary<string, CoreInstruction>();
 
@@ -420,18 +425,18 @@ namespace LEGv8Day
                 //replace text with new text
 
                 //get selected position relative to end
-                int index = MainRichTextBox.Text.Length - 1 - MainRichTextBox.SelectionStart;
+                int index = Assembly_RichTextBox.Text.Length - 1 - Assembly_RichTextBox.SelectionStart;
 
                 //set text, do not trigger infinite loop
                 _ignoreNextSetText = true;
-                MainRichTextBox.Rtf = text;
+                Assembly_RichTextBox.Rtf = text;
                 _ignoreNextSetText = false;
 
                 _rtf = text;
 
                 //set selected back to where we were
-                MainRichTextBox.SelectionStart = Math.Max(MainRichTextBox.Text.Length - 1 - index, 0);
-                MainRichTextBox.SelectionLength = 0;
+                Assembly_RichTextBox.SelectionStart = Math.Max(Assembly_RichTextBox.Text.Length - 1 - index, 0);
+                Assembly_RichTextBox.SelectionLength = 0;
             }
             else
             {
@@ -445,11 +450,11 @@ namespace LEGv8Day
         {
             if(plainText)
             {
-                _convertingBox.Rtf = MainRichTextBox.Rtf.Replace(@"\line", @"\par");
+                _convertingBox.Rtf = Assembly_RichTextBox.Rtf.Replace(@"\line", @"\par");
                 return _convertingBox.Text;
             } else
             {
-                return MainRichTextBox.Rtf;
+                return Assembly_RichTextBox.Rtf;
             }
         }
 
@@ -474,7 +479,7 @@ namespace LEGv8Day
 
             BackColor = active.PrimaryColor;
 
-            MainRichTextBox.BackColor = active.SecondaryColor;
+            Assembly_RichTextBox.BackColor = active.SecondaryColor;
         }
 
         private void LoadAllData()
@@ -506,6 +511,11 @@ namespace LEGv8Day
             FileSettings.Default.Save();
 
             Data.Save(THEMES_PATH, _themes);
+        }
+
+        private void OpenURL(string link)
+        {
+            Process.Start("explorer", link);
         }
 
         #endregion
@@ -627,15 +637,29 @@ namespace LEGv8Day
             Run();
         }
 
-        #endregion
-
-        #endregion
-
-        #endregion
-
-        private void MainMenuStrip_AutoDump_ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MainMenuStrip_AutoDump_ToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             FormSettings.Default.AutoDump = MainMenuStrip_AutoDump_ToolStripMenuItem.Checked;
         }
+
+        #endregion
+
+        #region Help
+
+        private void MainMenuStrip_Documentation_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenURL(URL_DOCUMENTATION);
+        }
+
+        private void MainMenuStrip_Repository_ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenURL(URL_REPOSITORY);
+        }
+
+        #endregion
+
+        #endregion
+
+        #endregion
     }
 }

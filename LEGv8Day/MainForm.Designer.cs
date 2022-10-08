@@ -40,14 +40,18 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip_Undo_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip_Redo_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip_Theme_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip_Run_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.MainMenuStrip_RunSettings_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainMenuStrip_Documentation_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainMenuStrip_Repository_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Assembly_RichTextBox = new System.Windows.Forms.RichTextBox();
+            this.runToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip_AutoDump_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MainRichTextBox = new System.Windows.Forms.RichTextBox();
             this.MainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,7 +61,8 @@
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.viewToolStripMenuItem,
-            this.runToolStripMenuItem});
+            this.runToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MainMenuStrip.Name = "MainMenuStrip";
             this.MainMenuStrip.Size = new System.Drawing.Size(1068, 24);
@@ -127,8 +132,7 @@
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MainMenuStrip_Undo_ToolStripMenuItem,
-            this.MainMenuStrip_Redo_ToolStripMenuItem,
-            this.toolStripSeparator1});
+            this.MainMenuStrip_Redo_ToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
@@ -137,7 +141,7 @@
             // 
             this.MainMenuStrip_Undo_ToolStripMenuItem.Name = "MainMenuStrip_Undo_ToolStripMenuItem";
             this.MainMenuStrip_Undo_ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.MainMenuStrip_Undo_ToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.MainMenuStrip_Undo_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.MainMenuStrip_Undo_ToolStripMenuItem.Text = "Undo";
             this.MainMenuStrip_Undo_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_Undo_ToolStripMenuItem_Click);
             // 
@@ -145,19 +149,15 @@
             // 
             this.MainMenuStrip_Redo_ToolStripMenuItem.Name = "MainMenuStrip_Redo_ToolStripMenuItem";
             this.MainMenuStrip_Redo_ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.MainMenuStrip_Redo_ToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.MainMenuStrip_Redo_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.MainMenuStrip_Redo_ToolStripMenuItem.Text = "Redo";
             this.MainMenuStrip_Redo_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_Redo_ToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
             // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MainMenuStrip_Theme_ToolStripMenuItem});
+            this.MainMenuStrip_Theme_ToolStripMenuItem,
+            this.runToolStripMenuItem1});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -165,7 +165,7 @@
             // MainMenuStrip_Theme_ToolStripMenuItem
             // 
             this.MainMenuStrip_Theme_ToolStripMenuItem.Name = "MainMenuStrip_Theme_ToolStripMenuItem";
-            this.MainMenuStrip_Theme_ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.MainMenuStrip_Theme_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.MainMenuStrip_Theme_ToolStripMenuItem.Text = "Theme";
             this.MainMenuStrip_Theme_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_Theme_ToolStripMenuItem_Click);
             // 
@@ -174,7 +174,7 @@
             this.runToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MainMenuStrip_Run_ToolStripMenuItem,
             this.toolStripSeparator3,
-            this.MainMenuStrip_AutoDump_ToolStripMenuItem});
+            this.MainMenuStrip_RunSettings_ToolStripMenuItem});
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
             this.runToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.runToolStripMenuItem.Text = "Run";
@@ -192,6 +192,55 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
+            // MainMenuStrip_RunSettings_ToolStripMenuItem
+            // 
+            this.MainMenuStrip_RunSettings_ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem});
+            this.MainMenuStrip_RunSettings_ToolStripMenuItem.Name = "MainMenuStrip_RunSettings_ToolStripMenuItem";
+            this.MainMenuStrip_RunSettings_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.MainMenuStrip_RunSettings_ToolStripMenuItem.Text = "Settings";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MainMenuStrip_Documentation_ToolStripMenuItem,
+            this.MainMenuStrip_Repository_ToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // MainMenuStrip_Documentation_ToolStripMenuItem
+            // 
+            this.MainMenuStrip_Documentation_ToolStripMenuItem.Name = "MainMenuStrip_Documentation_ToolStripMenuItem";
+            this.MainMenuStrip_Documentation_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.MainMenuStrip_Documentation_ToolStripMenuItem.Text = "Documentation";
+            this.MainMenuStrip_Documentation_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_Documentation_ToolStripMenuItem_Click);
+            // 
+            // MainMenuStrip_Repository_ToolStripMenuItem
+            // 
+            this.MainMenuStrip_Repository_ToolStripMenuItem.Name = "MainMenuStrip_Repository_ToolStripMenuItem";
+            this.MainMenuStrip_Repository_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.MainMenuStrip_Repository_ToolStripMenuItem.Text = "Repository";
+            this.MainMenuStrip_Repository_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_Repository_ToolStripMenuItem_Click);
+            // 
+            // Assembly_RichTextBox
+            // 
+            this.Assembly_RichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Assembly_RichTextBox.Location = new System.Drawing.Point(12, 27);
+            this.Assembly_RichTextBox.Name = "Assembly_RichTextBox";
+            this.Assembly_RichTextBox.Size = new System.Drawing.Size(1044, 519);
+            this.Assembly_RichTextBox.TabIndex = 1;
+            this.Assembly_RichTextBox.Text = "";
+            this.Assembly_RichTextBox.TextChanged += new System.EventHandler(this.MainRichTextBox_TextChanged);
+            // 
+            // runToolStripMenuItem1
+            // 
+            this.runToolStripMenuItem1.Name = "runToolStripMenuItem1";
+            this.runToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.runToolStripMenuItem1.Text = "Run";
+            // 
             // MainMenuStrip_AutoDump_ToolStripMenuItem
             // 
             this.MainMenuStrip_AutoDump_ToolStripMenuItem.CheckOnClick = true;
@@ -199,26 +248,14 @@
             this.MainMenuStrip_AutoDump_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.MainMenuStrip_AutoDump_ToolStripMenuItem.Text = "Auto Dump";
             this.MainMenuStrip_AutoDump_ToolStripMenuItem.ToolTipText = "Should the emulation DUMP at the end of the program?";
-            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_AutoDump_ToolStripMenuItem_Click);
-            // 
-            // MainRichTextBox
-            // 
-            this.MainRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.MainRichTextBox.Location = new System.Drawing.Point(12, 27);
-            this.MainRichTextBox.Name = "MainRichTextBox";
-            this.MainRichTextBox.Size = new System.Drawing.Size(1044, 519);
-            this.MainRichTextBox.TabIndex = 1;
-            this.MainRichTextBox.Text = "";
-            this.MainRichTextBox.TextChanged += new System.EventHandler(this.MainRichTextBox_TextChanged);
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_AutoDump_ToolStripMenuItem_Click_1);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1068, 558);
-            this.Controls.Add(this.MainRichTextBox);
+            this.Controls.Add(this.Assembly_RichTextBox);
             this.Controls.Add(this.MainMenuStrip);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -243,18 +280,22 @@
         private ToolStripMenuItem MainMenuStrip_Open_ToolStripMenuItem;
         private ToolStripMenuItem MainMenuStrip_Save_ToolStripMenuItem;
         private ToolStripMenuItem MainMenuStrip_SaveAs_ToolStripMenuItem;
-        private RichTextBox MainRichTextBox;
+        private RichTextBox Assembly_RichTextBox;
         private ToolStripMenuItem editToolStripMenuItem;
         private ToolStripMenuItem runToolStripMenuItem;
         private ToolStripMenuItem MainMenuStrip_Run_ToolStripMenuItem;
         private ToolStripMenuItem MainMenuStrip_Undo_ToolStripMenuItem;
         private ToolStripMenuItem MainMenuStrip_Redo_ToolStripMenuItem;
-        private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem MainMenuStrip_Refresh_ToolStripMenuItem;
         private ToolStripMenuItem viewToolStripMenuItem;
         private ToolStripMenuItem MainMenuStrip_Theme_ToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator3;
+        private ToolStripMenuItem MainMenuStrip_RunSettings_ToolStripMenuItem;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripMenuItem MainMenuStrip_Documentation_ToolStripMenuItem;
+        private ToolStripMenuItem MainMenuStrip_Repository_ToolStripMenuItem;
+        private ToolStripMenuItem runToolStripMenuItem1;
         private ToolStripMenuItem MainMenuStrip_AutoDump_ToolStripMenuItem;
     }
 }
