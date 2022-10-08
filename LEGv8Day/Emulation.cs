@@ -72,6 +72,16 @@ namespace LEGv8Day
         /// </summary>
         public int ExecutionIndex { get; set; } = 0;
 
+        /// <summary>
+        /// The line number of the last Instruction to be executed.
+        /// </summary>
+        public int ExecutionLine => _executionInstruction?.LineNumber ?? -1;
+
+        /// <summary>
+        /// The last instruction to be executed.
+        /// </summary>
+        private Instruction? _executionInstruction = null;
+
         private byte Flags;
 
         public bool NegativeFlag => ((Flags >> 3) & 1) != 0;
@@ -86,11 +96,11 @@ namespace LEGv8Day
 
         private Stopwatch _watch = new Stopwatch();
 
+        public float ExecutionTime => _watch.ElapsedMilliseconds;
+
         public bool IsRunning { get; private set; } = false;
 
         public bool IsCompleted { get; private set; } = false;
-
-        public float ExecutionTime => _watch.ElapsedMilliseconds;
 
         private List<string> _output = new List<string>();
 
@@ -146,6 +156,7 @@ namespace LEGv8Day
                 IsRunning = true;
 
                 ExecutionIndex = 0;
+                _executionInstruction = null;
 
                 _watch.Restart();
             }
@@ -159,11 +170,11 @@ namespace LEGv8Day
                 {
                     //perform step
 
-                    Instruction currentInstruction = _instructions[ExecutionIndex];
+                    _executionInstruction = _instructions[ExecutionIndex];
 
                     ExecutionIndex++;
 
-                    currentInstruction.Evaluate(this);
+                    _executionInstruction.Evaluate(this);
                 }
                 else
                 {
@@ -181,6 +192,9 @@ namespace LEGv8Day
                 IsRunning = false;
 
                 _watch.Stop();
+
+                ExecutionIndex = -1;
+                _executionInstruction = null;
             }
         }
 
@@ -196,6 +210,10 @@ namespace LEGv8Day
 
             //no longer completed
             IsCompleted = false;
+
+            //get rid of lines
+            ExecutionIndex = 0;
+            _executionInstruction = null;
         }
 
         public string[] GetOutput()
@@ -232,7 +250,15 @@ namespace LEGv8Day
             Stop();
 
             //print dump
-            Log($"DUMP on line {ExecutionIndex}:");
+            if(_executionInstruction != null)
+            {
+                Log("DUMP on:");
+                Log($"  Line ({ExecutionLine})");
+                Log($"  Instruction [{_executionInstruction}]");
+            } else
+            {
+                Log("DUMP:");
+            }
 
             //add registers
             DumpAllRegisters();
