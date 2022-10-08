@@ -46,12 +46,11 @@
             this.MainMenuStrip_Run_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.MainMenuStrip_RunSettings_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip_Documentation_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip_Repository_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Assembly_RichTextBox = new System.Windows.Forms.RichTextBox();
-            this.runToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.MainMenuStrip_AutoDump_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -141,7 +140,7 @@
             // 
             this.MainMenuStrip_Undo_ToolStripMenuItem.Name = "MainMenuStrip_Undo_ToolStripMenuItem";
             this.MainMenuStrip_Undo_ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.MainMenuStrip_Undo_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.MainMenuStrip_Undo_ToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.MainMenuStrip_Undo_ToolStripMenuItem.Text = "Undo";
             this.MainMenuStrip_Undo_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_Undo_ToolStripMenuItem_Click);
             // 
@@ -149,15 +148,14 @@
             // 
             this.MainMenuStrip_Redo_ToolStripMenuItem.Name = "MainMenuStrip_Redo_ToolStripMenuItem";
             this.MainMenuStrip_Redo_ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.MainMenuStrip_Redo_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.MainMenuStrip_Redo_ToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.MainMenuStrip_Redo_ToolStripMenuItem.Text = "Redo";
             this.MainMenuStrip_Redo_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_Redo_ToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MainMenuStrip_Theme_ToolStripMenuItem,
-            this.runToolStripMenuItem1});
+            this.MainMenuStrip_Theme_ToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -200,6 +198,15 @@
             this.MainMenuStrip_RunSettings_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.MainMenuStrip_RunSettings_ToolStripMenuItem.Text = "Settings";
             // 
+            // MainMenuStrip_AutoDump_ToolStripMenuItem
+            // 
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.CheckOnClick = true;
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Name = "MainMenuStrip_AutoDump_ToolStripMenuItem";
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Text = "Auto Dump";
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.ToolTipText = "Should the emulation DUMP at the end of the program?";
+            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_AutoDump_ToolStripMenuItem_Click_1);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -234,21 +241,6 @@
             this.Assembly_RichTextBox.TabIndex = 1;
             this.Assembly_RichTextBox.Text = "";
             this.Assembly_RichTextBox.TextChanged += new System.EventHandler(this.MainRichTextBox_TextChanged);
-            // 
-            // runToolStripMenuItem1
-            // 
-            this.runToolStripMenuItem1.Name = "runToolStripMenuItem1";
-            this.runToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.runToolStripMenuItem1.Text = "Run";
-            // 
-            // MainMenuStrip_AutoDump_ToolStripMenuItem
-            // 
-            this.MainMenuStrip_AutoDump_ToolStripMenuItem.CheckOnClick = true;
-            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Name = "MainMenuStrip_AutoDump_ToolStripMenuItem";
-            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Text = "Auto Dump";
-            this.MainMenuStrip_AutoDump_ToolStripMenuItem.ToolTipText = "Should the emulation DUMP at the end of the program?";
-            this.MainMenuStrip_AutoDump_ToolStripMenuItem.Click += new System.EventHandler(this.MainMenuStrip_AutoDump_ToolStripMenuItem_Click_1);
             // 
             // MainForm
             // 
@@ -295,7 +287,6 @@
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem MainMenuStrip_Documentation_ToolStripMenuItem;
         private ToolStripMenuItem MainMenuStrip_Repository_ToolStripMenuItem;
-        private ToolStripMenuItem runToolStripMenuItem1;
         private ToolStripMenuItem MainMenuStrip_AutoDump_ToolStripMenuItem;
     }
 }
