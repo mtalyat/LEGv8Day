@@ -33,8 +33,8 @@ namespace LEGv8Day
 
             BackColor = theme.PrimaryColor;
             ForeColor = theme.PrimaryColor.GetTextColor();
-            SimulationRichTextBox.BackColor = theme.SecondaryColor;
-            SimulationRichTextBox.ForeColor = theme.SecondaryColor.GetTextColor();
+            Output_RichTextBox.BackColor = theme.SecondaryColor;
+            Output_RichTextBox.ForeColor = theme.SecondaryColor.GetTextColor();
         }
 
         #region Form Events
@@ -47,13 +47,14 @@ namespace LEGv8Day
             ExecutionTime_Label.Text = $"Execution Time: {_emulation.ExecutionTime}ms";
 
             //check for auto dump
-            if(FormSettings.Default.AutoDump)
+            if(!_emulation.IsDumped && FormSettings.Default.AutoDump)
             {
                 _emulation.Dump();
             }
 
             //show output
-            SimulationRichTextBox.Lines = _emulation.GetOutput();
+            Output_RichTextBox.Lines = _emulation.GetOutput();
+            StackTrace_RichTextBox.Lines = _emulation.GetStackTrace();
         }
 
         #endregion

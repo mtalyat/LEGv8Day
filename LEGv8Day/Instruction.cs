@@ -39,6 +39,7 @@ namespace LEGv8Day
         {
             _data = new PackedInt();
             _instruction = instruction;
+            LineNumber = lineNumber;
         }
 
         /// <summary>
@@ -49,8 +50,12 @@ namespace LEGv8Day
 
         public override string ToString()
         {
-            //print in binary
-            return Convert.ToString(MachineCode, 2).PadLeft(sizeof(int) * 8, '0');
+            return $"{_instruction.Mnemonic} on line {LineNumber}";
+        }
+
+        public string ToStackTraceString(int spacing)
+        {
+            return $"{LineNumber.ToString().PadLeft(spacing)}: {_instruction.Mnemonic.ToString().PadRight(6)} {_data}";
         }
 
         /// <summary>

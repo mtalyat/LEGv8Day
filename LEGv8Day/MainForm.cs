@@ -93,7 +93,7 @@ namespace LEGv8Day
                 }
 
                 //turn into a line
-                line = new Line(strLine, i);
+                line = new Line(strLine, i + 1);
 
                 //if no args and not a mnemonic, must be a header
                 if (line.IsInstruction())

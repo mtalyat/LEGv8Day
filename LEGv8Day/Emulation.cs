@@ -102,7 +102,12 @@ namespace LEGv8Day
 
         public bool IsCompleted { get; private set; } = false;
 
+        public bool IsDumped { get; private set; } = false;
+
         private List<string> _output = new List<string>();
+
+        private List<int> _stackTrace = new List<int>();
+        private int _maxExecutionIndex = -1;
 
         /// <summary>
         /// Creates a new Simulation that will run using the given instructions.
@@ -172,6 +177,9 @@ namespace LEGv8Day
 
                     _executionInstruction = _instructions[ExecutionIndex];
 
+                    _stackTrace.Add(ExecutionIndex);
+                    _maxExecutionIndex = Math.Max(_maxExecutionIndex, ExecutionIndex);
+
                     ExecutionIndex++;
 
                     _executionInstruction.Evaluate(this);
@@ -207,9 +215,12 @@ namespace LEGv8Day
             Clear();
 
             _output.Clear();
+            _stackTrace.Clear();
+            _maxExecutionIndex = -1;
 
-            //no longer completed
+            //no longer completed or dumped
             IsCompleted = false;
+            IsDumped = false;
 
             //get rid of lines
             ExecutionIndex = 0;
@@ -246,15 +257,10 @@ namespace LEGv8Day
         /// <returns></returns>
         public void Dump()
         {
-            //stop program
-            Stop();
-
             //print dump
             if(_executionInstruction != null)
             {
-                Print("DUMP on:");
-                Print($"  Line ({ExecutionLine})");
-                Print($"  Instruction [{_executionInstruction}]");
+                Print($"DUMP: {_executionInstruction}");
             } else
             {
                 Print("DUMP:");
@@ -265,6 +271,11 @@ namespace LEGv8Day
 
             //add memory
             DumpAllMemory();
+
+            //stop program
+            Stop();
+
+            IsDumped = true;
         }
 
         private void DumpAllRegisters()
@@ -385,6 +396,22 @@ namespace LEGv8Day
 
             //remove string at end
             return sb.ToString().TrimEnd();
+        }
+
+        public string[] GetStackTrace()
+        {
+            int spacing = _maxExecutionIndex.ToString().Length;
+            List<string> lines = _stackTrace.Select(i => _instructions[i].ToStackTraceString(spacing)).ToList();
+
+            if(IsCompleted)
+            {
+                lines.Add("Program completed.");
+            } else if (IsDumped)
+            {
+                lines.Add("Program dumped.");
+            }
+
+            return lines.ToArray();
         }
 
         #endregion

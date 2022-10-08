@@ -91,10 +91,8 @@ namespace LEGv8Day
                 return;
             }
 
-            
-
-            //simulation completed
-            if (simulation.IsCompleted)
+            //simulation stopped, but intentionally
+            if (simulation.IsCompleted || simulation.IsDumped)
             {
                 //finished
                 OutputForm form = new OutputForm(_mainForm, simulation, _simulationName);
