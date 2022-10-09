@@ -195,7 +195,7 @@ namespace LEGv8Day
 
             for (int i = 0; i < text.Length; i++)
             {
-                c = text[i];
+                c = char.ToUpper(text[i]);
 
                 //check for escape conditions
                 if (ESCAPE_CHARS.Contains(c))
@@ -246,16 +246,22 @@ namespace LEGv8Day
                 //check word
                 if ((c == '#' || c == '-' || char.IsNumber(c)) && char.IsNumber(d))
                 {
+                    //number
+
                     NUMBER_STYLE.Stylize(sb, ref currentStyle, word);
                 }
                 else if (char.IsLetter(c) && d == ':')
                 {
+                    //label
+
                     //stylize only the text, not the colon
                     LABEL_STYLE.Stylize(sb, ref currentStyle, word.Substring(0, word.Length - 1));
                     DEFAULT_STYLE.Stylize(sb, ref currentStyle, ":");
                 }
                 else if (c == '/' && i + 1 < text.Length && text[i + 1] == '/')
                 {
+                    //comment
+
                     //comment until the end of the line
                     for (; j < text.Length; j++)
                     {
@@ -278,6 +284,8 @@ namespace LEGv8Day
                 }
                 else if (_keywords.Contains(word.ToUpper()))
                 {
+                    //keyword
+
                     KEYWORD_STYLE.Stylize(sb, ref currentStyle, word);
                 }
                 else if (IsRegister(word))
@@ -314,7 +322,7 @@ namespace LEGv8Day
             }
 
             //not a shortcut, must be a number
-            return word[0] == 'X' && int.TryParse(word.Substring(1), out int x) && x < Emulation.REGISTER_COUNT;
+            return char.ToUpper(word[0]) == 'X' && int.TryParse(word.Substring(1), out int x) && x < Emulation.REGISTER_COUNT;
         }
 
         private static bool IsIrrelevantPunctuation(char c)

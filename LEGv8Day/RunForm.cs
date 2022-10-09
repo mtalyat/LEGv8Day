@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,13 +19,15 @@ namespace LEGv8Day
 
         private readonly string _simulationName;
 
-        private object _lock = new object();
+        private object _lock;
 
         public RunForm(MainForm mainForm, Emulation emulation, string name)
         {
             _mainForm = mainForm;
             _emulation = emulation;
             _simulationName = name;
+
+            _lock = new object();
 
             InitializeComponent();
 
@@ -35,41 +38,24 @@ namespace LEGv8Day
         {
             lock(_lock)
             {
-                _emulation.Stop();
+                _emulation.Cancel();
             }
         }
 
-        private async Task<Emulation> RunSimulation(Emulation simulation)
+        private Task RunEmulation()
         {
-            await Task.Run(() =>
+            return Task.Run(() =>
             {
-                simulation.Start();
+                _emulation.Start();
 
-                while (simulation.IsRunning)
+                while (_emulation.IsRunning)
                 {
-                    lock(_lock)
+                    lock (_lock)
                     {
-                        simulation.Step();
+                        _emulation.Step();
                     }
-
-                    //report progress
-                    //if (InvokeRequired)
-                    //{
-                    //    ElapsedTime_Label.Invoke(new Action(() =>
-                    //    {
-                    //        ElapsedTime_Label.Text = $"Elapsed time: {simulation.ExecutionTime / 1000.0f}s";
-                    //    }));
-                    //}
-                    //else
-                    //{
-                    //    ElapsedTime_Label.Text = $"Elapsed time: {simulation.ExecutionTime / 1000.0f}s";
-                    //}
                 }
-
-                return simulation;
             });
-
-            return simulation;
         }
 
         private void RunForm_Load(object sender, EventArgs e)
@@ -79,27 +65,17 @@ namespace LEGv8Day
 
         private async void RunForm_Shown(object sender, EventArgs e)
         {
-            Emulation simulation;
+            await RunEmulation();
 
-            try
-            {
-                simulation = await RunSimulation(_emulation);
-            } catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error running the emulation.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Close();
-                return;
-            }
-
-            //simulation stopped, but intentionally
-            if (simulation.IsCompleted || simulation.IsDumped)
+            if (!_emulation.IsRunning)
             {
                 //finished
-                OutputForm form = new OutputForm(_mainForm, simulation, _simulationName);
+                OutputForm form = new OutputForm(_mainForm, _emulation, _simulationName);
+
                 form.Show();
             }
 
-            //close regardless of completed or canceled
+            //close regardless of completed or canceled or whatever
             Close();
         }
     }

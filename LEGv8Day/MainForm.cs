@@ -25,8 +25,6 @@ namespace LEGv8Day
 
         private const string URL_REPOSITORY = @"https://github.com/mtalyat/LEGv8Day";
 
-        private Dictionary<string, CoreInstruction> _coreInstructions = new Dictionary<string, CoreInstruction>();
-
         private LegFile _legFile;
 
         private List<Theme> _themes;

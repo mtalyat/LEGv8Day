@@ -10,6 +10,8 @@ namespace LEGv8Day
     {
         #region Consts
 
+        public const char ESCAPE_CHAR = '\\';
+
         public const char FORMAT_REG_OPEN = '{';
         public const char FORMAT_REG_CLOSE = '}';
 
@@ -94,7 +96,7 @@ namespace LEGv8Day
             int arg2 = args.Length > 2 ? args[2] : (args.Length > 1 ? arg1 : arg0);
 
             //find the core instruction
-            if (Parse.CoreInstructions.TryGetValue(line.Label, out CoreInstruction? ci))
+            if (Parse.CoreInstructions.TryGetValue(line.Label.ToUpper(), out CoreInstruction? ci))
             {
                 switch (ci.Format)
                 {
@@ -115,14 +117,16 @@ namespace LEGv8Day
                 }
             }
 
-            return new EmptyInstruction(line.LineNumber);
+            return new EmptyInstruction(line);
         }
 
         public static int ParseRegister(string arg)
         {
-            if (arg.StartsWith(REGISTER_PREFIX))
+            string upperArg = arg.ToUpper();
+
+            if (upperArg[0] == REGISTER_PREFIX)
             {
-                if (arg == "XZR")
+                if (upperArg == "XZR")
                 {
                     return 31;//zero register
                 }
@@ -134,7 +138,7 @@ namespace LEGv8Day
             } else
             {
                 //check special cases for registers
-                switch (arg)
+                switch (upperArg)
                 {
                     case "IP0": return 16;
                     case "IP1": return 17;
@@ -160,26 +164,28 @@ namespace LEGv8Day
 
         public static int ParseArgument(string arg, Dictionary<string, int>? headers = null)
         {
+            string upperArg = arg.ToUpper();
+
             //determine what to do based on the starting char
-            switch (arg[0])
+            switch (upperArg[0])
             {
                 case REGISTER_PREFIX://register
                     {
-                        if (arg == "XZR")
+                        if (upperArg == "XZR")
                         {
                             return 31;//zero register
                         }
                         else
                         {
                             //another register, parse the number next to the X
-                            return int.Parse(arg.Substring(1));
+                            return int.TryParse(arg.Substring(1), out int i) ? i : -1;
                         }
                     }
                 case NUMBER_PREFIX://number
                     return int.Parse(arg.Substring(1));
                 default:
                     //check special cases for registers
-                    switch (arg)
+                    switch (upperArg)
                     {
                         case "IP0": return 16;
                         case "IP1": return 17;

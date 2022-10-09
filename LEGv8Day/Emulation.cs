@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,6 +25,11 @@ namespace LEGv8Day
         /// The size of memory, in bytes, within this simulation.
         /// </summary>
         public const int MEMORY_SIZE = 4096;
+
+        /// <summary>
+        /// The maximum number of lines the stack trace will remember.
+        /// </summary>
+        private const int STACK_TRACE_MAX_LENGTH = 256;
 
         #endregion
 
@@ -104,9 +111,11 @@ namespace LEGv8Day
 
         public bool IsDumped { get; private set; } = false;
 
+        public bool IsCanceled { get; private set; } = false;
+
         private List<string> _output = new List<string>();
 
-        private List<int> _stackTrace = new List<int>();
+        private Queue<int> _stackTrace = new Queue<int>();
         private int _maxExecutionIndex = -1;
 
         /// <summary>
@@ -177,7 +186,12 @@ namespace LEGv8Day
 
                     _executionInstruction = _instructions[ExecutionIndex];
 
-                    _stackTrace.Add(ExecutionIndex);
+                    _stackTrace.Enqueue(ExecutionIndex);
+                    if(_stackTrace.Count > STACK_TRACE_MAX_LENGTH)
+                    {
+                        _stackTrace.Dequeue();
+                    }
+
                     _maxExecutionIndex = Math.Max(_maxExecutionIndex, ExecutionIndex);
 
                     ExecutionIndex++;
@@ -206,6 +220,14 @@ namespace LEGv8Day
             }
         }
 
+        public void Cancel()
+        {
+            //stop
+            Stop();
+
+            IsCanceled = true;
+        }
+
         /// <summary>
         /// Resets the simulation entirely. Clears all registers and memory.
         /// </summary>
@@ -221,6 +243,7 @@ namespace LEGv8Day
             //no longer completed or dumped
             IsCompleted = false;
             IsDumped = false;
+            IsCanceled = false;
 
             //get rid of lines
             ExecutionIndex = 0;
@@ -333,69 +356,181 @@ namespace LEGv8Day
             _output.Add(FormatString(str));
         }
 
-        private string FormatString(string str)
+        private int FindInFormatString(string str, int i, char c)
         {
-            //split into words
-            string[] words = str.Split(' ');
+            char d;
 
-            //string builder to go back
-            StringBuilder sb = new StringBuilder();
-
-            //check words
-            foreach(string w in words)
+            for (int j = i + 1; j < str.Length; j++)
             {
-                //if starts with { and ends with }...
-                if(w.StartsWith(Parse.FORMAT_REG_OPEN) && w.EndsWith(Parse.FORMAT_REG_CLOSE))
+                d = str[j];
+
+                if (d == Parse.ESCAPE_CHAR)
                 {
-                    //format
-                    string inside = w.Substring(1, w.Length - 2);
-
-                    //get register index
-                    int index = Parse.ParseRegister(inside);
-
-                    //get value
-                    if(index >= 0)
-                    {
-                        sb.Append(GetReg(index));
-                        sb.Append(' ');
-
-                        continue;
-                    }
-                } else if (w.StartsWith(Parse.FORMAT_MEM_OPEN) && w.EndsWith(Parse.FORMAT_MEM_CLOSE))
-                {
-                    //format
-                    string inside = w.Substring(1, w.Length - 2);
-
-                    //get register index
-                    int value = Parse.ParseRegister(inside);
-
-                    if(value < 0)
-                    {
-                        //not a register, get a number
-                        value = Parse.ParseNumber(inside);
-                    } else
-                    {
-                        //register, get value from register
-                        value = (int)GetReg(value);
-                    }
-
-                    //put value from memory
-                    if(value >= 0)
-                    {
-                        sb.Append(GetMem(value));
-                        sb.Append(' ');
-
-                        continue;
-                    }
+                    //skip this and next char
+                    j++;
+                    continue;
                 }
 
-                //ignore otherwise
-                sb.Append(w);
-                sb.Append(' ');
+                //if a closing...
+                if (d == c)
+                {
+                    return j;
+                }
             }
 
-            //remove string at end
-            return sb.ToString().TrimEnd();
+            //not found
+            return str.Length;
+        }
+
+        private string FormatString(string str)
+        {
+            if(string.IsNullOrWhiteSpace(str))
+            {
+                return string.Empty;
+            }
+
+            //if it is just one word, and a register, just print that
+            int index = Parse.ParseRegister(str);
+
+            if (index >= 0)
+            {
+                return GetReg(index).ToString();
+            }
+
+            int i, j;
+            char c, d;
+            string inside;
+
+            StringBuilder sb = new StringBuilder();
+
+            //not just a register, so format it
+            for (i = 0; i < str.Length; i++)
+            {
+                c = str[i];
+
+                if(c == Parse.ESCAPE_CHAR)
+                {
+                    //skip this and next char
+                    i++;
+                    continue;
+                }
+
+                //if an opening...
+                if(c == Parse.FORMAT_REG_OPEN || c == Parse.FORMAT_MEM_OPEN)
+                {
+                    //find closing
+                    j = FindInFormatString(str, i, c == Parse.FORMAT_REG_OPEN ? Parse.FORMAT_REG_CLOSE : Parse.FORMAT_MEM_CLOSE);
+
+                    //check if not found or
+                    //if the next one, ignore, there is no inside
+                    if (j >= str.Length || j == i + 1)
+                    {
+                        sb.Append(c);
+                        continue;
+                    }
+
+                    //get insides
+                    inside = str.Substring(i + 1, j - i - 1);
+
+                    //parse
+                    index = Parse.ParseRegister(inside);
+
+                    //if valid...
+                    if (index >= 0)
+                    {
+                        //insert value
+                        if (c == Parse.FORMAT_REG_OPEN)
+                        {
+                            //register value
+                            sb.Append(GetReg(index));
+                        }
+                        else
+                        {
+                            //memory value at the given register
+                            sb.Append(GetMem((int)GetReg(index)));
+                        }
+                    }
+                    else
+                    {
+                        //if not valid, just insert the whole thing
+                        sb.Append(c);
+                        sb.Append(inside);
+                        sb.Append(str[j]);
+                    }
+
+                    //advance i to the closing
+                    i = j;
+                } else
+                {
+                    //not an opening, so just add
+                    sb.Append(c);
+                }
+            }
+
+            //return new string
+            return sb.ToString();
+
+            ////split into words
+            //string[] words = str.Split(' ');
+
+            ////string builder to go back
+            //StringBuilder sb = new StringBuilder();
+
+            ////check words
+            //foreach(string w in words)
+            //{
+            //    //if starts with { and ends with }...
+            //    if(w.StartsWith(Parse.FORMAT_REG_OPEN) && w.EndsWith(Parse.FORMAT_REG_CLOSE))
+            //    {
+            //        //format
+            //        string inside = w.Substring(1, w.Length - 2);
+
+            //        //get register index
+            //        int index = Parse.ParseRegister(inside);
+
+            //        //get value
+            //        if(index >= 0)
+            //        {
+            //            sb.Append(GetReg(index));
+            //            sb.Append(' ');
+
+            //            continue;
+            //        }
+            //    } else if (w.StartsWith(Parse.FORMAT_MEM_OPEN) && w.EndsWith(Parse.FORMAT_MEM_CLOSE))
+            //    {
+            //        //format
+            //        string inside = w.Substring(1, w.Length - 2);
+
+            //        //get register index
+            //        int value = Parse.ParseRegister(inside);
+
+            //        if(value < 0)
+            //        {
+            //            //not a register, get a number
+            //            value = Parse.ParseNumber(inside);
+            //        } else
+            //        {
+            //            //register, get value from register
+            //            value = (int)GetReg(value);
+            //        }
+
+            //        //put value from memory
+            //        if(value >= 0)
+            //        {
+            //            sb.Append(GetMem(value));
+            //            sb.Append(' ');
+
+            //            continue;
+            //        }
+            //    }
+
+            //    //ignore otherwise
+            //    sb.Append(w);
+            //    sb.Append(' ');
+            //}
+
+            ////remove string at end
+            //return sb.ToString().TrimEnd();
         }
 
         public string[] GetStackTrace()
@@ -403,13 +538,22 @@ namespace LEGv8Day
             int spacing = _maxExecutionIndex.ToString().Length;
             List<string> lines = _stackTrace.Select(i => _instructions[i].ToStackTraceString(spacing)).ToList();
 
+            //add reason for completion
             if(IsCompleted)
             {
                 lines.Add("Program completed.");
-            } else if (IsDumped)
+            }
+            else if (IsCanceled)
+            {
+                lines.Add("Program canceled.");
+            }
+            else if (IsDumped)
             {
                 lines.Add("Program dumped.");
             }
+
+            //reverse
+            lines.Reverse();
 
             return lines.ToArray();
         }

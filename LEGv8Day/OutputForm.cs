@@ -46,15 +46,17 @@ namespace LEGv8Day
             //set label to name
             ExecutionTime_Label.Text = $"Execution Time: {_emulation.ExecutionTime}ms";
 
+            //show stack trace
+            StackTrace_RichTextBox.Lines = _emulation.GetStackTrace();
+
             //check for auto dump
-            if(!_emulation.IsDumped && FormSettings.Default.AutoDump)
+            if (!_emulation.IsDumped && FormSettings.Default.AutoDump)
             {
                 _emulation.Dump();
             }
 
             //show output
             Output_RichTextBox.Lines = _emulation.GetOutput();
-            StackTrace_RichTextBox.Lines = _emulation.GetStackTrace();
         }
 
         #endregion

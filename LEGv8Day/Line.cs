@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LEGv8Day
 {
-    internal class Line
+    public class Line
     {
         public string Label { get; private set; }
 
@@ -57,7 +57,7 @@ namespace LEGv8Day
 
         public override string ToString()
         {
-            return $"{Label} {string.Join(Constants.ARG_SEPARATOR, RawArgs)}";
+            return $"{Label} {RawArgs}";
         }
     }
 }
