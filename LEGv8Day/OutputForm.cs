@@ -1,9 +1,11 @@
-﻿using System;
+﻿using LEGv8Day;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -31,10 +33,11 @@ namespace LEGv8Day
             //set theme
             Theme theme = _mainForm.GetActiveTheme();
 
-            BackColor = theme.PrimaryColor;
-            ForeColor = theme.PrimaryColor.GetTextColor();
-            Output_RichTextBox.BackColor = theme.SecondaryColor;
-            Output_RichTextBox.ForeColor = theme.SecondaryColor.GetTextColor();
+            this.SetTheme(theme.PrimaryColor);
+            Output_RichTextBox.SetTheme(theme.SecondaryColor);
+            StackTrace_RichTextBox.SetTheme(theme.SecondaryColor);
+            OutputTabPage.SetTheme(theme.TertiaryColor);
+            StackTraceTabPage.SetTheme(theme.TertiaryColor);
         }
 
         #region Form Events
@@ -62,5 +65,20 @@ namespace LEGv8Day
         #endregion
 
         #endregion
+    }
+}
+
+public static class ControlExtensions
+{
+    public static void SetTheme(this Control control, Color foreground, Color background)
+    {
+        control.ForeColor = foreground;
+        control.BackColor = background;
+    }
+
+    public static void SetTheme(this Control control, Color color)
+    {
+        control.BackColor = color;
+        control.ForeColor = color.GetTextColor();
     }
 }

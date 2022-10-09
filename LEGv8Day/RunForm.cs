@@ -32,6 +32,12 @@ namespace LEGv8Day
             InitializeComponent();
 
             Text = $"Running {name}...";
+
+            //set theme
+            Theme theme = _mainForm.GetActiveTheme();
+
+            this.SetTheme(theme.PrimaryColor);
+            Cancel_Button.SetTheme(theme.SecondaryColor);
         }
 
         private void Cancel_Button_Click(object sender, EventArgs e)
