@@ -51,6 +51,7 @@
             this.MainMenuStrip_Documentation_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip_Repository_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Assembly_RichTextBox = new System.Windows.Forms.RichTextBox();
+            this.Stats_Label = new System.Windows.Forms.Label();
             this.MainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -237,17 +238,30 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Assembly_RichTextBox.Location = new System.Drawing.Point(12, 27);
             this.Assembly_RichTextBox.Name = "Assembly_RichTextBox";
-            this.Assembly_RichTextBox.Size = new System.Drawing.Size(1044, 519);
+            this.Assembly_RichTextBox.Size = new System.Drawing.Size(1044, 504);
             this.Assembly_RichTextBox.TabIndex = 1;
             this.Assembly_RichTextBox.Text = "";
             this.Assembly_RichTextBox.WordWrap = false;
+            this.Assembly_RichTextBox.SelectionChanged += new System.EventHandler(this.Assembly_RichTextBox_SelectionChanged);
             this.Assembly_RichTextBox.TextChanged += new System.EventHandler(this.MainRichTextBox_TextChanged);
+            // 
+            // Stats_Label
+            // 
+            this.Stats_Label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Stats_Label.AutoSize = true;
+            this.Stats_Label.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Stats_Label.Location = new System.Drawing.Point(12, 534);
+            this.Stats_Label.Name = "Stats_Label";
+            this.Stats_Label.Size = new System.Drawing.Size(84, 14);
+            this.Stats_Label.TabIndex = 2;
+            this.Stats_Label.Text = "Stats Label";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1068, 558);
+            this.Controls.Add(this.Stats_Label);
             this.Controls.Add(this.Assembly_RichTextBox);
             this.Controls.Add(this.MainMenuStrip);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -289,5 +303,6 @@
         private ToolStripMenuItem MainMenuStrip_Documentation_ToolStripMenuItem;
         private ToolStripMenuItem MainMenuStrip_Repository_ToolStripMenuItem;
         private ToolStripMenuItem MainMenuStrip_AutoDump_ToolStripMenuItem;
+        private Label Stats_Label;
     }
 }

@@ -346,9 +346,8 @@ namespace LEGv8Day
 
             RefreshText();
 
-            BackColor = active.PrimaryColor;
-
-            Assembly_RichTextBox.BackColor = active.SecondaryColor;
+            this.SetTheme(active.PrimaryColor);
+            Assembly_RichTextBox.SetTheme(active.SecondaryColor);
         }
 
         private void LoadAllData()
@@ -387,6 +386,23 @@ namespace LEGv8Day
             Process.Start("explorer", link);
         }
 
+        private void UpdateStats()
+        {
+            int selectStart = Assembly_RichTextBox.SelectionStart;
+            int selectStartLine = Assembly_RichTextBox.GetLineFromCharIndex(selectStart) + 1;
+            int selectLength = Assembly_RichTextBox.SelectionLength;
+            int selectStopLine;
+            if (selectLength > 0)
+            {
+                selectStopLine = Assembly_RichTextBox.GetLineFromCharIndex(selectStart + Assembly_RichTextBox.SelectionLength) + 1;
+            } else
+            {
+                selectStopLine = selectStartLine;
+            }
+
+            Stats_Label.Text = $"Line: ({selectStartLine}{(selectStartLine == selectStopLine ? string.Empty : $" - {selectStopLine}")}/{Assembly_RichTextBox.GetLineFromCharIndex(Assembly_RichTextBox.Text.Length) + 1})";
+        }
+
         #endregion
 
         #region Form Events
@@ -404,6 +420,8 @@ namespace LEGv8Day
         }
 
         #endregion
+
+        #region Assembly RichTextBox
 
         private void MainRichTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -423,6 +441,13 @@ namespace LEGv8Day
 
             SetSaveState(text == _lastSavedText);
         }
+
+        private void Assembly_RichTextBox_SelectionChanged(object sender, EventArgs e)
+        {
+            UpdateStats();
+        }
+
+        #endregion
 
         #region Main Menu Strip
 
