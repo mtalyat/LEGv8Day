@@ -286,6 +286,9 @@ namespace LEGv8Day
                 //get selected position relative to end
                 int index = Assembly_RichTextBox.Text.Length - 1 - Assembly_RichTextBox.SelectionStart;
 
+                //disable
+                Assembly_RichTextBox.Enabled = false;
+
                 //set text, do not trigger infinite loop
                 _ignoreNextSetText = true;
                 Assembly_RichTextBox.Rtf = text;
@@ -293,9 +296,16 @@ namespace LEGv8Day
 
                 _rtf = text;
 
+                //re-enable
+                Assembly_RichTextBox.Enabled = true;
+
                 //set selected back to where we were
                 Assembly_RichTextBox.SelectionStart = Math.Max(Assembly_RichTextBox.Text.Length - 1 - index, 0);
                 Assembly_RichTextBox.SelectionLength = 0;
+
+                //focus up
+                Assembly_RichTextBox.Focus();
+
             }
             else
             {

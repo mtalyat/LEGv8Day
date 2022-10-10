@@ -240,6 +240,7 @@
             this.Assembly_RichTextBox.Size = new System.Drawing.Size(1044, 519);
             this.Assembly_RichTextBox.TabIndex = 1;
             this.Assembly_RichTextBox.Text = "";
+            this.Assembly_RichTextBox.WordWrap = false;
             this.Assembly_RichTextBox.TextChanged += new System.EventHandler(this.MainRichTextBox_TextChanged);
             // 
             // MainForm
