@@ -116,7 +116,6 @@ namespace LEGv8Day
         private List<string> _output = new List<string>();
 
         private Queue<int> _stackTrace = new Queue<int>();
-        private int _maxExecutionIndex = -1;
 
         /// <summary>
         /// Creates a new Simulation that will run using the given instructions.
@@ -196,8 +195,6 @@ namespace LEGv8Day
                         _stackTrace.Dequeue();
                     }
 
-                    _maxExecutionIndex = Math.Max(_maxExecutionIndex, ExecutionIndex);
-
                     ExecutionIndex++;
 
                     _executionInstruction.Evaluate(this);
@@ -242,7 +239,6 @@ namespace LEGv8Day
 
             _output.Clear();
             _stackTrace.Clear();
-            _maxExecutionIndex = -1;
 
             //no longer completed or dumped
             IsCompleted = false;
@@ -505,7 +501,7 @@ namespace LEGv8Day
 
         public string[] GetStackTrace()
         {
-            int spacing = _maxExecutionIndex.ToString().Length;
+            int spacing = _stackTrace.Max(i => _instructions[i].LineNumber).ToString().Length;
             List<string> lines = _stackTrace.Select(i => _instructions[i].ToStackTraceString(i, spacing)).ToList();
 
             //add reason for completion
