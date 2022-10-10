@@ -281,6 +281,9 @@ namespace LEGv8Day
 
             //Stack Pointer (end of memory)
             _registers[28] = MEMORY_SIZE;
+
+            //Frame Pointer
+            _registers[29] = MEMORY_SIZE;
         }
 
         /// <summary>
@@ -363,6 +366,11 @@ namespace LEGv8Day
 
             //format string
             _output.Add(FormatString(str));
+        }
+
+        public void PrintRaw(string str)
+        {
+            _output.Add(str);
         }
 
         private int FindInFormatString(string str, int i, char c)

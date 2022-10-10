@@ -89,7 +89,7 @@ namespace LEGv8Day
         public long Get(int offset, int size)
         {
             //return what we want at the least significant bits side, with everything else zero'd
-            return (_data >> offset) & ((1 << size) - 1);
+            return (_data >> offset) & (((long)1 << size) - 1);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace LEGv8Day
              */
 
             //clear out old data
-            _data &= ~(((1 << size) - 1) << offset);
+            _data &= ~((((long)1 << size) - 1) << offset);
 
             //add in new data
             _data |= data << offset;

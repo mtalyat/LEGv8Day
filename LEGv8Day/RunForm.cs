@@ -71,7 +71,16 @@ namespace LEGv8Day
 
         private async void RunForm_Shown(object sender, EventArgs e)
         {
-            await RunEmulation();
+            try
+            {
+                await RunEmulation();
+            } catch(Exception ex)
+            {
+                //crashed!
+                _emulation.PrintRaw($"ERROR: {ex.Message}");
+
+                _emulation.Dump();
+            }
 
             if (!_emulation.IsRunning)
             {
