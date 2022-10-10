@@ -14,54 +14,54 @@
             _data.SetRange(0, 4, rt);
         }
 
-        public override void Evaluate(Emulation simulation)
+        public override void Evaluate(Emulation emulation)
         {
             switch (_instruction.Mnemonic)
             {
                 case InstructionMnemonic.CBZ:
-                    if (simulation.GetReg(Rt) == 0)
-                        simulation.ExecutionIndex = CondBrAddress;
+                    if (emulation.GetReg(Rt) == 0)
+                        emulation.ExecutionIndex = CondBrAddress;
                     break;
                 case InstructionMnemonic.CBNZ:
-                    if (simulation.GetReg(Rt) != 0)
-                        simulation.ExecutionIndex = CondBrAddress;
+                    if (emulation.GetReg(Rt) != 0)
+                        emulation.ExecutionIndex = CondBrAddress;
                     break;
 
                 case InstructionMnemonic.B_EQ:
-                    if (simulation.ZeroFlag)
-                        simulation.ExecutionIndex = CondBrAddress;
+                    if (emulation.ZeroFlag)
+                        emulation.ExecutionIndex = CondBrAddress;
                     break;
                 case InstructionMnemonic.B_NE:
-                    if (!simulation.ZeroFlag)
-                        simulation.ExecutionIndex = CondBrAddress;
+                    if (!emulation.ZeroFlag)
+                        emulation.ExecutionIndex = CondBrAddress;
                     break;
                 case InstructionMnemonic.B_LT:
                 case InstructionMnemonic.B_LO:
-                    if (!simulation.ZeroFlag && simulation.NegativeFlag)
-                        simulation.ExecutionIndex = CondBrAddress;
+                    if (!emulation.ZeroFlag && emulation.NegativeFlag)
+                        emulation.ExecutionIndex = CondBrAddress;
                     break;
                 case InstructionMnemonic.B_LE:
                 case InstructionMnemonic.B_LS:
-                    if (simulation.ZeroFlag || simulation.NegativeFlag)
-                        simulation.ExecutionIndex = CondBrAddress;
+                    if (emulation.ZeroFlag || emulation.NegativeFlag)
+                        emulation.ExecutionIndex = CondBrAddress;
                     break;
                 case InstructionMnemonic.B_GT:
                 case InstructionMnemonic.B_HI:
-                    if (!simulation.ZeroFlag && !simulation.NegativeFlag)
-                        simulation.ExecutionIndex = CondBrAddress;
+                    if (!emulation.ZeroFlag && !emulation.NegativeFlag)
+                        emulation.ExecutionIndex = CondBrAddress;
                     break;
                 case InstructionMnemonic.B_GE:
                 case InstructionMnemonic.B_HS:
-                    if (simulation.ZeroFlag || !simulation.NegativeFlag)
-                        simulation.ExecutionIndex = CondBrAddress;
+                    if (emulation.ZeroFlag || !emulation.NegativeFlag)
+                        emulation.ExecutionIndex = CondBrAddress;
                     break;
                 case InstructionMnemonic.B_MI:
-                    if (simulation.NegativeFlag)
-                        simulation.ExecutionIndex = CondBrAddress;
+                    if (emulation.NegativeFlag)
+                        emulation.ExecutionIndex = CondBrAddress;
                     break;
                 case InstructionMnemonic.B_PL:
-                    if(!simulation.NegativeFlag)
-                        simulation.ExecutionIndex = CondBrAddress;
+                    if(!emulation.NegativeFlag)
+                        emulation.ExecutionIndex = CondBrAddress;
                     break;
 
                 default:

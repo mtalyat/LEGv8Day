@@ -162,7 +162,7 @@ namespace LEGv8Day
             return int.TryParse(arg, out int i) ? i : -1;
         }
 
-        public static int ParseArgument(string arg, Dictionary<string, int>? headers = null)
+        public static int ParseArgument(string arg, Dictionary<string, int>? labels = null)
         {
             string upperArg = arg.ToUpper();
 
@@ -200,7 +200,7 @@ namespace LEGv8Day
                         //return that number
                         return value;
                     }
-                    else if (headers?.TryGetValue(arg, out value) ?? false)//check if a header name
+                    else if (labels?.TryGetValue(arg, out value) ?? false)//check if a label name
                     {
                         //use the line the header corresponds to
                         return value;

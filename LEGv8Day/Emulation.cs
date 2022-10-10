@@ -48,7 +48,7 @@ namespace LEGv8Day
         /// <summary>
         /// The index of the return address register.
         /// </summary>
-        public const int RETURN_ADDRESS_REG = REGISTER_COUNT - 2;
+        public const int LINK_REG = REGISTER_COUNT - 2;
 
         /// <summary>
         /// The index of the constant zero register.
@@ -448,31 +448,46 @@ namespace LEGv8Day
 
                     //get insides
                     inside = str.Substring(i + 1, j - i - 1);
-
-                    //parse
-                    index = Parse.ParseRegister(inside);
-
-                    //if valid...
-                    if (index >= 0)
+                    
+                    //check special cases, otherwise parse register number
+                    switch(inside.ToUpper())
                     {
-                        //insert value
-                        if (c == Parse.FORMAT_REG_OPEN)
-                        {
-                            //register value
-                            sb.Append(GetReg(index));
-                        }
-                        else
-                        {
-                            //memory value at the given register
-                            sb.Append(GetMem((int)GetReg(index)));
-                        }
-                    }
-                    else
-                    {
-                        //if not valid, just insert the whole thing
-                        sb.Append(c);
-                        sb.Append(inside);
-                        sb.Append(str[j]);
+                        case "EI":
+                            sb.Append(ExecutionIndex);
+                            break;
+                        case "EL":
+                            sb.Append(ExecutionLine);
+                            break;
+                        case "ET":
+                            sb.Append(ExecutionTime);
+                            break;
+                        default:
+                            //parse
+                            index = Parse.ParseRegister(inside);
+
+                            //if valid...
+                            if (index >= 0)
+                            {
+                                //insert value
+                                if (c == Parse.FORMAT_REG_OPEN)
+                                {
+                                    //register value
+                                    sb.Append(GetReg(index));
+                                }
+                                else
+                                {
+                                    //memory value at the given register
+                                    sb.Append(GetMem((int)GetReg(index)));
+                                }
+                            }
+                            else
+                            {
+                                //if not valid, just insert the whole thing
+                                sb.Append(c);
+                                sb.Append(inside);
+                                sb.Append(str[j]);
+                            }
+                            break;
                     }
 
                     //advance i to the closing
@@ -486,74 +501,12 @@ namespace LEGv8Day
 
             //return new string
             return sb.ToString();
-
-            ////split into words
-            //string[] words = str.Split(' ');
-
-            ////string builder to go back
-            //StringBuilder sb = new StringBuilder();
-
-            ////check words
-            //foreach(string w in words)
-            //{
-            //    //if starts with { and ends with }...
-            //    if(w.StartsWith(Parse.FORMAT_REG_OPEN) && w.EndsWith(Parse.FORMAT_REG_CLOSE))
-            //    {
-            //        //format
-            //        string inside = w.Substring(1, w.Length - 2);
-
-            //        //get register index
-            //        int index = Parse.ParseRegister(inside);
-
-            //        //get value
-            //        if(index >= 0)
-            //        {
-            //            sb.Append(GetReg(index));
-            //            sb.Append(' ');
-
-            //            continue;
-            //        }
-            //    } else if (w.StartsWith(Parse.FORMAT_MEM_OPEN) && w.EndsWith(Parse.FORMAT_MEM_CLOSE))
-            //    {
-            //        //format
-            //        string inside = w.Substring(1, w.Length - 2);
-
-            //        //get register index
-            //        int value = Parse.ParseRegister(inside);
-
-            //        if(value < 0)
-            //        {
-            //            //not a register, get a number
-            //            value = Parse.ParseNumber(inside);
-            //        } else
-            //        {
-            //            //register, get value from register
-            //            value = (int)GetReg(value);
-            //        }
-
-            //        //put value from memory
-            //        if(value >= 0)
-            //        {
-            //            sb.Append(GetMem(value));
-            //            sb.Append(' ');
-
-            //            continue;
-            //        }
-            //    }
-
-            //    //ignore otherwise
-            //    sb.Append(w);
-            //    sb.Append(' ');
-            //}
-
-            ////remove string at end
-            //return sb.ToString().TrimEnd();
         }
 
         public string[] GetStackTrace()
         {
             int spacing = _maxExecutionIndex.ToString().Length;
-            List<string> lines = _stackTrace.Select(i => _instructions[i].ToStackTraceString(spacing)).ToList();
+            List<string> lines = _stackTrace.Select(i => _instructions[i].ToStackTraceString(i, spacing)).ToList();
 
             //add reason for completion
             if(IsCompleted)

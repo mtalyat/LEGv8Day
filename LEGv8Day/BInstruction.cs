@@ -19,7 +19,7 @@
                     e.ExecutionIndex = BrAddress;
                     break;
                 case InstructionMnemonic.BL:
-                    e.SetReg(Emulation.RETURN_ADDRESS_REG, e.ExecutionIndex);
+                    e.SetReg(Emulation.LINK_REG, e.ExecutionIndex);
                     e.ExecutionIndex = BrAddress;
                     break;
                 default:

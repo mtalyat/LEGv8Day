@@ -29,6 +29,9 @@ namespace LEGv8Day
                 case InstructionMnemonic.PRNL:
                     e.Print("");
                     break;
+
+                default:
+                    throw new NotImplementedException($"The instruction {_instruction.Mnemonic} has not been implemented yet.");
             }
         }
     }

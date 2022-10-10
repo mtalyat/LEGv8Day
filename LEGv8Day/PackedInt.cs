@@ -136,11 +136,13 @@ namespace LEGv8Day
              * 
              */
 
+            int c = ((1 << size) - 1);
+
             //clear out old data
-            _data &= ~(((1 << size) - 1) << offset);
+            _data &= ~(c << offset);
 
             //add in new data
-            _data |= data << offset;
+            _data |= (c & data) << offset;
 
             //_data = (_data & ~(1 << bit)) | (value ? 1 : 0) << bit;
         }

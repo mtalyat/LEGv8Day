@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Logging;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -137,11 +138,13 @@ namespace LEGv8Day
              * 
              */
 
+            long c = (((long)1 << size) - 1);
+
             //clear out old data
-            _data &= ~((((long)1 << size) - 1) << offset);
+            _data &= ~(c << offset);
 
             //add in new data
-            _data |= data << offset;
+            _data |= (data & c) << offset;
 
             //_data = (_data & ~(1 << bit)) | (value ? 1 : 0) << bit;
         }

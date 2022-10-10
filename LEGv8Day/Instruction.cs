@@ -53,9 +53,9 @@ namespace LEGv8Day
             return $"{_instruction.Mnemonic} on line {LineNumber}";
         }
 
-        public string ToStackTraceString(int spacing)
+        public string ToStackTraceString(int index, int spacing)
         {
-            return $"{LineNumber.ToString().PadLeft(spacing)}: {_instruction.Mnemonic.ToString().PadRight(6)} {_data}";
+            return $"{LineNumber.ToString().PadLeft(spacing)}: {_instruction.Mnemonic.ToString().PadRight(6)} {_data} : {index}";
         }
 
         /// <summary>

@@ -9,9 +9,10 @@
             _line = line;
         }
 
-        public override void Evaluate(Emulation simulation)
+        public override void Evaluate(Emulation emulation)
         {
-
+            emulation.PrintRaw($"ERROR: \"{_line}\" on line {LineNumber}, no instruction executed");
+            emulation.Dump();
         }
 
         public override string ToString()
