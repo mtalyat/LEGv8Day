@@ -81,7 +81,7 @@
                     break;
 
                 case InstructionMnemonic.CMP:
-                    unchecked { value = left + right; }
+                    unchecked { value = e.GetReg(Rd) - left; }
                     e.SetFlags(value, left, right);
                     break;
                 case InstructionMnemonic.MOV:

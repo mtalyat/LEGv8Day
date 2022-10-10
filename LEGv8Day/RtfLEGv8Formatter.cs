@@ -156,6 +156,8 @@ namespace LEGv8Day
 
         private static HashSet<string> _keywords = new HashSet<string>();
 
+        private static HashSet<string> _labels = new HashSet<string>();
+
         private static string FormatColor(Color color)
         {
             return $"\\red{color.R}\\green{color.G}\\blue{color.B}";
@@ -164,6 +166,11 @@ namespace LEGv8Day
         public static void SetKeywords(string[] words)
         {
             _keywords = new HashSet<string>(words.Select(w => w.ToUpper()));
+        }
+
+        public static void SetLabels(string[] labels)
+        {
+            _labels = new HashSet<string>(labels);
         }
 
         public static void SetTheme(Theme theme)
@@ -250,7 +257,7 @@ namespace LEGv8Day
 
                     NUMBER_STYLE.Stylize(sb, ref currentStyle, word);
                 }
-                else if (char.IsLetter(c) && d == ':')
+                else if (char.IsLetter(c) && d == ':' /*&& _labels.Contains(word.Substring(0, word.Length - 1))*/)
                 {
                     //label
 

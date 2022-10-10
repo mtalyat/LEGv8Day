@@ -124,9 +124,13 @@ namespace LEGv8Day
         /// <param name="instructions"></param>
         public Emulation(Instruction[] instructions)
         {
+            //initialize data
             _registers = new long[REGISTER_COUNT];
             _memory = new byte[MEMORY_SIZE];
             _instructions = instructions;
+
+            //"clear"/set initial data
+            Clear();
         }
 
         #region Running
@@ -272,6 +276,11 @@ namespace LEGv8Day
             {
                 _memory[i] = 0;
             }
+
+            //initialize registers
+
+            //Stack Pointer (end of memory)
+            _registers[28] = MEMORY_SIZE;
         }
 
         /// <summary>

@@ -66,7 +66,7 @@ namespace LEGv8Day
 
         private Instruction[] GetInstructions(string[] strLines)
         {
-            Dictionary<string, int> headers = new Dictionary<string, int>();
+            Dictionary<string, int> labels = new Dictionary<string, int>();
             List<Line> instructionLines = new List<Line>();
 
             string strLine;
@@ -103,17 +103,20 @@ namespace LEGv8Day
                 {
                     if (line.Label.EndsWith(Constants.HEADER_POSTFIX))
                     {
-                        headers.Add(line.Label.TrimEnd(Constants.HEADER_POSTFIX), instructionLines.Count);
+                        labels.Add(line.Label.TrimEnd(Constants.HEADER_POSTFIX), instructionLines.Count);
                     }
                 }
             }
+
+            //set RTF
+            RtfLEGv8Formatter.SetLabels(labels.Keys.ToArray());
 
             //got the lines organized, now create instructions from them
             Instruction[] instructions = new Instruction[instructionLines.Count];
 
             for (int i = 0; i < instructionLines.Count; i++)
             {
-                instructions[i] = Parse.ParseInstruction(instructionLines[i], headers);
+                instructions[i] = Parse.ParseInstruction(instructionLines[i], labels);
             }
 
             return instructions;
