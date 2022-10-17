@@ -1,3 +1,5 @@
+*Note: This repository is no longer being updated. Please check out the new Visual Studio Code extension, which has the same features, if not more:* [https://github.com/mtalyat/LEGv8-Assembly-VSCode-Extension](https://github.com/mtalyat/LEGv8-Assembly-VSCode-Extension).
+
 Table of Contents
 ======
 1. [General Information](#general-information)
