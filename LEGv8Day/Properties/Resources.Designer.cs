@@ -59,5 +59,15 @@ namespace LEGv8Day.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Legv8Day_Icon {
+            get {
+                object obj = ResourceManager.GetObject("Legv8Day Icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

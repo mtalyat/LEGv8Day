@@ -52,10 +52,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\..\..\..\OneDrive\Pictures\Art\Pixel Art\Legv8Day.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

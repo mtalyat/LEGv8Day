@@ -1,0 +1,93 @@
+main:
+
+SUBI SP, SP, #8
+STUR LR, [SP, #0]
+
+MOVZ X0, #5
+MOVZ X1, #10
+
+PRNT Testing {X0} and {X1}:
+
+test_0: // EQ Equal
+CMP X0, X1
+B.EQ test_eq
+PRNT !=
+B test_1
+test_eq:
+PRNT =
+
+test_1: // NE Not Equal
+CMP X0, X1
+B.NE test_ne
+PRNT =
+B test_2
+test_ne:
+PRNT !=
+
+test_2: // GT Greater Than
+CMP X0, X1
+B.GT test_gt
+PRNT <=
+B test_3
+test_gt:
+PRNT >
+
+test_3: // GE Greater than or Equal to
+CMP X0, X1
+B.GE test_ge
+PRNT <
+B test_4
+test_ge:
+PRNT >=
+
+test_4: // LT Less Than
+CMP X0, X1
+B.LT test_lt
+PRNT >=
+B test_5
+test_lt:
+PRNT <
+
+test_5: // LE Less than or Equal to
+CMP X0, X1
+B.LE test_le
+PRNT >
+B test_6
+test_le:
+PRNT <=
+
+test_6: // MI MInus
+CMP X0, X1
+B.MI test_mi
+PRNT +
+B test_7
+test_mi:
+PRNT -
+
+test_7: // PL PLus
+CMP X0, X1
+B.PL test_pl
+PRNT -
+B test_8
+test_pl:
+PRNT +
+
+end:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

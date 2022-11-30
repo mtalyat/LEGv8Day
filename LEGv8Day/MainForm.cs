@@ -42,7 +42,7 @@ namespace LEGv8Day
 
         private RichTextBox _convertingBox;
 
-        public MainForm()
+        public MainForm(string filePath)
         {
             InitializeComponent();
 
@@ -54,6 +54,12 @@ namespace LEGv8Day
             _convertingBox = new RichTextBox();
 
             _legFile = new LegFile();
+
+            //if a file provided, open it
+            if(!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+            {
+                FileSettings.Default.LastFilePath = filePath;
+            }
 
             RefreshForm();
         }

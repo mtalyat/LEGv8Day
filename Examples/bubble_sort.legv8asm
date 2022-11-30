@@ -1,0 +1,44 @@
+main:
+BL create_array
+B sort
+
+// create a small array of data to sort
+create_array:
+ADDI X0, XZR, #4
+STUR X0, [XZR, #0]
+ADDI X0, XZR, #1
+STUR X0, [XZR, #1]
+ADDI X0, XZR, #3
+STUR X0, [XZR, #2]
+ADDI X0, XZR, #2
+STUR X0, [XZR, #3]
+ADDI X0, XZR, #4 // length of array
+BR LR
+
+// sort the data
+sort:
+ADDI X1, XZR, #-1 // i = -1
+start_loop:
+ADDI X1, X1, #1   // i++
+ADDI X2, X1, #1   // j = i + 1
+SUBS XZR, X2, X0  //if j >= length (checking j, as j is i + 1)
+B.GE end          //go to end, we are done sorting
+loop:
+LDURB X3, [X1, #0] // load value at i
+LDURB X4, [X2, #0] // load value at j
+SUBS XZR, X3, X4   // if i > j, swap
+B.GT swap
+end_loop:
+ADDI X2, X2, #1  // j++
+SUBS XZR, X2, X0 //if j >= length
+B.GE start_loop  //move to next i iteration
+B loop           //otherwise go to next j iteration
+
+// swap two values
+swap:
+PRNT Swapping X3->{X3} and X4->{X4}
+STURB X3, [X2, #0] //store i value in j memory
+STURB X4, [X1, #0] //store j value in i memory
+B end_loop         //finish the loop
+
+end:

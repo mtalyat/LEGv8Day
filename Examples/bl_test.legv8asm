@@ -1,0 +1,82 @@
+main:
+BL one
+B end
+
+one:
+PRNT one
+
+SUBI SP, SP, #8
+STUR LR, [SP, #0]
+
+BL two
+BL three
+BL four
+BL five
+
+LDUR LR, [SP, #0]
+ADDI SP, SP, #8
+
+BR LR
+
+two:
+PRNT two
+
+SUBI SP, SP, #8
+STUR LR, [SP, #0]
+
+BL three
+BL four
+BL five
+
+LDUR LR, [SP, #0]
+ADDI SP, SP, #8
+
+BR LR
+
+three:
+PRNT three
+
+SUBI SP, SP, #8
+STUR LR, [SP, #0]
+
+BL four
+BL five
+
+LDUR LR, [SP, #0]
+ADDI SP, SP, #8
+
+BR LR
+
+four:
+PRNT four
+
+SUBI SP, SP, #8
+STUR LR, [SP, #0]
+
+BL five
+
+LDUR LR, [SP, #0]
+ADDI SP, SP, #8
+
+BR LR
+
+five:
+PRNT five
+BR LR
+
+end:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
